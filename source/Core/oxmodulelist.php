@@ -665,7 +665,7 @@ class oxModuleList extends oxSuperCfg
      */
     protected function _isVendorDir($sModuleDir)
     {
-        if (is_dir($sModuleDir) && file_exists($sModuleDir . 'vendormetadata.php')) {
+        if (is_dir($sModuleDir) && !file_exists($sModuleDir . 'metadata.php')) {
             return true;
         }
 
