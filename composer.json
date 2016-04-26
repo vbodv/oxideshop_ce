@@ -11,8 +11,7 @@
     "require": {
         "phpmailer/phpmailer": "^5.2.14",
         "smarty/smarty": "^2.6.29",
-        "doctrine/dbal": "v2.5.4",
-        "psr/log": "1.0.0"
+        "doctrine/dbal": "v2.5.4"
     },
     "require-dev": {
         "oxid-esales/testing-library": "dev-master",
