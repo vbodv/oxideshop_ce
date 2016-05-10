@@ -53,16 +53,6 @@ class LegacyResultSetTest extends ResultSetTest
     }
 
     /**
-     * Create the database object under test - the static pendant to use in the setUpBeforeClass and tearDownAfterClass.
-     *
-     * @return \oxLegacyDb The database object under test.
-     */
-    protected static function createDatabaseStatic()
-    {
-        return \oxDb::getDb();
-    }
-
-    /**
      * The following test are exceptions of the abstract ResultSetTest, which are designed especially for using
      * ADODB lite with the 'mysqli' driver.
      *
