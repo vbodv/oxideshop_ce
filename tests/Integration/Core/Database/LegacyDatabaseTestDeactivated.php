@@ -22,8 +22,8 @@
 
 namespace OxidEsales\Eshop\Tests\Integration\Core\Database;
 
-use OxidEsales\Eshop\Core\LegacyDatabase;
 use OxidEsales\Eshop\Core\Database\DatabaseInterface;
+use OxidEsales\Eshop\Core\LegacyDatabase;
 
 /**
  * Tests for our database object.
@@ -58,46 +58,6 @@ class LegacyDatabaseTest extends DatabaseInterfaceImplementationTest
      * @var DatabaseInterface|LegacyDatabase The database to test.
      */
     protected $database = null;
-    
-    /**
-     * Set up before beginning with tests
-     */
-    public static function setUpBeforeClass()
-    {
-        parent::setUpBeforeClass();
-
-        self::createDatabaseTable();
-    }
-
-    /**
-     * Tear down after all tests are done
-     */
-    public static function tearDownAfterClass()
-    {
-        self::removeDatabaseTable();
-
-        parent::tearDownAfterClass();
-    }
-
-    /**
-     * Create a table in the database especially for this test.
-     */
-    protected static function createDatabaseTable()
-    {
-        $db = self::createDatabaseStatic();
-
-        $db->execute('CREATE TABLE IF NOT EXISTS ' . self::TABLE_NAME . ' (oxid CHAR(32), oxuserid CHAR(32)) ENGINE innoDb;');
-    }
-
-    /**
-     * Drop the test database table.
-     */
-    protected static function removeDatabaseTable()
-    {
-        $db = self::createDatabaseStatic();
-
-        $db->execute('DROP TABLE ' . self::TABLE_NAME . ';');
-    }
 
     /**
      * @return string The name of the database exception class
@@ -139,15 +99,5 @@ class LegacyDatabaseTest extends DatabaseInterfaceImplementationTest
      */
     protected function closeConnection()
     {
-    }
-
-    /**
-     * Create the database object under test - the static pendant to use in the setUpBeforeClass and tearDownAfterClass.
-     *
-     * @return \oxLegacyDb The database object under test.
-     */
-    protected static function createDatabaseStatic()
-    {
-        return \oxDb::getDb();
     }
 }
