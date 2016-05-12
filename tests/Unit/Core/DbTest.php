@@ -24,6 +24,7 @@ namespace Unit\Core;
 use Exception;
 use oxConfigFile;
 use oxDb;
+use OxidEsales\Eshop\Core\exception\DatabaseConnectionException;
 use oxRegistry;
 
 /**
@@ -39,7 +40,7 @@ class oxDbPublicized extends oxDb
         return parent::getConfigParam($sConfigName);
     }
 
-    public function onConnectionError(Exception $exception)
+    public function onConnectionError(DatabaseConnectionException $exception)
     {
         parent::onConnectionError($exception);
     }
