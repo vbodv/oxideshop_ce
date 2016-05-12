@@ -21,10 +21,10 @@
  */
 namespace Unit\Core;
 
-use \oxDb;
-use \oxConfigFile;
-use \oxRegistry;
-use \Exception;
+use Exception;
+use oxConfigFile;
+use oxDb;
+use oxRegistry;
 
 /**
  * Test private methods with mock.
@@ -34,9 +34,9 @@ use \Exception;
  */
 class oxDbPublicized extends oxDb
 {
-    public static function _getConfigParam($sConfigName)
+    public function getConfigParam($sConfigName)
     {
-        return parent::_getConfigParam($sConfigName);
+        return parent::getConfigParam($sConfigName);
     }
 
     public function onConnectionError(Exception $exception)
@@ -94,13 +94,13 @@ class DbTest extends \OxidTestCase
 
         $oDb = new oxDbPublicized();
         $oDb->setConfig($oConfigFile);
-        $this->assertEquals($iDebug, $oDb->_getConfigParam('_iDebug'));
+        $this->assertEquals($iDebug, $oDb->getConfigParam('_iDebug'));
 
         $iDebug = 8;
         $oConfigFile->iDebug = $iDebug;
         $oDb->setConfig($oConfigFile);
 
-        $this->assertEquals($iDebug, $oDb->_getConfigParam('_iDebug'), 'Debug should be same as set in setConfig()');
+        $this->assertEquals($iDebug, $oDb->getConfigParam('_iDebug'), 'Debug should be same as set in setConfig()');
     }
 
     public function testSetDbObject()
