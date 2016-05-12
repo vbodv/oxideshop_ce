@@ -24,7 +24,6 @@ namespace Unit\Core\Exception;
 use OxidEsales\TestingLibrary\UnitTestCase;
 use OxidEsales\Eshop\Core\exception\DatabaseException;
 
-
 /**
  *
  * Test class for DatabaseException
