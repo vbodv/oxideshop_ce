@@ -506,7 +506,7 @@ class Database
     /**
      * Redirect to the OXID eShop maintenance wizard
      */
-    protected static function redirectToMaintenancePage()
+    protected function redirectToMaintenancePage()
     {
         $headerCode = "HTTP/1.1 302 Found";
         header($headerCode);
@@ -637,7 +637,6 @@ class Database
          * Reset sql_mode
          */
         $connection->execute('SET @@session.sql_mode = ""');
-        
     }
 
     /**
