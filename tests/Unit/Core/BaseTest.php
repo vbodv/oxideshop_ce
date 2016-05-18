@@ -1907,7 +1907,7 @@ class BaseTest extends \OxidTestCase
 
         $oField5 = new stdClass();
         $oField5->name = 'OXLONGDESC';
-        //  $oField5->max_length = '10';
+        $oField5->max_length = '10';
         $oField5->type = 'text';
         $oField5->scale = null;
         $oField5->not_null = true;
@@ -2052,7 +2052,7 @@ class BaseTest extends \OxidTestCase
 
         $oField12 = new stdClass();
         $oField12->name = 'OXTIMESTAMP';
-        // $oField12->max_length = '10';
+        $oField12->max_length = '10';
         $oField12->type = 'timestamp';
         $oField12->scale = null;
         $oField12->not_null = true;
