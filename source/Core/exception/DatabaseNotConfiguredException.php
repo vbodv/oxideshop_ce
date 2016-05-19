@@ -19,30 +19,26 @@
  * @copyright (C) OXID eSales AG 2003-2016
  * @version       OXID eShop CE
  */
-namespace Unit\Core\Exception;
 
-use OxidEsales\TestingLibrary\UnitTestCase;
-use OxidEsales\Eshop\Core\exception\DatabaseException;
+namespace OxidEsales\Eshop\Core\exception;
+
+use oxException;
 
 /**
- *
- * Test class for DatabaseException
+ * Exception to be thrown when the database has not been configured in the configuration file config.inc.php
  */
-class DatabaseExceptionTest extends UnitTestCase
+class DatabaseNotConfiguredException extends oxException
 {
 
     /**
-     * DatabaseException must be an instance of oxException
+     * DatabaseNotConfiguredException constructor.
+     *
+     * @param string     $message
+     * @param int        $code
+     * @param \Exception $previous Previous exception thrown by the underlying DBAL
      */
-    public function testDatabaseExceptionIsInstanceOfOxException()
+    public function __construct($message, $code, \Exception $previous = null)
     {
-        $message = 'message';
-        $code = 1;
-        $previous = new \Exception();
-
-        $expected = 'oxException';
-        $actualException = new DatabaseException($message, $code, $previous);
-
-        $this->assertInstanceOf($expected, $actualException, 'DatabaseException is not an instance of oxException');
+        parent::__construct($message, $code, $previous);
     }
 }

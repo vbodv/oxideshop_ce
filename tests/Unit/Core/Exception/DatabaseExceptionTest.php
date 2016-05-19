@@ -21,12 +21,14 @@
  */
 namespace Unit\Core\Exception;
 
-use OxidEsales\TestingLibrary\UnitTestCase;
 use OxidEsales\Eshop\Core\exception\DatabaseException;
+use OxidEsales\TestingLibrary\UnitTestCase;
 
 /**
  *
  * Test class for DatabaseException
+ * 
+ * @group database-adapter
  */
 class DatabaseExceptionTest extends UnitTestCase
 {
