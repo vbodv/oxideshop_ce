@@ -1854,9 +1854,11 @@ class BaseTest extends \OxidTestCase
         $oField2->unsigned = false;
         $oField2->has_default = false;
         $oField2->comment = 'Shop id (oxshops)';
-        $oField2->characterSet = null;
-        $oField2->collation = null;
+        $oField2->characterSet = 'latin1';
+        $oField2->collation = 'latin1_general_ci';
         if ($this->getConfig()->getEdition() === 'EE') :
+            $oField2->characterSet = null;
+            $oField2->collation = null;
             $oField2->max_length = '11';
             $oField2->type = 'int';
             $oField2->has_default = true;
