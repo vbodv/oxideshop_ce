@@ -21,18 +21,17 @@
  */
 namespace Unit\Application\Model;
 
-use \oxList;
-use \oxSimpleVariant;
-use \oxArticle;
-
+use Exception;
+use oxArticle;
 use oxArticleHelper;
-use \oxField;
-use \Exception;
-use \StdClass;
-use \oxbasket;
-use \oxDb;
-use \oxRegistry;
-use \oxTestModules;
+use oxbasket;
+use oxDb;
+use oxField;
+use oxList;
+use oxRegistry;
+use oxSimpleVariant;
+use oxTestModules;
+use StdClass;
 
 if (!defined('OX_IS_ADMIN')) {
     define('OX_IS_ADMIN', false);
@@ -107,7 +106,7 @@ class ArticleTest extends \OxidTestCase
         $oDB->Execute('delete from oxselectlist where oxid = "_testoxsellist" ');
         $oDB->Execute('delete from oxobject2selectlist where oxselnid = "_testoxsellist" ');
 
-        oxDb::getInstance()->resetTblDescCache();
+        $this->setProtectedClassProperty(oxDb::getInstance(), 'tblDescCache', []);
 
         parent::tearDown();
     }
@@ -6425,7 +6424,7 @@ class ArticleTest extends \OxidTestCase
         $dbMock->expects($this->any())
             ->method('getOne')
             ->will($this->returnValue($return));
-        oxDb::setDbObject($dbMock);
+        $this->setProtectedClassProperty(Database::getInstance(), 'db' , $dbMock); 
 
         $this->assertEquals($expected, $oA->inPriceCategory('sCatNid'));
     }
@@ -6448,7 +6447,7 @@ class ArticleTest extends \OxidTestCase
                     throw new Exception($s);
             }));
 
-        oxDb::setDbObject($dbMock);
+        $this->setProtectedClassProperty(Database::getInstance(), 'db' , $dbMock); 
 
         try {
             $oA->inPriceCategory('sCatNid');
