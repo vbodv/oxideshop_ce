@@ -22,10 +22,10 @@
 namespace Unit\Core;
 
 use modDB;
-use \oxField;
-use \oxDb;
-use \oxRegistry;
-use \oxTestModules;
+use oxDb;
+use oxField;
+use oxRegistry;
+use oxTestModules;
 
 //require_once 'oxbaseTest.php';
 
@@ -655,7 +655,7 @@ class I18ntest extends \OxidTestCase
         $dbMock = $this->getDbObjectMock();
         $dbMock->expects($this->any())->method('select')->will($this->returnValue(false));
         $dbMock->expects($this->any())->method('execute')->will($this->evalFunction('{\Unit\Core\I18nTest::$aLoggedSqls[] = $args[0];return true;}'));
-        oxDb::setDbObject($dbMock);
+        $this->setProtectedClassProperty(Database::getInstance(), 'db' , $dbMock); 
 
         $oObj->setLanguage(0);
         I18nTest::$aLoggedSqls = array();
@@ -704,7 +704,7 @@ class I18ntest extends \OxidTestCase
         $dbMock = $this->getDbObjectMock();
         $dbMock->expects($this->any())->method('select')->will($this->returnValue(false));
         $dbMock->expects($this->any())->method('execute')->will($this->evalFunction('{\Unit\Core\I18nTest::$aLoggedSqls[] = $args[0];return true;}'));
-        oxDb::setDbObject($dbMock);
+        $this->setProtectedClassProperty(Database::getInstance(), 'db' , $dbMock); 
 
         $oObj->setLanguage(0);
         I18ntest::$aLoggedSqls = array();
@@ -769,7 +769,7 @@ class I18ntest extends \OxidTestCase
         $dbMock = $this->getDbObjectMock();
         $dbMock->expects($this->any())->method('select')->will($this->returnValue(false));
         $dbMock->expects($this->any())->method('execute')->will($this->evalFunction('{\Unit\Core\I18nTest::$aLoggedSqls[] = $args[0];return true;}'));
-        oxDb::setDbObject($dbMock);
+        $this->setProtectedClassProperty(Database::getInstance(), 'db' , $dbMock); 
 
         $oObj->setLanguage(0);
         I18nTest::$aLoggedSqls = array();
