@@ -27,6 +27,7 @@ use oxArticleHelper;
 use oxbasket;
 use oxDb;
 use oxField;
+use OxidEsales\Eshop\Core\Database;
 use oxList;
 use oxRegistry;
 use oxSimpleVariant;
