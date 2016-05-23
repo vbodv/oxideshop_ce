@@ -21,7 +21,7 @@
  */
 namespace Unit\Core\Exception;
 
-use OxidEsales\Eshop\Core\exception\DatabaseException;
+use OxidEsales\Eshop\Core\Exception\DatabaseException;
 use OxidEsales\TestingLibrary\UnitTestCase;
 
 /**
