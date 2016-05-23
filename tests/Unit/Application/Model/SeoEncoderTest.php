@@ -25,6 +25,7 @@ use Exception;
 use modDB;
 use oxDb;
 use oxField;
+use OxidEsales\Eshop\Core\Database;
 use oxRegistry;
 use oxSeoEncoder;
 use oxSeoEncoderHelper;
