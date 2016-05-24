@@ -1280,7 +1280,7 @@ class ArticleList extends \oxList
      * Updates article.
      *
      * @param string     $sCurrUpdateTime
-     * @param oxLegacyDb $oDb
+     * @param DatabaseInterface $oDb
      *
      * @return mixed
      */
