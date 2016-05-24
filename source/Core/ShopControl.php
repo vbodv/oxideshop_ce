@@ -687,10 +687,6 @@ class ShopControl extends \oxSuperCfg
             $message .= $debugInfo->formatDbInfo();
         }
 
-        if ($debugLevel == 2 || $debugLevel == 3 || $debugLevel == 4) {
-            $message .= $debugInfo->formatAdoDbPerf();
-        }
-
         return $message;
     }
 
