@@ -141,16 +141,16 @@ class ArticleTagList extends \oxI18n implements \oxITagList
         foreach ($tagSet as $tag) {
             $tag->addUnderscores();
         }
-        $tags = oxDb::getInstance()->escapeString($tagSet);
         $database = oxDb::getDb();
 
         $table = getLangTableName('oxartextends', $this->getLanguage());
         $languageSuffix = oxRegistry::getLang()->getLanguageTag($this->getLanguage());
 
-        $query = "insert into {$table} (oxid, oxtags$languageSuffix) value (" . $database->quote($this->getArticleId()) . ", '{$tags}')
-               on duplicate key update oxtags$languageSuffix = '{$tags}'";
+        $query = "insert into {$table} (oxid, oxtags$languageSuffix) value (?, ?)
+               on duplicate key update oxtags$languageSuffix = ?";
+        $parameters = [$this->getArticleId(), $tagSet, $tagSet];
 
-        if ($database->execute($query)) {
+        if ($database->execute($query, $parameters)) {
             $this->executeDependencyEvent();
 
             return true;
