@@ -246,7 +246,7 @@ class RecommendationList extends \oxBase implements \oxIUrl
         if (count($aArticleIds)) {
             startProfile(__FUNCTION__);
 
-            $sIds = implode(",", oxDb::getInstance()->quoteArray($aArticleIds));
+            $sIds = implode(",", oxDb::getDb()->quoteArray($aArticleIds));
 
             $oRecommList = oxNew('oxlist');
             $oRecommList->init('oxrecommlist');
@@ -292,7 +292,7 @@ class RecommendationList extends \oxBase implements \oxIUrl
      */
     protected function _loadFirstArticles(oxList $oRecommList, $aIds)
     {
-        $aIds = oxDb::getInstance()->quoteArray($aIds);
+        $aIds = oxDb::getDb()->quoteArray($aIds);
         $sIds = implode(", ", $aIds);
 
         $aPrevIds = array();
