@@ -28,6 +28,7 @@ use oxCategory;
 use oxCategoryList;
 use oxContent;
 use oxDb;
+use OxidEsales\Eshop\Core\Database;
 use oxManufacturer;
 use oxManufacturerList;
 use oxPrice;
@@ -926,8 +927,10 @@ class BaseController extends \oxView
         $sortBy = $config->getRequestParameter($this->getSortOrderByParameterName());
         $sortOrder = $config->getRequestParameter($this->getSortOrderParameterName());
 
-        if ($sortBy && oxDb::getInstance()->isValidFieldName($sortBy) && $sortOrder &&
-            oxRegistry::getUtils()->isValidAlpha($sortOrder) && in_array($stringModifier->strtolower($sortOrder), $sortDirections)
+        if ($sortBy &&
+            $sortOrder &&
+            oxRegistry::getUtils()->isValidAlpha($sortOrder) &&
+            in_array($stringModifier->strtolower($sortOrder), $sortDirections)
         ) {
             $sorting = array('sortby' => $sortBy, 'sortdir' => $sortOrder);
         }
@@ -1442,7 +1445,11 @@ class BaseController extends \oxView
     {
         $sorting = $this->getSorting($ident);
         if (is_array($sorting)) {
-            return implode(" ", $sorting);
+            $sortBy = Database::getDb()->quoteIdentifier($sorting['sortby']);
+            $sortDir = isset($sorting['sortdir']) ? $sorting['sortdir'] : '';
+            $sortString = trim($sortBy . ' ' . $sortDir);
+
+            return $sortString;
         }
     }
 
