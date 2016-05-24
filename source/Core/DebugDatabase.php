@@ -154,7 +154,7 @@ class DebugDatabase
         $aOutput = array();
         $oDb = oxDb::getDb();
         foreach ($aInput as $fnc => $aWarnings) {
-            $ids = implode(",", oxDb::getInstance()->quoteArray(array_keys($aWarnings)));
+            $ids = implode(",", oxDb::getDb()->quoteArray(array_keys($aWarnings)));
             $rs = $oDb->select("select sql1, timer, tracer from adodb_logsql where sql0 in ($ids)");
             if ($rs != false && $rs->recordCount() > 0) {
                 while (!$rs->EOF) {
