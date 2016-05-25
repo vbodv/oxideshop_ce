@@ -140,9 +140,9 @@ class ShopControl extends \oxSuperCfg
         } catch (oxCookieException $ex) {
             $this->_handleCookieException($ex);
         } catch (DatabaseNotConfiguredException $exception) {
-            $this->_handleDbNotConfiguredException();
+            $this->handleDbNotConfiguredException();
         } catch (DatabaseConnectionException $exception) {
-            $this->_handleDbConnectionException($exception);
+            $this->handleDbConnectionException($exception);
         } catch (oxException $ex) {
             $this->_handleBaseException($ex);
         }
@@ -711,7 +711,7 @@ class ShopControl extends \oxSuperCfg
     /**
      * If the database connection has not been configured, redirect to the OXID eShop setup wizard
      */
-    protected function _handleDbNotConfiguredException () {
+    protected function handleDbNotConfiguredException () {
         /**
          * The shop standard redirect mechanism needs a working database connection.
          * Use a special method here.
@@ -726,7 +726,7 @@ class ShopControl extends \oxSuperCfg
      *
      * @param DatabaseConnectionException $exception Exception to handle
      */
-    protected function _handleDbConnectionException(DatabaseConnectionException $exception)
+    protected function handleDbConnectionException(DatabaseConnectionException $exception)
     {
         /**
          * Report the database connection exception
