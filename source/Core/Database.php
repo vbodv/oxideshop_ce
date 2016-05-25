@@ -163,13 +163,16 @@ class Database
     }
 
     /**
-     * Call to reset table description cache
-     * 
-     * @deprecated since v5.3.0 (2016-05-20); Do not use any more. This method will be removed.
+     * Extracts and returns table metadata from DB.
+     * This method is extended in the Enterprise Edition.
+     *
+     * @param string $tableName
+     *
+     * @return array
      */
-    public function resetTblDescCache()
+    protected function fetchTableDescription($tableName)
     {
-        self::$tblDescCache = array();
+        return static::getDb()->metaColumns($tableName);
     }
 
     /**
@@ -206,19 +209,18 @@ class Database
      */
     protected function onPostConnect()
     {
-        /**
-         * @todo remove this comment after all work is done
-         * The original post connect functionality was found in prepareDatabaseConnection
-         * It did the following things:
-         * - if needed, truncate table adodb_logsql and trigger the adodb lite logging. This is a todo
-         * - Set connection cacheSecs to 600, this feature did not work. This is a Won't do
-         * - Set sql mode. This is done in Database::setSqlMode()
-         * - Set character set of the connection via "SET NAMES". This is done in Database::buildConnectionParameters()
-         */
         $this->setSqlMode();
 
         // @todo Set database logging from iDebug
         // @todo Set user auditing from blLogChangesInAdmin
+    }
+
+    /**
+     * Set the sql_mode of the MySQL server for the session.
+     */
+    protected function setSqlMode()
+    {
+        static::getDb()->execute('SET @@session.sql_mode = ""');
     }
 
     /**
@@ -322,6 +324,18 @@ class Database
     }
 
     /**
+     * Return local config value by given name.
+     *
+     * @param string $configVar returning config name.
+     *
+     * @return mixed
+     */
+    protected function getConfigParam($configVar)
+    {
+        return $this->configFile->getVar($configVar);
+    }
+
+    /**
      * Return false if the database connection has not been configured in the eShop configuration file.
      *
      * @param ConfigFile $config
@@ -340,31 +354,6 @@ class Database
     }
 
     /**
-     * Return local config value by given name.
-     *
-     * @param string $configVar returning config name.
-     *
-     * @return mixed
-     */
-    protected function getConfigParam($configVar)
-    {
-        return $this->configFile->getVar($configVar);
-    }
-
-    /**
-     * Extracts and returns table metadata from DB.
-     * This method is extended in the Enterprise Edition.
-     *
-     * @param string $tableName
-     *
-     * @return array
-     */
-    protected function fetchTableDescription($tableName)
-    {
-        return static::getDb()->metaColumns($tableName);
-    }
-
-    /**
      * Call function is admin from oxFunction. Need to mock in tests.
      *
      * @return bool
@@ -372,37 +361,5 @@ class Database
     protected function isAdmin()
     {
         return isAdmin();
-    }
-
-    /**
-     * Set the sql_mode of the MySQL server for the session.
-     */
-    protected function setSqlMode()
-    {
-        static::getDb()->execute('SET @@session.sql_mode = ""');
-    }
-
-    /**
-     * Setter for database connection object
-     * @todo This must be removed, it is used only in tests and is not supposed to be called by anyone.
-     * @deprecated since v5.3.0 (2016-05-20); Do not use any more. This method will be removed. 
-     *
-     * @param null|Database $newDbObject
-     */
-    public static function setDbObject($newDbObject)
-    {
-        self::$db = $newDbObject;
-    }
-
-    /**
-     * Database connection object getter
-     * @todo This must be removed, it is used only in tests and is not supposed to be called by anyone.
-     * @deprecated since v5.3.0 (2016-05-20); Do not use any more. This method will be removed.
-     *
-     * @return Database
-     */
-    public static function getDbObject()
-    {
-        return self::$db;
     }
 }
