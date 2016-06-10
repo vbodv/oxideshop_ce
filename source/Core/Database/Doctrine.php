@@ -52,11 +52,6 @@ class Doctrine implements DatabaseInterface
     protected $connection = null;
 
     /**
-     * @var int The number of rows affected by the last sql query.
-     */
-    protected $affectedRows = 0;
-
-    /**
      * @var int The current fetch mode.
      */
     protected $fetchMode = \PDO::FETCH_NUM;
@@ -324,16 +319,6 @@ class Doctrine implements DatabaseInterface
     }
 
     /**
-     * Get the number of rows, which where changed during the last sql statement.
-     *
-     * @return int The number of rows affected by the sql statement.
-     */
-    public function affectedRows()
-    {
-        return $this->getAffectedRows();
-    }
-
-    /**
      * Quote a string in a way that it can be used as a identifier (i.e. table name or field name) in a SQL statement.
      *
      * @param $value
@@ -465,7 +450,7 @@ class Doctrine implements DatabaseInterface
      *
      * @throws DatabaseException
      *
-     * @return DoctrineEmptyResultSet|DoctrineResultSet
+     * @return integer The number of affected rows.
      */
     public function execute($query, $parameters = array())
     {
@@ -473,21 +458,7 @@ class Doctrine implements DatabaseInterface
         $parameters = $this->assureParameterIsAnArray($parameters);
         // END deprecated
 
-        /**
-         * We divide the execution here, cause it is easier to achieve the ADOdb Lite behavior this way:
-         * ADOdb Lite returns different kinds of result sets:
-         * - DoctrineResultSet for "SELECT"
-         * - DoctrineEmptyResultSet for the rest of queries
-         */
-       /* if ($this->doesStatementProduceOutput($query)) {
-            /** @var DoctrineResultSet $result */
-          //  $result = $this->select($query, $parameters);
-      /*  } else {*/
-            /** @var DoctrineEmptyResultSet $result */
-            $result = $this->executeUpdate($query, $parameters);
-     //   }
-
-        return $result;
+        return $this->executeUpdate($query, $parameters);
     }
 
     /**
@@ -518,8 +489,6 @@ class Doctrine implements DatabaseInterface
             /** @var \Doctrine\DBAL\Driver\Statement $statement Statement is prepared and executed by executeQuery() */
             $statement = $this->getConnection()->executeQuery($sqlSelect, $parameters);
             $result = new DoctrineResultSet($statement);
-
-            $this->setAffectedRows($result->recordCount());
         } catch (DBALException $exception) {
             $exception = $this->convertException($exception);
             $this->handleException($exception);
@@ -623,7 +592,7 @@ class Doctrine implements DatabaseInterface
      *
      * @throws DatabaseException
      *
-     * @return DoctrineEmptyResultSet
+     * @return integer The number of affected rows.
      */
     public function executeUpdate($query, $parameters = array(), $types = array())
     {
@@ -633,15 +602,12 @@ class Doctrine implements DatabaseInterface
 
         try {
             $affectedRows = $this->getConnection()->executeUpdate($query, $parameters, $types);
-            $this->setAffectedRows($affectedRows);
         } catch (DBALException $exception) {
             $exception = $this->convertException($exception);
             $this->handleException($exception);
         }
 
-        $result = new DoctrineEmptyResultSet();
-
-        return $result;
+        return $affectedRows;
     }
 
     /**
@@ -652,26 +618,6 @@ class Doctrine implements DatabaseInterface
     protected function getConnection()
     {
         return $this->connection;
-    }
-
-    /**
-     * Set the number of the rows, changed by the last query.
-     *
-     * @param int $affectedRows How many rows did the last query changed?
-     */
-    protected function setAffectedRows($affectedRows)
-    {
-        $this->affectedRows = $affectedRows;
-    }
-
-    /**
-     * Get the number of the rows, changed by the last query.
-     *
-     * @return int How many rows did the last query changed?
-     */
-    protected function getAffectedRows()
-    {
-        return $this->affectedRows;
     }
 
     /**
