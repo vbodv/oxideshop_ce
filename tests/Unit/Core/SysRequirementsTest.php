@@ -359,7 +359,7 @@ class SysRequirementsTest extends \OxidTestCase
 
         $dbMock = $this->getDbObjectMock();
         $dbMock->expects($this->any())
-            ->method('execute')
+            ->method('select')
             ->will($this->returnValue($oRs));
         $this->setProtectedClassProperty(Database::getInstance(), 'db' , $dbMock); 
 
@@ -396,7 +396,7 @@ class SysRequirementsTest extends \OxidTestCase
 
         $dbMock = $this->getDbObjectMock();
         $dbMock->expects($this->any())
-            ->method('execute')
+            ->method('select')
             ->will($this->returnValue($oRs));
         $this->setProtectedClassProperty(Database::getInstance(), 'db' , $dbMock); 
 

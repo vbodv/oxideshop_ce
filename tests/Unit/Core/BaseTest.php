@@ -947,7 +947,7 @@ class BaseTest extends \OxidTestCase
         $oBase->init("oxactions");
         $select = "select * from oxactions where oxid = 'oxstart'";
         $oDB = oxDb::getDB(oxDB::FETCH_MODE_ASSOC);
-        $rs = $oDB->execute($select);
+        $rs = $oDB->select($select);
         $oBase->assign($rs->fields);
         $this->assertEquals("oxstart", $oBase->getId());
     }
@@ -964,7 +964,7 @@ class BaseTest extends \OxidTestCase
         $oBase->init("oxactions");
         $oBase->oxactions__oxid = new oxField("oxstart", oxField::T_RAW);
         $select = "select * from oxactions where oxid = 'oxstart'";
-        $rs = $oDB->Execute($select);
+        $rs = $oDB->select($select);
         $oBase->assign($rs->fields);
         $this->assertEquals($oBase->getId(), "oxstart");
     }
@@ -1264,7 +1264,7 @@ class BaseTest extends \OxidTestCase
 
         $oDB = oxDb::getDb();
 
-        $rs = $oDB->Execute($sSelect);
+        $rs = $oDB->select($sSelect);
         $expectedCount = $this->getConfig()->getEdition() === 'EE' ? 6 : 1;
         $this->assertEquals($expectedCount, $rs->RecordCount());
     }
@@ -1584,7 +1584,7 @@ class BaseTest extends \OxidTestCase
 
         $this->assertNotNull($sResult);
         $myDB = oxDb::getDb(oxDB::FETCH_MODE_ASSOC);
-        $res = $myDB->Execute("select oxupdate from oxuserbaskets where oxid='_test'");
+        $res = $myDB->select("select oxupdate from oxuserbaskets where oxid='_test'");
         $this->assertNotEquals("2007-07-07 00:00:00", $res->fields['oxupdate']);
     }
 
@@ -1627,7 +1627,7 @@ class BaseTest extends \OxidTestCase
         //$this->getConfig()->blAdmin = false;
         $this->assertNotNull($sResult);
         $myDB = oxDb::getDb(oxDB::FETCH_MODE_ASSOC);
-        $res = $myDB->Execute("select oxdate from oxnews where oxshortdesc='oxbasetest'");
+        $res = $myDB->select("select oxdate from oxnews where oxshortdesc='oxbasetest'");
         $this->assertEquals($res->fields['oxdate'], "2007-07-07");
     }
 
@@ -1667,7 +1667,7 @@ class BaseTest extends \OxidTestCase
         $sResult = $oBase->update();
         $this->assertNotNull($sResult);
         $myDB = oxDb::getDb(oxDB::FETCH_MODE_ASSOC);
-        $res = $myDB->Execute("select oxtitle from oxarticles where oxid='_test'");
+        $res = $myDB->select("select oxtitle from oxarticles where oxid='_test'");
         $this->assertEquals($res->fields['oxtitle'], "changed title");
     }
 
