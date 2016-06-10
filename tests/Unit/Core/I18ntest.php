@@ -910,7 +910,7 @@ class I18ntest extends \OxidTestCase
         // creating language set tables and inserting by one test record
         foreach ($this->_aLangTables as $iPos => $sTable) {
             $sQ = "show create table {$sTable}";
-            $rs = $oDb->execute($sQ);
+            $rs = $oDb->select($sQ);
 
             // creating table
             $sQ = end($rs->fields);
@@ -937,7 +937,7 @@ class I18ntest extends \OxidTestCase
 
             $sQVal = "";
             $sQ = "show columns from {$sTable}";
-            $rs = $oDb->execute($sQ);
+            $rs = $oDb->select($sQ);
             if ($rs != false && $rs->recordCount() > 0) {
                 while (!$rs->EOF) {
                     $sValue = $rs->fields["Default"];
