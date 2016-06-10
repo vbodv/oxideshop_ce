@@ -1425,8 +1425,6 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
     {
         $this->assertTrue($resultSet->EOF);
         $this->assertEmpty($resultSet->fields);
-
-        $this->assertSame($this->getEmptyResultSetClassName(), get_class($resultSet));
     }
 
     /**

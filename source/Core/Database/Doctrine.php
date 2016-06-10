@@ -28,7 +28,6 @@ use Doctrine\DBAL\Driver\PDOException;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;
 use OxidEsales\Eshop;
-use OxidEsales\Eshop\Core\Database\Adapter\DoctrineEmptyResultSet;
 use OxidEsales\Eshop\Core\Database\Adapter\DoctrineResultSet;
 use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\DatabaseException;
@@ -418,7 +417,7 @@ class Doctrine implements DatabaseInterface
      *
      * @throws \InvalidArgumentException|DatabaseException
      *
-     * @return bool|DoctrineEmptyResultSet|DoctrineResultSet
+     * @return bool
      */
     public function setTransactionIsolationLevel($level)
     {
@@ -435,7 +434,7 @@ class Doctrine implements DatabaseInterface
                 $result = $this->execute('SET SESSION TRANSACTION ISOLATION LEVEL ' . $level);
             }
 
-            return $result;
+            return (bool) $result;
         } catch (DBALException $exception) {
             $exception = $this->convertException($exception);
             $this->handleException($exception);
@@ -581,8 +580,8 @@ class Doctrine implements DatabaseInterface
     }
 
     /**
-     * Executes an SQL INSERT/UPDATE/DELETE query with the given parameters, sets the number of affected rows and returns
-     * an empty DoctrineResultSet.
+     * Executes an SQL INSERT/UPDATE/DELETE query with the given parameters, sets the number of affected rows and
+     * returns it.
      *
      * This method supports PDO binding types as well as DBAL mapping types.
      *
