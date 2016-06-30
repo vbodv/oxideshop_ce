@@ -11,9 +11,7 @@
     "require": {
         "phpmailer/phpmailer": "^5.2.14",
         "smarty/smarty": "^2.6.29",
-        "doctrine/dbal": "v2.5.4",
-        "oxid-esales/oxideshop-pe": "dev-master",
-        "oxid-esales/oxideshop-ee": "dev-master"
+        "doctrine/dbal": "v2.5.4"
     },
     "require-dev": {
         "oxid-esales/testing-library": "dev-integrate_doctrine-ESDEV-3462",
@@ -50,16 +48,6 @@
                 "shop_tests_path": "SHOP_TESTS_PATH",
                 "partial_module_paths": "PARTIAL_MODULE_PATHS"
             }
-        }
-    },
-    "repositories": {
-        "oxid-esales/oxideshop-ee": {
-            "type": "vcs",
-            "url": "https://github.com/OXID-eSales/oxideshop_ee"
-        },
-        "oxid-esales/oxideshop-pe": {
-            "type": "vcs",
-            "url": "https://github.com/OXID-eSales/oxideshop_pe"
         }
     }
 }
