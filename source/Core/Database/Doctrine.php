@@ -507,11 +507,7 @@ class Doctrine implements DatabaseInterface
             $statement = $this->getConnection()->executeQuery($sqlSelect, $parameters);
             $result = new DoctrineResultSet($statement);
 
-
-
-
-
-            $this->setAffectedRows($result->recordCount());
+            $this->setAffectedRows($result->count());
         } catch (DBALException $exception) {
             $exception = $this->convertException($exception);
             $this->handleException($exception);
