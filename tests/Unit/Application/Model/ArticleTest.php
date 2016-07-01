@@ -3520,6 +3520,8 @@ class ArticleTest extends \OxidTestCase
      */
     public function testDeleteWithId()
     {
+        $this->_createArticle('_testArt');
+
         $oArticle = oxNew('oxArticle');
         $this->assertTrue($oArticle->delete('_testArt'));
     }
@@ -3828,7 +3830,7 @@ class ArticleTest extends \OxidTestCase
 
         $rs = $oArticle->updateSoldAmount(1);
 
-        $this->assertTrue($rs->EOF);
+        $this->assertTrue($rs);
         $this->assertEquals(1, $oDb->getOne("select oxsoldamount from oxarticles where oxid = '_testArt'"));
         $this->assertNotEquals($sTimeStamp, $oDb->getOne("select oxtimestamp from oxarticles where oxid = '_testArt'"));
     }
@@ -3855,7 +3857,7 @@ class ArticleTest extends \OxidTestCase
     {
         $oArticle = $this->_createArticle('_testArt');
         $rs = $oArticle->disableReminder(1);
-        $this->assertTrue($rs->EOF);
+        $this->assertTrue($rs);
         $this->assertEquals(2, oxDb::getDB()->getOne("select oxremindactive from oxarticles where oxid = '_testArt'"));
     }
 
