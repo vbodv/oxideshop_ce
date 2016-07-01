@@ -272,7 +272,7 @@ class ArticleMain extends \oxAdminDetails
         if ($oRs !== false && $oRs->count() > 0) {
             while (!$oRs->EOF) {
                 $this->resetCounter("catArticle", $oRs->fields[0]);
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -391,7 +391,7 @@ class ArticleMain extends \oxAdminDetails
             if ($oRs !== false && $oRs->count() > 0) {
                 while (!$oRs->EOF) {
                     $this->copyArticle($oRs->fields[0], $myUtilsObject->generateUid(), $sNewId);
-                    $oRs->moveNext();
+                    $oRs->fetchRow();
                 }
             }
 
@@ -439,7 +439,7 @@ class ArticleMain extends \oxAdminDetails
                 $sTime = $oRs->fields[1];
                 $sSql = $this->formQueryForCopyingToCategory($newArticleId, $uniqueId, $sCatId, $sTime);
                 $oDb->execute($sSql);
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -466,7 +466,7 @@ class ArticleMain extends \oxAdminDetails
                 $oAttr->setId($myUtilsObject->generateUID());
                 $oAttr->oxobject2attribute__oxobjectid->setValue($sNewId);
                 $oAttr->save();
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -495,7 +495,7 @@ class ArticleMain extends \oxAdminDetails
                 $oFile->oxfiles__oxstorehash = new oxField($oRs->fields['OXSTOREHASH']);
                 $oFile->oxfiles__oxpurchasedonly = new oxField($oRs->fields['OXPURCHASEDONLY']);
                 $oFile->save();
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -520,7 +520,7 @@ class ArticleMain extends \oxAdminDetails
                 $sSql = "insert into oxobject2selectlist (oxid, oxobjectid, oxselnid) " .
                         "VALUES (" . $oDb->quote($sUid) . ", " . $oDb->quote($sNewId) . ", " . $oDb->quote($sId) . ") ";
                 $oDb->execute($sSql);
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -545,7 +545,7 @@ class ArticleMain extends \oxAdminDetails
                 $sSql = "insert into oxobject2article (oxid, oxobjectid, oxarticlenid) " .
                        "VALUES (" . $oDb->quote($sUid) . ", " . $oDb->quote($sId) . ", " . $oDb->quote($sNewId) . " ) ";
                 $oDb->execute($sSql);
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -570,7 +570,7 @@ class ArticleMain extends \oxAdminDetails
                 $sSql = "insert into oxaccessoire2article (oxid, oxobjectid, oxarticlenid) " .
                         "VALUES (" . $oDb->quote($sUId) . ", " . $oDb->quote($sId) . ", " . $oDb->quote($sNewId) . ") ";
                 $oDb->execute($sSql);
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }

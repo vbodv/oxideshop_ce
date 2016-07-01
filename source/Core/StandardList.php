@@ -408,7 +408,7 @@ class StandardList extends \oxSuperCfg implements \ArrayAccess, \Iterator, \Coun
 
                 $this->add($oListObject);
 
-                $rs->moveNext();
+                $rs->fetchRow();
             }
         }
     }

@@ -1177,7 +1177,7 @@ class SystemRequirements
                     );
                 }
 
-                $blockRecords->moveNext();
+                $blockRecords->fetchRow();
             }
         }
 

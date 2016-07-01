@@ -192,7 +192,7 @@ class ArticleSeo extends \Object_Seo
                     }
                     $aCatList[] = $oCat;
                 }
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
 

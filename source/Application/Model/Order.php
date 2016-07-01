@@ -1601,7 +1601,7 @@ class Order extends \oxBase
         if ($rs != false && $rs->count() > 0) {
             while (!$rs->EOF) {
                 $aVouchers[] = $rs->fields['oxvouchernr'];
-                $rs->moveNext();
+                $rs->fetchRow();
             }
         }
 
