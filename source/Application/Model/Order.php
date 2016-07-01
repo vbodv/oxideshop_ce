@@ -1598,7 +1598,7 @@ class Order extends \oxBase
         $aVouchers = array();
         $sSelect = "select oxvouchernr from oxvouchers where oxorderid = " . $oDb->quote($this->oxorder__oxid->value);
         $rs = $oDb->select($sSelect);
-        if ($rs != false && $rs->recordCount() > 0) {
+        if ($rs != false && $rs->count() > 0) {
             while (!$rs->EOF) {
                 $aVouchers[] = $rs->fields['oxvouchernr'];
                 $rs->moveNext();
