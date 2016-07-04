@@ -374,7 +374,7 @@ class DynamicExportBaseController extends \oxAdminDetails
         $sQ .= "where oxobject2category.oxobjectid=" . $oDB->quote($oArticle->getId()) . " and $sCatView.oxactive = 1 order by oxobject2category.oxtime ";
 
         $oRs = $oDB->select($sQ);
-        if ($oRs != false && $oRs->recordCount() > 0) {
+        if ($oRs != false && $oRs->count() > 0) {
             $sLeft = $oRs->fields[0];
             $sRight = $oRs->fields[1];
             $sRootId = $oRs->fields[2];
@@ -383,13 +383,13 @@ class DynamicExportBaseController extends \oxAdminDetails
             $sQ = "select oxtitle from $sCatView where oxright >= {$sRight} and oxleft <= {$sLeft} and oxrootid = '{$sRootId}' order by oxleft ";
 
             $oRs = $oDB->select($sQ);
-            if ($oRs != false && $oRs->recordCount() > 0) {
+            if ($oRs != false && $oRs->count() > 0) {
                 while (!$oRs->EOF) {
                     if ($sCatStr) {
                         $sCatStr .= $sSeparator;
                     }
                     $sCatStr .= $oRs->fields[0];
-                    $oRs->moveNext();
+                    $oRs->fetchRow();
                 }
             }
         }
@@ -721,14 +721,14 @@ class DynamicExportBaseController extends \oxAdminDetails
             $oRs = $oDB->select($sQ);
             $sDel = "delete from $sHeapTable where oxid in ( ";
             $blSep = false;
-            if ($oRs != false && $oRs->recordCount() > 0) {
+            if ($oRs != false && $oRs->count() > 0) {
                 while (!$oRs->EOF) {
                     if ($blSep) {
                         $sDel .= ",";
                     }
                     $sDel .= $oDB->quote($oRs->fields[0]);
                     $blSep = true;
-                    $oRs->moveNext();
+                    $oRs->fetchRow();
                 }
             }
             $sDel .= " )";
@@ -798,7 +798,7 @@ class DynamicExportBaseController extends \oxAdminDetails
             // Load all root cat's == all trees
             $sSQL = "select oxid from $sCatView where oxparentid = 'oxrootid'";
             $oRs = $oDb->select($sSQL);
-            if ($oRs != false && $oRs->recordCount() > 0) {
+            if ($oRs != false && $oRs->count() > 0) {
                 while (!$oRs->EOF) {
                     // now load each tree
                     $sSQL = "SELECT s.oxid, s.oxtitle,
@@ -808,7 +808,7 @@ class DynamicExportBaseController extends \oxAdminDetails
                              v.oxleft AND v.oxright AND s.oxhidden = '0' GROUP BY s.oxleft order by level";
 
                     $oRs2 = $oDb->select($sSQL);
-                    if ($oRs2 != false && $oRs2->recordCount() > 0) {
+                    if ($oRs2 != false && $oRs2->count() > 0) {
                         while (!$oRs2->EOF) {
                             // store it
                             $oCat = new stdClass();
@@ -818,10 +818,10 @@ class DynamicExportBaseController extends \oxAdminDetails
                             $oCat->ilevel = $oRs2->fields[3];
                             $this->_aCatLvlCache[$oCat->_sOXID] = $oCat;
 
-                            $oRs2->moveNext();
+                            $oRs2->fetchRow();
                         }
                     }
-                    $oRs->moveNext();
+                    $oRs->fetchRow();
                 }
             }
         }
@@ -880,7 +880,7 @@ class DynamicExportBaseController extends \oxAdminDetails
     protected function _initArticle($sHeapTable, $iCnt, & $blContinue)
     {
         $oRs = oxDb::getDb()->selectLimit("select oxid from $sHeapTable", 1, $iCnt);
-        if ($oRs != false && $oRs->recordCount() > 0) {
+        if ($oRs != false && $oRs->count() > 0) {
             $oArticle = oxNew('oxArticle');
             $oArticle->setLoadParentData(true);
 

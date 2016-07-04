@@ -67,14 +67,6 @@ class DoctrineEmptyResultSet implements \IteratorAggregate, ResultSetInterface
     /**
      * @inheritdoc
      */
-    function fields($field)
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getIterator(){
         throw new \LogicException('You cannot call this method on a empty result set');
     }
@@ -82,110 +74,7 @@ class DoctrineEmptyResultSet implements \IteratorAggregate, ResultSetInterface
     /**
      * @inheritdoc
      */
-    function RecordCount()
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-
-    /**
-     * @inheritdoc
-     */
     function FieldCount()
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    function MoveNext()
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    function MoveFirst()
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    function MoveLast()
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    function Move($rowNumber = 0)
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    function _seek($row)
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    function _fetch()
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    function EOF()
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    function GetArray($nRows = -1)
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    function GetRows($nRows = -1)
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    function GetAll($nRows = -1)
-    {
-        throw new \LogicException('You cannot call this method on a empty result set');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    function FetchField($fieldOffset = -1)
     {
         throw new \LogicException('You cannot call this method on a empty result set');
     }

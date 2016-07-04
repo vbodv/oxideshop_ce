@@ -269,10 +269,10 @@ class ArticleMain extends \oxAdminDetails
         $oDb = oxDb::getDb();
         $sQ = "select oxcatnid from oxobject2category where oxobjectid = " . $oDb->quote($sArticleId);
         $oRs = $oDb->select($sQ);
-        if ($oRs !== false && $oRs->recordCount() > 0) {
+        if ($oRs !== false && $oRs->count() > 0) {
             while (!$oRs->EOF) {
                 $this->resetCounter("catArticle", $oRs->fields[0]);
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -388,10 +388,10 @@ class ArticleMain extends \oxAdminDetails
             //copy variants
             $sQ = "select oxid from oxarticles where oxparentid = " . $oDb->quote($sOldId);
             $oRs = $oDb->select($sQ);
-            if ($oRs !== false && $oRs->recordCount() > 0) {
+            if ($oRs !== false && $oRs->count() > 0) {
                 while (!$oRs->EOF) {
                     $this->copyArticle($oRs->fields[0], $myUtilsObject->generateUid(), $sNewId);
-                    $oRs->moveNext();
+                    $oRs->fetchRow();
                 }
             }
 
@@ -432,14 +432,14 @@ class ArticleMain extends \oxAdminDetails
         $sO2CView = getViewName('oxobject2category');
         $sQ = "select oxcatnid, oxtime from {$sO2CView} where oxobjectid = " . $oDb->quote($sOldId);
         $oRs = $oDb->select($sQ);
-        if ($oRs !== false && $oRs->recordCount() > 0) {
+        if ($oRs !== false && $oRs->count() > 0) {
             while (!$oRs->EOF) {
                 $uniqueId = $myUtilsObject->generateUid();
                 $sCatId = $oRs->fields[0];
                 $sTime = $oRs->fields[1];
                 $sSql = $this->formQueryForCopyingToCategory($newArticleId, $uniqueId, $sCatId, $sTime);
                 $oDb->execute($sSql);
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -457,7 +457,7 @@ class ArticleMain extends \oxAdminDetails
 
         $sQ = "select oxid from oxobject2attribute where oxobjectid = " . $oDb->quote($sOldId);
         $oRs = $oDb->select($sQ);
-        if ($oRs !== false && $oRs->recordCount() > 0) {
+        if ($oRs !== false && $oRs->count() > 0) {
             while (!$oRs->EOF) {
                 // #1055A
                 $oAttr = oxNew("oxBase");
@@ -466,7 +466,7 @@ class ArticleMain extends \oxAdminDetails
                 $oAttr->setId($myUtilsObject->generateUID());
                 $oAttr->oxobject2attribute__oxobjectid->setValue($sNewId);
                 $oAttr->save();
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -484,7 +484,7 @@ class ArticleMain extends \oxAdminDetails
 
         $sQ = "SELECT * FROM `oxfiles` WHERE `oxartid` = " . $oDb->quote($sOldId);
         $oRs = $oDb->select($sQ);
-        if ($oRs !== false && $oRs->recordCount() > 0) {
+        if ($oRs !== false && $oRs->count() > 0) {
             while (!$oRs->EOF) {
 
                 $oFile = oxNew("oxfile");
@@ -495,7 +495,7 @@ class ArticleMain extends \oxAdminDetails
                 $oFile->oxfiles__oxstorehash = new oxField($oRs->fields['OXSTOREHASH']);
                 $oFile->oxfiles__oxpurchasedonly = new oxField($oRs->fields['OXPURCHASEDONLY']);
                 $oFile->save();
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -513,14 +513,14 @@ class ArticleMain extends \oxAdminDetails
 
         $sQ = "select oxselnid from oxobject2selectlist where oxobjectid = " . $oDb->quote($sOldId);
         $oRs = $oDb->select($sQ);
-        if ($oRs !== false && $oRs->recordCount() > 0) {
+        if ($oRs !== false && $oRs->count() > 0) {
             while (!$oRs->EOF) {
                 $sUid = $myUtilsObject->generateUID();
                 $sId = $oRs->fields[0];
                 $sSql = "insert into oxobject2selectlist (oxid, oxobjectid, oxselnid) " .
                         "VALUES (" . $oDb->quote($sUid) . ", " . $oDb->quote($sNewId) . ", " . $oDb->quote($sId) . ") ";
                 $oDb->execute($sSql);
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -538,14 +538,14 @@ class ArticleMain extends \oxAdminDetails
 
         $sQ = "select oxobjectid from oxobject2article where oxarticlenid = " . $oDb->quote($sOldId);
         $oRs = $oDb->select($sQ);
-        if ($oRs !== false && $oRs->recordCount() > 0) {
+        if ($oRs !== false && $oRs->count() > 0) {
             while (!$oRs->EOF) {
                 $sUid = $myUtilsObject->generateUID();
                 $sId = $oRs->fields[0];
                 $sSql = "insert into oxobject2article (oxid, oxobjectid, oxarticlenid) " .
                        "VALUES (" . $oDb->quote($sUid) . ", " . $oDb->quote($sId) . ", " . $oDb->quote($sNewId) . " ) ";
                 $oDb->execute($sSql);
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }
@@ -563,14 +563,14 @@ class ArticleMain extends \oxAdminDetails
 
         $sQ = "select oxobjectid from oxaccessoire2article where oxarticlenid= " . $oDb->quote($sOldId);
         $oRs = $oDb->select($sQ);
-        if ($oRs !== false && $oRs->recordCount() > 0) {
+        if ($oRs !== false && $oRs->count() > 0) {
             while (!$oRs->EOF) {
                 $sUId = $myUtilsObject->generateUid();
                 $sId = $oRs->fields[0];
                 $sSql = "insert into oxaccessoire2article (oxid, oxobjectid, oxarticlenid) " .
                         "VALUES (" . $oDb->quote($sUId) . ", " . $oDb->quote($sId) . ", " . $oDb->quote($sNewId) . ") ";
                 $oDb->execute($sSql);
-                $oRs->moveNext();
+                $oRs->fetchRow();
             }
         }
     }

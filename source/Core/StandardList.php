@@ -396,7 +396,7 @@ class StandardList extends \oxSuperCfg implements \ArrayAccess, \Iterator, \Coun
             $rs = $oDb->select($sql, $parameters);
         }
 
-        if ($rs != false && $rs->recordCount() > 0) {
+        if ($rs != false && $rs->count() > 0) {
 
             $oSaved = clone $this->getBaseObject();
 
@@ -408,7 +408,7 @@ class StandardList extends \oxSuperCfg implements \ArrayAccess, \Iterator, \Coun
 
                 $this->add($oListObject);
 
-                $rs->moveNext();
+                $rs->fetchRow();
             }
         }
     }

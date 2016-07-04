@@ -79,7 +79,7 @@ class DbTest extends UnitTestCase
 
         $rs = Database::getDb()->select("show tables");
         $icount = 3;
-        if ($rs != false && $rs->recordCount() > 0) {
+        if ($rs != false && $rs->count() > 0) {
             while (!$rs->EOF && $icount--) {
                 $sTable = $rs->fields[0];
 
@@ -90,7 +90,7 @@ class DbTest extends UnitTestCase
                 $this->assertEquals($amc, $rmc1, "not cached return is bad [shouldn't be] of $sTable.");
                 $this->assertEquals($amc, $rmc2, "cached [simple] return is bad of $sTable.");
 
-                $rs->MoveNext();
+                $rs->fetchRow();
             }
         } else {
             $this->fail("no tables???");

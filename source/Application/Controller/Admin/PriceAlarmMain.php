@@ -152,14 +152,14 @@ class PriceAlarmMain extends \oxAdminDetails
         $result = oxDb::getDb()->select($query);
         $count = 0;
 
-        if ($result != false && $result->recordCount() > 0) {
+        if ($result != false && $result->count() > 0) {
             while (!$result->EOF) {
                 $article = oxNew("oxArticle");
                 $article->load($result->fields[0]);
                 if ($article->getPrice()->getBruttoPrice() <= $result->fields[1]) {
                     $count++;
                 }
-                $result->moveNext();
+                $result->fetchRow();
             }
         }
 

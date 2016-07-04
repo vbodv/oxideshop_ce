@@ -1872,7 +1872,7 @@ class Config extends SuperConfig
         $rs = $db->select($query);
 
         $value = null;
-        if ($rs != false && $rs->recordCount() > 0) {
+        if ($rs != false && $rs->count() > 0) {
             $value = $this->decodeValue($rs->fields['oxvartype'], $rs->fields['oxvarvalue']);
         }
 

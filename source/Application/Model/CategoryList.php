@@ -581,7 +581,7 @@ class CategoryList extends \oxList
 
         // Get all root categories
         $rs = $oDb->select("select oxid, oxtitle from oxcategories where oxparentid = 'oxrootid' and $sWhere order by oxsort", false, false);
-        if ($rs != false && $rs->recordCount() > 0) {
+        if ($rs != false && $rs->count() > 0) {
             while (!$rs->EOF) {
                 $this->_aUpdateInfo[] = "<b>Processing : " . $rs->fields[1] . "</b>(" . $rs->fields[0] . ")<br>";
                 if ($blVerbose) {
@@ -590,7 +590,7 @@ class CategoryList extends \oxList
                 $oxRootId = $rs->fields[0];
 
                 $this->_updateNodes($oxRootId, true, $oxRootId);
-                $rs->moveNext();
+                $rs->fetchRow();
             }
         }
 
@@ -641,7 +641,7 @@ class CategoryList extends \oxList
         $rs = $oDb->execute("update oxcategories set oxrootid = " . $oDb->quote($thisRoot) . " where oxparentid = " . $oDb->quote($oxRootId));
         $rs = $oDb->select("select oxid, oxparentid from oxcategories where oxparentid = " . $oDb->quote($oxRootId) . " order by oxsort", false, false);
         // If there are sub categories
-        if ($rs != false && $rs->recordCount() > 0) {
+        if ($rs != false && $rs->count() > 0) {
             while (!$rs->EOF) {
                 $parentId = $rs->fields[1];
                 $actOxid = $rs->fields[0];
@@ -652,14 +652,14 @@ class CategoryList extends \oxList
                 while (!$rs3->EOF) {
                     $parentOxRootId = $rs3->fields[0];
                     $parentRight = (int) $rs3->fields[1];
-                    $rs3->moveNext();
+                    $rs3->fetchRow();
                 }
                 $sParentOxRootIdQuoted = $oDb->quote($parentOxRootId);
                 $oDb->execute("update oxcategories set oxleft = oxleft + 2 where oxrootid = $sParentOxRootIdQuoted and oxleft > '$parentRight' and oxright >= '$parentRight' and oxid != $sActOxidQuoted");
                 $oDb->execute("update oxcategories set oxright = oxright + 2 where oxrootid = $sParentOxRootIdQuoted and oxright >= '$parentRight' and oxid != $sActOxidQuoted");
                 $oDb->execute("update oxcategories set oxleft = $parentRight, oxright = ($parentRight + 1) where oxid = $sActOxidQuoted");
                 $this->_updateNodes($actOxid, false, $thisRoot);
-                $rs->moveNext();
+                $rs->fetchRow();
             }
         }
     }

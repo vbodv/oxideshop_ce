@@ -199,10 +199,10 @@ class Attribute extends \oxI18n
 
             $aIds = array();
             $rs = $oDb->select($sSelect);
-            if ($rs != false && $rs->recordCount() > 0) {
+            if ($rs != false && $rs->count() > 0) {
                 while (!$rs->EOF) {
                     $aIds[] = $rs->fields[0];
-                    $rs->moveNext();
+                    $rs->fetchRow();
                 }
             }
 

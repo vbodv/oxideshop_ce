@@ -243,7 +243,7 @@ class UtilsCount extends \oxSuperCfg
 
         $resultSet = $database->select($query, $parameters, $executeOnSlave);
 
-        $rows = $resultSet->getAll();
+        $rows = $resultSet->fetchAll();
 
         if (!$rows) {
             return array();
@@ -332,12 +332,12 @@ class UtilsCount extends \oxSuperCfg
             $sSelect = "select $sTable.oxid from $sTable where " . (double) $iPrice . " >= $sTable.oxpricefrom and " . (double) $iPrice . " <= $sTable.oxpriceto ";
 
             $rs = oxDb::getDb()->select($sSelect, false, false);
-            if ($rs != false && $rs->recordCount() > 0) {
+            if ($rs != false && $rs->count() > 0) {
                 while (!$rs->EOF) {
                     if (isset($aCatData[$rs->fields[0]])) {
                         unset($aCatData[$rs->fields[0]]);
                     }
-                    $rs->moveNext();
+                    $rs->fetchRow();
                 }
 
                 // writing back to cache

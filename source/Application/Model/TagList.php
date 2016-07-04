@@ -102,9 +102,9 @@ class TagList extends \oxI18n implements \oxITagList
         $oRs = $oDb->select($sQ);
 
         $this->get()->clear();
-        while ($oRs && $oRs->recordCount() && !$oRs->EOF) {
+        while ($oRs && $oRs->count() && !$oRs->EOF) {
             $this->_addTagsFromDb($oRs->fields['oxtags']);
-            $oRs->moveNext();
+            $oRs->fetchRow();
         }
 
         return $this->_isLoaded = true;

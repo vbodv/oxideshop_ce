@@ -28,7 +28,7 @@ use Doctrine\DBAL\Driver\Statement;
  *
  * @package OxidEsales\Eshop\Core\Database\Adapter
  */
-class DoctrineResultSet implements \IteratorAggregate,  ResultSetInterface
+class DoctrineResultSet implements \IteratorAggregate, ResultSetInterface
 {
 
     /**
@@ -63,7 +63,7 @@ class DoctrineResultSet implements \IteratorAggregate,  ResultSetInterface
         $this->EOF = false;
         $this->currentRow = 0;
 
-        if ($this->recordCount() == 0) {
+        if ($this->count() == 0) {
             $this->setToEmptyState();
         }
 
@@ -89,6 +89,11 @@ class DoctrineResultSet implements \IteratorAggregate,  ResultSetInterface
     public function fetchRow()
     {
         $this->fields = $this->getStatement()->fetch();
+        
+        // @todo: test the following functionality
+        if (false === $this->fields) {
+            $this->EOF = true;
+        }
 
         return $this->fields;
     }
@@ -100,17 +105,10 @@ class DoctrineResultSet implements \IteratorAggregate,  ResultSetInterface
      */
     public function fetchAll()
     {
-        return $this->getStatement()->fetchAll();
-    }
+        $this->close();
+        $this->getStatement()->execute();
 
-    /**
-     * Returns the number of rows affected by the last execution of this statement.
-     *
-     * @return int The number of affected rows
-     */
-    public function recordCount()
-    {
-        return $this->getStatement()->rowCount();
+        return $this->getStatement()->fetchAll();
     }
 
     /**
@@ -124,14 +122,17 @@ class DoctrineResultSet implements \IteratorAggregate,  ResultSetInterface
     }
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     *
+     * @todo write test for this
+     */
     public function getIterator()
-     {
-         $data = $this->fetchAll();
+    {
+        $this->close();
+        $this->getStatement()->execute();
 
-         return new \ArrayIterator($data);
-     }
+        return $this->getStatement();
+    }
 
     /**
      * Returns fields array
@@ -139,86 +140,6 @@ class DoctrineResultSet implements \IteratorAggregate,  ResultSetInterface
     public function getFields()
     {
         return $this->fields;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function fields($columnKey)
-    {
-        if (empty($columnKey)) {
-            return $this->getFields();
-        } else {
-            return $this->fields[$columnKey];
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function moveNext()
-    {
-        if ($this->fetchRow()) {
-            $this->currentRow += 1;
-
-            return true;
-        }
-        if (!$this->EOF) {
-            $this->currentRow += 1;
-            $this->EOF = true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function EOF()
-    {
-        if ($this->currentRow < $this->recordCount()) {
-            return false;
-        } else {
-            $this->EOF = true;
-
-            return true;
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getArray($numberOfRows = -1)
-    {
-        $results = array();
-        $cnt = 0;
-        while (!$this->EOF && $numberOfRows != $cnt) {
-            $results[] = $this->fields;
-            $this->moveNext();
-            $cnt++;
-        }
-
-        return $results;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getRows($numberOfRows = -1)
-    {
-        $arr = $this->getArray($numberOfRows);
-
-        return $arr;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAll($numberOfRows = -1)
-    {
-        $arr = $this->getArray($numberOfRows);
-
-        return $arr;
     }
 
     /**
@@ -253,67 +174,9 @@ class DoctrineResultSet implements \IteratorAggregate,  ResultSetInterface
     /**
      * @inheritdoc
      */
-    public function fetchField($columnIndex = -1)
-    {
-        /** @todo The method getColumnMeta is specific of the PDO driver. Change to unspecific version, if not exits be creative ;-) */
-        $metaInformation = $this->getStatement()->getColumnMeta($columnIndex);
-
-        $result = new \stdClass();
-        $result->name = $metaInformation['name'];
-        $result->table = $metaInformation['table'];
-        $result->max_length = $metaInformation['len'];
-        $result->not_null = (int) in_array('not_null', $metaInformation['flags']);
-        $result->primary_key = (int) in_array('primary_key', $metaInformation['flags']);
-        $result->type = strtolower($metaInformation['native_type']);
-
-        return $result;
-    }
-
-    /**
-     * @inheritdoc 
-     */
     public function count()
     {
-        // TODO: Implement count() method.
+        return $this->getStatement()->rowCount();
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function Move($rowNumber = 0)
-    {
-        // This method is deprecated and will not be implemented.
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function MoveFirst()
-    {
-        // This method is deprecated and will not be implemented.
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function MoveLast()
-    {
-        // This method is deprecated and will not be implemented.
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function _fetch()
-    {
-        // This method is deprecated and will not be implemented.
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function _seek($row)
-    {
-        // This method is deprecated and will not be implemented.
-    }
+    
 }
