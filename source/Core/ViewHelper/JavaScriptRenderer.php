@@ -45,6 +45,7 @@ class JavaScriptRenderer
         $suffix = $isDynamic ? '_dynamic' : '';
         $filesParameterName = \OxidEsales\Eshop\Core\ViewHelper\JavaScriptRegistrator::FILES_PARAMETER_NAME . $suffix;
         $scriptsParameterName = \OxidEsales\Eshop\Core\ViewHelper\JavaScriptRegistrator::SNIPPETS_PARAMETER_NAME . $suffix;
+        $eventsParameterName = \OxidEsales\Eshop\Core\ViewHelper\JavaScriptRegistrator::SNIPPETS_PARAMETER_NAME . '_events';
 
         $isAjaxRequest = $this->isAjaxRequest();
         $forceRender = $this->shouldForceRender($forceRender, $isAjaxRequest);
@@ -69,6 +70,16 @@ class JavaScriptRenderer
                 $dynamicScripts = (array) $config->getGlobalParameter(\OxidEsales\Eshop\Core\ViewHelper\JavaScriptRegistrator::SNIPPETS_PARAMETER_NAME . '_dynamic');
                 $scriptOutput .= $this->formSnippetsOutput($dynamicScripts, $widget, $isAjaxRequest);
                 $config->setGlobalParameter(\OxidEsales\Eshop\Core\ViewHelper\JavaScriptRegistrator::SNIPPETS_PARAMETER_NAME . '_dynamic', null);
+            }
+
+            $events = (array) $config->getGlobalParameter($eventsParameterName);
+            foreach($events as $event) {
+                $eventScriptsParameterName = JavaScriptRegistrator::SNIPPETS_PARAMETER_NAME . $suffix. '_'.$event;
+                // Form onload output for adds.
+                $eventScripts = (array)$config->getGlobalParameter($eventScriptsParameterName);
+                $eventScriptOutput = $this->formSnippetsOutput($eventScripts, $widget, $isAjaxRequest);
+                $eventScriptOutput = $this->bindEvent($eventScriptOutput, $event);
+                $scriptOutput .= $eventScriptOutput;
             }
             $output .= $this->enclose($scriptOutput, $widget, $isAjaxRequest);
         }
@@ -206,6 +217,21 @@ JS;
             }
 
             return "<script type='text/javascript'>$scriptsOutput</script>";
+        }
+    }
+
+    /**
+     * Bind js code to a event.
+     *
+     * @param string $scriptsOutput
+     * @param string $event
+     *
+     * @return null | string
+     */
+    protected function bindEvent($scriptsOutput, $event) {
+        if(!empty($scriptsOutput) && !empty($event)) {
+            $output = "window.addEventListener('$event', function() { $scriptsOutput }, false );";
+            return $output;
         }
     }
 }
