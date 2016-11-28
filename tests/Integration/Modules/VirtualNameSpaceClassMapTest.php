@@ -19,24 +19,21 @@
  * @copyright (C) OXID eSales AG 2003-2016
  * @version   OXID eShop CE
  */
-namespace Integration\Modules;
 
+namespace OxidEsales\EshopCommunity\Tests\Integration\Modules;
+
+use OxidEsales\Eshop\Core\Edition\EditionSelector;
 use OxidEsales\EshopCommunity\Core\Registry;
 
-require_once __DIR__ . '/BaseModuleTestCase.php';
-
 /**
- * Class VirtualNameSpaceClassMapTest
- *
- * @package Integration\Modules
+ * Class tests inheritance chains.
  */
 class VirtualNameSpaceClassMapTest extends BaseModuleTestCase
 {
-
     /**
      * @var Environment The helper object for the environment.
      */
-    protected $environment = null;
+    private $environment = null;
 
     /**
      * Standard set up method. Calls parent first.
@@ -45,10 +42,10 @@ class VirtualNameSpaceClassMapTest extends BaseModuleTestCase
     {
         parent::setUp();
 
-        $configFile = Registry::get("oxConfigFile");
+        $configFile = Registry::get(\OxConfigFile::class);
         $configFile->setVar('sShopDir', realpath(__DIR__ . '/TestData'));
 
-        Registry::set('oxConfigFile', $configFile);
+        Registry::set(\OxConfigFile::class, $configFile);
 
         $this->environment = new Environment();
     }
@@ -213,23 +210,30 @@ class VirtualNameSpaceClassMapTest extends BaseModuleTestCase
      * Test, that the overwriting for the modules and their chain works.
      *
      * @dataProvider dataProviderForTestVirtualNamespaceModules
+     * @param array $modulesToActivate
+     * @param array $expectedInheritanceChainCE
+     * @param array $expectedInheritanceChainPE
+     * @param array $expectedInheritanceChainEE
+     * @param array $expectedTitle
      */
-    public function testVirtualNamespaceModules($modulesToActivate, $expectedInheritanceChain, $expectedInheritanceChainPE, $expectedInheritanceChainEE, $expectedTitle)
-    {
+    public function testVirtualNamespaceModules(
+        $modulesToActivate,
+        $expectedInheritanceChainCE,
+        $expectedInheritanceChainPE,
+        $expectedInheritanceChainEE,
+        $expectedTitle
+    ){
         $this->environment->prepare($modulesToActivate);
 
-        $createdContentController = oxNew('Content');
+        $createdContentController = oxNew(\Content::class);
 
-        $expectedInheritanceChainEdition = $expectedInheritanceChain;
+        $expectedInheritanceChain = $this->selectInheritanceChainAccordingEdition(
+            $expectedInheritanceChainCE,
+            $expectedInheritanceChainPE,
+            $expectedInheritanceChainEE
+        );
 
-        if ($this->getTestConfig()->getShopEdition() == 'PE') {
-            $expectedInheritanceChainEdition = $expectedInheritanceChainPE;
-        }
-        if ($this->getTestConfig()->getShopEdition() == 'EE') {
-            $expectedInheritanceChainEdition = $expectedInheritanceChainEE;
-        }
-
-        $this->assertObjectHasInheritances($createdContentController, $expectedInheritanceChainEdition);
+        $this->assertObjectHasInheritances($createdContentController, $expectedInheritanceChain);
 
         $resultTitle = $createdContentController->getTitle();
         $this->assertSame($expectedTitle,$resultTitle);
@@ -247,5 +251,23 @@ class VirtualNameSpaceClassMapTest extends BaseModuleTestCase
         $resultInheritanceChain = array_merge(array(get_class($objectUnderTest)), $classParents);
 
         $this->assertSame($expectedInheritanceChain, $resultInheritanceChain, 'The given object does not have the expected inheritance chain!');
+    }
+
+    /**
+     * @param array $expectedInheritanceChainCE
+     * @param array $expectedInheritanceChainPE
+     * @param array $expectedInheritanceChainEE
+     * @return mixed
+     */
+    protected function selectInheritanceChainAccordingEdition($expectedInheritanceChainCE, $expectedInheritanceChainPE, $expectedInheritanceChainEE)
+    {
+        $expectedInheritanceChainEdition = $expectedInheritanceChainCE;
+        if ($this->getTestConfig()->getShopEdition() === EditionSelector::PROFESSIONAL) {
+            $expectedInheritanceChainEdition = $expectedInheritanceChainPE;
+        }
+        if ($this->getTestConfig()->getShopEdition() === EditionSelector::ENTERPRISE) {
+            $expectedInheritanceChainEdition = $expectedInheritanceChainEE;
+        }
+        return $expectedInheritanceChainEdition;
     }
 }
