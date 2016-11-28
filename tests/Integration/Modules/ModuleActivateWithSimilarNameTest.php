@@ -22,6 +22,8 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Integration\Modules;
 
+use OxidEsales\EshopCommunity\Tests\Integration\Modules\DataSets\ModuleActivateWithSimilarNameDataSet;
+
 class ModuleActivateWithSimilarNameTest extends BaseModuleTestCase
 {
     /**
@@ -32,6 +34,8 @@ class ModuleActivateWithSimilarNameTest extends BaseModuleTestCase
         return array(
             $this->caseActivateModuleFirstTimeOtherModuleWithSimilarNameIsDisabledExtensionsDoNotChange(),
             $this->caseReactivateModuleOtherModuleWithSimilarNameIsDisabledExtensionsDoNotChange(),
+            ModuleActivateWithSimilarNameDataSet::caseActivateModuleFirstTimeOtherModuleWithSimilarNameIsDisabledExtensionsDoNotChange(),
+            ModuleActivateWithSimilarNameDataSet::caseReactivateModuleOtherModuleWithSimilarNameIsDisabledExtensionsDoNotChange(),
         );
     }
 

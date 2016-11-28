@@ -90,7 +90,8 @@ abstract class BaseModuleTestCase extends \OxidTestCase
         }
 
         if (isset($aExpectedResult['extend'])) {
-            $this->assertTrue($oValidator->checkExtensions($aExpectedResult['extend']), 'Extensions do not match expectations');
+//            $this->assertTrue($oValidator->checkExtensions($aExpectedResult['extend']), 'Extensions do not match expectations');
+            $this->assertEquals($aExpectedResult['extend'], $this->getConfig()->getConfigParam('aModules'), 'Extensions do not match expectations');
         }
 
         if (isset($aExpectedResult['files'])) {
