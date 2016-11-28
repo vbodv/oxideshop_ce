@@ -19,7 +19,8 @@
  * @copyright (C) OXID eSales AG 2003-2016
  * @version   OXID eShop CE
  */
-namespace Integration\Modules;
+
+namespace OxidEsales\EshopCommunity\Tests\Integration\Modules;
 
 use oxOnlineModulesNotifierRequest;
 use oxOnlineModuleVersionNotifier;
