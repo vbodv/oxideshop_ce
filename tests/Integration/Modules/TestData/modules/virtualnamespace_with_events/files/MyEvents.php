@@ -20,7 +20,7 @@
  * @version   OXID eShop CE
  */
 
-namespace virtualnamespace_with_events\files;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Modules\TestData\modules\virtualnamespace_with_events\files;
 
 use oxRegistry;
 

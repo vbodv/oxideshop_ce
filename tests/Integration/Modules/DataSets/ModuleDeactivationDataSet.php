@@ -16,30 +16,13 @@
  * along with OXID eShop Community Edition.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2015
+ * @copyright (C) OXID eSales AG 2003-2016
  * @version   OXID eShop CE
  */
 
-/**
- * Metadata version
- */
-$sMetadataVersion = '1.0';
+namespace OxidEsales\EshopCommunity\Tests\Integration\Modules\DataSets;
 
-/**
- * Module information
- */
-$aModule = array(
-    'id'           => 'virtualnamespace_extending_1_class_3_extensions',
-    'title'        => 'Test extending 1 shop class with 3 extensions',
-    'description'  => 'Module testing extending 1 shop class with 3 extensions',
-    'thumbnail'    => 'picture.png',
-    'version'      => '1.0',
-    'author'       => 'OXID eSales AG',
-    'extend'       => array(
-        \OxidEsales\Eshop\Application\Model\Order::class => array(
-            \virtualnamespace_extending_1_class_3_extensions\MyOrder1::class,
-            \virtualnamespace_extending_1_class_3_extensions\MyOrder2::class,
-            \virtualnamespace_extending_1_class_3_extensions\MyOrder3::class,
-        )
-    )
-);
+class ModuleDeactivationDataSet
+{
+
+}

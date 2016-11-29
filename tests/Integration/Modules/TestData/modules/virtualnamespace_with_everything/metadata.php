@@ -49,8 +49,8 @@ $aModule = array(
         array('template' => 'page/checkout/payment.tpl', 'block'=>'select_payment',         'file'=>'/views/blocks/page/checkout/mypaymentselector.tpl'),
     ),
     'events'       => array(
-        'onActivate'   => \virtualnamespace_with_everything\MyEvents::onActivate(),
-        'onDeactivate' => \virtualnamespace_with_everything\MyEvents::onDeactivate()
+        'onActivate'   => 'MyEvents::onActivate',
+        'onDeactivate' => 'MyEvents::onDeactivate'
     ),
     'templates' => array(
         'order_special.tpl'      => 'virtualnamespace_with_everything/views/admin/tpl/order_special.tpl',

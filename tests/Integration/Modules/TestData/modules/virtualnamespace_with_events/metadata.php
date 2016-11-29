@@ -36,7 +36,8 @@ $aModule = array(
     'version'      => '1.0',
     'author'       => 'OXID eSales AG',
     'events'       => array(
-        'onActivate'   => \virtualnamespace_with_events\files\MyEvents::onActivate(),
-        'onDeactivate' => \virtualnamespace_with_events\files\MyEvents::onDeactivate()
+        // Just a string with namespace, because we can't test if method is called with these integration tests.
+        'onActivate'   => '\OxidEsales\EshopCommunity\Tests\Integration\Modules\TestData\modules\virtualnamespace_with_events\files\MyEvents::onActivate()',
+        'onDeactivate' => '\OxidEsales\EshopCommunity\Tests\Integration\Modules\TestData\modules\virtualnamespace_with_events\files\MyEvents::onDeactivate()'
     ),
 );

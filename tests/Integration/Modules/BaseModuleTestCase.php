@@ -95,11 +95,13 @@ abstract class BaseModuleTestCase extends \OxidTestCase
         }
 
         if (isset($aExpectedResult['files'])) {
-            $this->assertTrue($oValidator->checkFiles($aExpectedResult['files']), 'Files do not match expectations');
+//            $this->assertTrue($oValidator->checkFiles($aExpectedResult['files']), 'Files do not match expectations');
+            $this->assertEquals($aExpectedResult['files'], $this->getConfig()->getConfigParam('aModuleFiles'), 'Files do not match expectations');
         }
 
         if (isset($aExpectedResult['events'])) {
-            $this->assertTrue($oValidator->checkEvents($aExpectedResult['events']), 'Events do not match expectations');
+//            $this->assertTrue($oValidator->checkEvents($aExpectedResult['events']), 'Events do not match expectations');
+            $this->assertEquals($aExpectedResult['events'], $this->getConfig()->getConfigParam('aModuleEvents'), 'Events do not match expectations');
         }
 
         if (isset($aExpectedResult['settings'])) {

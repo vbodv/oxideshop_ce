@@ -22,6 +22,8 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Integration\Modules;
 
+use OxidEsales\EshopCommunity\Tests\Integration\Modules\DataSets\ModuleActivationFirstDataSet;
+
 class ModuleActivationFirstTest extends BaseModuleTestCase
 {
     /**
@@ -37,6 +39,13 @@ class ModuleActivationFirstTest extends BaseModuleTestCase
             $this->caseOneModulePreparedActivatedWithTwoFiles(),
             $this->caseOneModulePreparedActivatedWithTwoSettings(),
             $this->caseOneModulePreparedActivatedWithTwoTemplates(),
+            ModuleActivationFirstDataSet::caseFiveModulesPreparedActivatedWithEverything(),
+            ModuleActivationFirstDataSet::caseOneModulePreparedActivatedWithEverything(),
+            ModuleActivationFirstDataSet::caseThreeModulesPreparedActivatedExtendingThreeClassesWithOneExtension(),
+            ModuleActivationFirstDataSet::caseSevenModulesPreparedActivatedNoExtending(),
+            ModuleActivationFirstDataSet::caseOneModulePreparedActivatedWithTwoFiles(),
+            ModuleActivationFirstDataSet::caseOneModulePreparedActivatedWithTwoSettings(),
+            ModuleActivationFirstDataSet::caseOneModulePreparedActivatedWithTwoTemplates(),
         );
     }
 

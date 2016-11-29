@@ -35,7 +35,7 @@ class ModuleActivationFirstDataSet
 
             // modules to be activated during test preparation
             array(
-                'virtualnamespace_virtualnamespace_extending_1_class', 'with_2_templates', 'with_2_files',
+                'virtualnamespace_extending_1_class', 'with_2_templates', 'with_2_files',
                 'extending_3_blocks', 'virtualnamespace_with_events',
             ),
 
@@ -52,9 +52,9 @@ class ModuleActivationFirstDataSet
                     array('template' => 'page/checkout/payment.tpl', 'block' => 'select_payment', 'file' => '/views/blocks/page/checkout/mypaymentselector.tpl'),
                 ),
                 'extend'          => array(
-                    'oxorder'   => 'virtualnamespace_extending_1_class/myorder&virtualnamespace_with_everything/myorder1&virtualnamespace_with_everything/myorder2&virtualnamespace_with_everything/myorder3',
-                    'oxarticle' => 'virtualnamespace_with_everything/myarticle',
-                    'oxuser'    => 'virtualnamespace_with_everything/myuser',
+                    \OxidEsales\Eshop\Application\Model\Order::class   => \virtualnamespace_extending_1_class\MyOrder::class.'&'.\virtualnamespace_with_everything\MyOrder1::class.'&'.\virtualnamespace_with_everything\MyOrder2::class.'&'.\virtualnamespace_with_everything\MyOrder3::class,
+                    \OxidEsales\Eshop\Application\Model\Article::class => \virtualnamespace_with_everything\MyArticle::class,
+                    \OxidEsales\Eshop\Application\Model\User::class    => \virtualnamespace_with_everything\MyUser::class,
                 ),
                 'files'           => array(
                     'with_2_files'    => array(
@@ -64,9 +64,6 @@ class ModuleActivationFirstDataSet
                     'virtualnamespace_with_everything' => array(
                         'myexception'  => 'virtualnamespace_with_everything/core/exception/myexception.php',
                         'myconnection' => 'virtualnamespace_with_everything/core/exception/myconnection.php',
-                    ),
-                    'virtualnamespace_with_events'     => array(
-                        'myevents' => 'virtualnamespace_with_events/files/myevents.php',
                     ),
                 ),
                 'settings'        => array(
@@ -98,8 +95,8 @@ class ModuleActivationFirstDataSet
                     'with_2_files'       => null,
                     'extending_3_blocks' => null,
                     'virtualnamespace_with_events'        => array(
-                        'onActivate'   => 'MyEvents::onActivate',
-                        'onDeactivate' => 'MyEvents::onDeactivate'
+                        'onActivate'   => '\OxidEsales\EshopCommunity\Tests\Integration\Modules\TestData\modules\virtualnamespace_with_events\files\MyEvents::onActivate()',
+                        'onDeactivate' => '\OxidEsales\EshopCommunity\Tests\Integration\Modules\TestData\modules\virtualnamespace_with_events\files\MyEvents::onDeactivate()'
                     ),
                     'virtualnamespace_with_everything'    => array(
                         'onActivate'   => 'MyEvents::onActivate',
@@ -134,9 +131,9 @@ class ModuleActivationFirstDataSet
                     array('template' => 'page/checkout/payment.tpl', 'block' => 'select_payment', 'file' => '/views/blocks/page/checkout/mypaymentselector.tpl'),
                 ),
                 'extend'          => array(
-                    'oxarticle' => 'virtualnamespace_with_everything/myarticle',
-                    'oxorder'   => 'virtualnamespace_with_everything/myorder1&virtualnamespace_with_everything/myorder2&virtualnamespace_with_everything/myorder3',
-                    'oxuser'    => 'virtualnamespace_with_everything/myuser',
+                    \OxidEsales\Eshop\Application\Model\Article::class => \virtualnamespace_with_everything\MyArticle::class,
+                    \OxidEsales\Eshop\Application\Model\Order::class   => \virtualnamespace_with_everything\MyOrder1::class.'&'.\virtualnamespace_with_everything\MyOrder2::class.'&'.\virtualnamespace_with_everything\MyOrder3::class,
+                    \OxidEsales\Eshop\Application\Model\User::class    => \virtualnamespace_with_everything\MyUser::class,
                 ),
                 'files'           => array(
                     'virtualnamespace_with_everything' => array(
@@ -172,7 +169,7 @@ class ModuleActivationFirstDataSet
 
 
     /**
-     * Data provider case with 3 modules prepared and virtualnamespace_virtualnamespace_extending_3_classes_with_1_extension module activated
+     * Data provider case with 3 modules prepared and virtualnamespace_extending_3_classes_with_1_extension module activated
      *
      * @return array
      */
@@ -183,7 +180,7 @@ class ModuleActivationFirstDataSet
             // modules to be activated during test preparation
             array(
                 'virtualnamespace_extending_1_class',
-                'virtualnamespace_virtualnamespace_extending_3_classes_with_1_extension', 'virtualnamespace_extending_3_classes'
+                'virtualnamespace_extending_3_classes_with_1_extension', 'virtualnamespace_extending_3_classes'
             ),
 
             // module that will be activated
@@ -193,25 +190,25 @@ class ModuleActivationFirstDataSet
             array(
                 'blocks'          => array(),
                 'extend'          => array(
-                    'oxorder'   => '' .
-                        'virtualnamespace_extending_1_class/myorder&virtualnamespace_virtualnamespace_extending_3_classes_with_1_extension/mybaseclass&' .
-                        'virtualnamespace_extending_3_classes/myorder&virtualnamespace_extending_1_class_3_extensions/myorder1&' .
-                        'virtualnamespace_extending_1_class_3_extensions/myorder2&virtualnamespace_extending_1_class_3_extensions/myorder3',
-                    'oxarticle' => 'virtualnamespace_virtualnamespace_extending_3_classes_with_1_extension/mybaseclass&virtualnamespace_extending_3_classes/myarticle',
-                    'oxuser'    => 'virtualnamespace_virtualnamespace_extending_3_classes_with_1_extension/mybaseclass&virtualnamespace_extending_3_classes/myuser',
+                    \OxidEsales\Eshop\Application\Model\Order::class   => '' .
+                        \virtualnamespace_extending_1_class\MyOrder::class.'&'.\virtualnamespace_extending_3_classes_with_1_extension\MyBaseClass::class.'&'.
+                        \virtualnamespace_extending_3_classes\MyOrder::class.'&'.\virtualnamespace_extending_1_class_3_extensions\MyOrder1::class.'&'.
+                        \virtualnamespace_extending_1_class_3_extensions\MyOrder2::class.'&'.\virtualnamespace_extending_1_class_3_extensions\MyOrder3::class,
+                    \OxidEsales\Eshop\Application\Model\Article::class => \virtualnamespace_extending_3_classes_with_1_extension\MyBaseClass::class.'&'.\virtualnamespace_extending_3_classes\MyArticle::class,
+                    \OxidEsales\Eshop\Application\Model\User::class    => \virtualnamespace_extending_3_classes_with_1_extension\MyBaseClass::class.'&'.\virtualnamespace_extending_3_classes\MyUser::class,
                 ),
                 'files'           => array(),
                 'settings'        => array(),
                 'disabledModules' => array(),
                 'templates'       => array(),
                 'versions'        => array(
-                    'virtualnamespace_virtualnamespace_extending_3_classes_with_1_extension' => '1.0',
+                    'virtualnamespace_extending_3_classes_with_1_extension' => '1.0',
                     'virtualnamespace_extending_1_class'                    => '1.0',
                     'virtualnamespace_extending_3_classes'                  => '1.0',
                     'virtualnamespace_extending_1_class_3_extensions'       => '1.0',
                 ),
                 'events'          => array(
-                    'virtualnamespace_virtualnamespace_extending_3_classes_with_1_extension' => null,
+                    'virtualnamespace_extending_3_classes_with_1_extension' => null,
                     'virtualnamespace_extending_1_class'                    => null,
                     'virtualnamespace_extending_3_classes'                  => null,
                     'virtualnamespace_extending_1_class_3_extensions'       => null,
@@ -248,9 +245,9 @@ class ModuleActivationFirstDataSet
                     array('template' => 'page/checkout/payment.tpl', 'block' => 'select_payment', 'file' => '/views/blocks/page/checkout/mypaymentselector.tpl'),
                 ),
                 'extend'          => array(
-                    'oxorder'   => 'virtualnamespace_extending_1_class/myorder&virtualnamespace_with_everything/myorder1&virtualnamespace_with_everything/myorder2&virtualnamespace_with_everything/myorder3',
-                    'oxarticle' => 'virtualnamespace_with_everything/myarticle',
-                    'oxuser'    => 'virtualnamespace_with_everything/myuser',
+                    \OxidEsales\Eshop\Application\Model\Order::class   => \virtualnamespace_extending_1_class\MyOrder::class.'&'.\virtualnamespace_with_everything\MyOrder1::class.'&'.\virtualnamespace_with_everything\MyOrder2::class.'&'.\virtualnamespace_with_everything\MyOrder3::class,
+                    \OxidEsales\Eshop\Application\Model\Article::class => \virtualnamespace_with_everything\MyArticle::class,
+                    \OxidEsales\Eshop\Application\Model\User::class    => \virtualnamespace_with_everything\MyUser::class,
                 ),
                 'files'           => array(
                     'with_2_files'    => array(
@@ -260,9 +257,6 @@ class ModuleActivationFirstDataSet
                     'virtualnamespace_with_everything' => array(
                         'myexception'  => 'virtualnamespace_with_everything/core/exception/myexception.php',
                         'myconnection' => 'virtualnamespace_with_everything/core/exception/myconnection.php',
-                    ),
-                    'virtualnamespace_with_events'     => array(
-                        'myevents' => 'virtualnamespace_with_events/files/myevents.php',
                     ),
                 ),
                 'settings'        => array(
@@ -300,8 +294,8 @@ class ModuleActivationFirstDataSet
                     'extending_3_blocks' => null,
                     'no_extending'       => null,
                     'virtualnamespace_with_events'        => array(
-                        'onActivate'   => 'MyEvents::onActivate',
-                        'onDeactivate' => 'MyEvents::onDeactivate'
+                        'onActivate'   => '\OxidEsales\EshopCommunity\Tests\Integration\Modules\TestData\modules\virtualnamespace_with_events\files\MyEvents::onActivate()',
+                        'onDeactivate' => '\OxidEsales\EshopCommunity\Tests\Integration\Modules\TestData\modules\virtualnamespace_with_events\files\MyEvents::onDeactivate()'
                     ),
                     'virtualnamespace_with_everything'    => array(
                         'onActivate'   => 'MyEvents::onActivate',
