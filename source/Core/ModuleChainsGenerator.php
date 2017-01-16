@@ -194,10 +194,12 @@ class ModuleChainsGenerator
             }
 
             if (!$this->isNamespacedClass($extensionPath)) {
+                // @todo: extract createExtensionPath
                 $modulesDirectory = oxRegistry::get("oxConfigFile")->getVar("sShopDir");
                 $extensionParentPath = "$modulesDirectory/modules/$extensionPath.php";
 
                 //including original file
+                // @todo: extract method includeOriginalFile (caution, returns a value)
                 if (file_exists($extensionParentPath)) {
                     include_once $extensionParentPath;
                 } elseif (!class_exists($extensionClass)) {
