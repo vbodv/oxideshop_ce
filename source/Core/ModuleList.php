@@ -241,19 +241,23 @@ class ModuleList extends \oxSuperCfg
         $disabledModules = $this->getDisabledModules();
         $disabledModuleClasses = array();
         if (isset($disabledModules) && is_array($disabledModules)) {
+            // @todo: extract method getAllDisabledModulePaths (not sure how long it is :))
             //get all disabled module paths
             $extensions = $this->getModuleConfigParametersByKey(static::MODULE_KEY_EXTENSIONS);
             $modules = $this->getModulesWithExtendedClass();
             $modulePaths = $this->getModuleConfigParametersByKey(static::MODULE_KEY_PATHS);
 
             foreach ($disabledModules as $moduleId) {
+                // @todo: extract method for inner loop
                 if (!array_key_exists($moduleId, $extensions)) {
+                    // @todo: extract getPathById (look for similarities in other Module classes)
                     $path = $modulePaths[$moduleId];
                     if (!isset($path)) {
                         $path = $moduleId;
                     }
                     foreach ($modules as $moduleClasses) {
                         foreach ($moduleClasses as $moduleClass) {
+                            // @todo: decompose conditional (see module.php - duplicated code, the whole foreach looks similar)
                             if (strpos($moduleClass, $path . "/") === 0) {
                                 $disabledModuleClasses[] = $moduleClass;
                             }

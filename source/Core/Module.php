@@ -181,11 +181,16 @@ class Module extends \oxSuperCfg
         $moduleId = null;
         $moduleFile = $module;
         $moduleId = $this->getIdFromExtension($module);
+
+        // @todo: think of extracting a method of the next if
         if (!$moduleId) {
+            // @todo: use getModulePaths here
             $modulePaths = $this->getConfig()->getConfigParam('aModulePaths');
 
+            // @todo: extract getModuleIdByFiles (lookup a better second part name)
             if (is_array($modulePaths)) {
                 foreach ($modulePaths as $id => $path) {
+                    // @todo: decompose conditional
                     if (strpos($moduleFile, $path . "/") === 0) {
                         $moduleId = $id;
                     }
@@ -212,6 +217,7 @@ class Module extends \oxSuperCfg
     public function getIdFromExtension($className)
     {
         $moduleId = '';
+        // @todo: maybe extract a getModuleExtensions
         $extensions = (array) $this->getConfig()->getConfigParam('aModuleExtensions');
         foreach ($extensions as $id => $moduleClasses) {
             if (in_array($className, $moduleClasses)) {
