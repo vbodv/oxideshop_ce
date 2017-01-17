@@ -23,9 +23,20 @@ namespace Integration\Modules;
 
 require_once __DIR__ . '/BaseModuleTestCase.php';
 
+use oxUtilsObject;
+
 class ModuleNamespaceTest extends BaseModuleTestCase
 {
     const TEST_ARTICLE_OXID = '1126';
+    const TEST_ARTICLE_DEFAULT_PRICE = 34.0;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->getConfig()->setConfigParam('blDoNotDisableModuleOnError', true);
+        $this->assertPrice();
+    }
 
     /**
      * @return array
@@ -33,7 +44,8 @@ class ModuleNamespaceTest extends BaseModuleTestCase
     public function providerModuleActivation()
     {
         return array(
-            $this->caseModuleNamespace()
+            $this->caseNoModuleNamespace(),
+            #$this->caseModuleNamespace()
         );
     }
 
@@ -44,64 +56,58 @@ class ModuleNamespaceTest extends BaseModuleTestCase
      *
      * @dataProvider providerModuleActivation
      *
-     * @param array  $aInstallModules
-     * @param string $sModule
-     * @param array  $aResultToAsserts
+     * @param array  $installModules
+     * @param string $moduleName
+     * @param array  $resultToAsserts
+     * @param array  $priceAsserts
      */
-    public function testModuleWorksAfterActivation($aInstallModules, $sModule, $aResultToAsserts)
+    public function _testModuleWorksAfterActivation($installModules, $moduleName, $resultToAsserts, $priceAsserts)
     {
-        $article = oxNew('oxArticle');
-        $article->load(self::TEST_ARTICLE_OXID);
-        $this->assertEquals(34.0, $article->getPrice()->getBruttoPrice());
-        $this->assertTrue(class_exists('OxidEsales\EshopTestModule\Application\Model\TestModuleOneModel'));
-
         $environment = new Environment();
-        $environment->prepare($aInstallModules);
+        $environment->prepare($installModules);
 
         $module = oxNew('oxModule');
-        $module->load($sModule);
+        $module->load($moduleName);
         $this->deactivateModule($module);
         $this->activateModule($module);
 
-        $this->runAsserts($aResultToAsserts);
-
-        $article = oxNew('oxArticle');
-        $article->load(self::TEST_ARTICLE_OXID);
-        $this->assertEquals(68.0, $article->getPrice()->getBruttoPrice());
+        $this->runAsserts($resultToAsserts);
+        $this->assertPrice($priceAsserts);
     }
 
     /**
-     * Tests if module was activated.
+     * Tests if module was activated and then properly deactivated.
      *
      * @group module
      *
      * @dataProvider providerModuleActivation
      *
-     * @param array  $aInstallModules
-     * @param string $sModule
-     * @param array  $aResultToAsserts
+     * @param array  $installModules
+     * @param string $moduleName
+     * @param array  $resultToAsserts
+     * @param array  $priceAsserts
      */
-    public function testModuleDeactivation($aInstallModules, $sModule, $aResultToAsserts)
+    public function testModuleDeactivation($installModules, $moduleName, $resultToAsserts, $priceAsserts)
     {
-        $article = oxNew('oxArticle');
-        $article->load(self::TEST_ARTICLE_OXID);
-        $this->assertEquals(34.0, $article->getPrice()->getBruttoPrice());
-        $this->assertTrue(class_exists('OxidEsales\EshopTestModule\Application\Model\TestModuleOneModel'));
-
         $environment = new Environment();
-        $environment->prepare($aInstallModules);
+        $environment->prepare($installModules);
 
         $module = oxNew('oxModule');
-        $module->load($sModule);
+        $module->load($moduleName);
         $this->deactivateModule($module);
         $this->activateModule($module);
-        $this->runAsserts($aResultToAsserts);
+
+        $this->runAsserts($resultToAsserts);
+        $this->assertPrice($priceAsserts);
 
         $this->deactivateModule($module);
+       # oxUtilsObject::resetClassInstances();
 
-        $article = oxNew('oxArticle');
-        $article->load(self::TEST_ARTICLE_OXID);
-        $this->assertEquals(34.0, $article->getPrice()->getBruttoPrice());
+
+        $price = oxNew('oxPrice');
+
+        $price = $this->assertPrice($priceAsserts);
+        $this->assertFalse(is_a($price, $priceAsserts['class']), 'Price object class not as expected');
     }
 
     /**
@@ -134,8 +140,84 @@ class ModuleNamespaceTest extends BaseModuleTestCase
                     'EshopTestModuleOne' => '1.0.0'
                 ),
                 'events'          => array('EshopTestModuleOne' => null)
-            )
+            ),
+
+            // price multiplier
+            array('factor' => 2,
+                  'class'  => 'TestModuleOnePrice')
         );
     }
 
+    /**
+     * Data provider case for not namespaced module
+     *
+     * @return array
+     */
+    protected function caseNoModuleNamespace()
+    {
+        return array(
+
+            // modules to be activated during test preparation
+            array('without_own_module_namespace'),
+
+            // module that will be reactivated
+            'without_own_module_namespace',
+
+            // environment asserts
+            array(
+                'blocks'          => array(),
+                'extend'          => array(
+                   'payment' => 'without_own_module_namespace/Application/Controller/TestModuleTwoPaymentController',
+                   'oxprice' => 'without_own_module_namespace/Application/Model/TestModuleTwoPrice'
+                ),
+                'files'           => array(
+                    'EshopTestModuleTwo' => array(
+                        'testmoduletwomodel' => 'without_own_module_namespace/Application/Model/TestModuleTwoModel.php',
+                        'testmoduletwopaymentcontroller' => 'without_own_module_namespace/Application/Controller/TestModuleTwoPaymentController.php',
+                        'testmoduletwoprice' => 'without_own_module_namespace/Application/Model/TestModuleTwoPrice.php')
+                ),
+                'settings'        => array(),
+                'disabledModules' => array(),
+                'templates'       => array(),
+                'versions'        => array(
+                    'EshopTestModuleTwo' => '1.0.0'
+                ),
+                'events'          => array('EshopTestModuleTwo' => null)
+            ),
+
+            array('factor' => 3,
+                  'class'  => 'TestModuleTwoPrice')
+        );
+    }
+
+    /**
+     * Check test article's price. Module multiplies the price by factor.
+     *
+     * @param array $asserts
+     *
+     * @return oxPrice
+     */
+    private function assertPrice($asserts = array())
+    {
+        $factor = isset($asserts['factor']) ? $asserts['factor'] : 1;
+
+        $price = oxNew('oxprice');
+        $price->setPrice(self::TEST_ARTICLE_DEFAULT_PRICE);
+
+        var_dump($price->getPrice());
+
+        /*
+        $article = oxNew('oxArticle');
+        $article->load(self::TEST_ARTICLE_OXID);
+        $price = $article->getPrice();
+
+        // check for module price class
+        if (isset($asserts['class'])) {
+            $this->assertTrue(is_a($price, $asserts['class']), 'Price object class not as expected');
+        }
+
+        $this->assertEquals($factor * self::TEST_ARTICLE_DEFAULT_PRICE, $price->getBruttoPrice(), 'Test article price not as expected.');
+*/
+        return $price;
+    }
 }
