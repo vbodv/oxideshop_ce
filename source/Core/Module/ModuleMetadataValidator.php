@@ -20,7 +20,7 @@
  * @version   OXID eShop CE
  */
 
-namespace OxidEsales\EshopCommunity\Core;
+namespace OxidEsales\EshopCommunity\Core\Module;
 
 use oxModule;
 
@@ -43,7 +43,7 @@ class ModuleMetadataValidator implements \oxIModuleValidator
      *
      * @return bool
      */
-    public function validate(\OxidEsales\EshopCommunity\Core\Module $oModule)
+    public function validate(\OxidEsales\EshopCommunity\Core\Module\Module $oModule)
     {
         return file_exists($oModule->getMetadataPath());
     }
