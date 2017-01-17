@@ -4,7 +4,7 @@
  * Module information
  */
 $aModule = array(
-    'id'           => 'EshopTestModuleTwo',
+    'id'           => 'without_own_module_namespace',
     'title'        => 'OXID eShop not namespaced test module',
     'description'  => 'Double the price. Show payment error message during checkout.',
     'thumbnail'    => 'module.png',
