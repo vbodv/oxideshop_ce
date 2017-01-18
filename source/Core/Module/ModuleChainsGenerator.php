@@ -72,7 +72,7 @@ class ModuleChainsGenerator
     }
 
     /**
-     * SPIKE: exracted function to build full class chain
+     * SPIKE: extracted function to build full class chain
      *
      * @param string $className
      * @param string $classAlias
@@ -133,16 +133,12 @@ class ModuleChainsGenerator
     {
         $variablesLocator = $this->getModuleVariablesLocator();
         $disabledModules = $variablesLocator->getModuleVariable('aDisabledModules');
-        $modulePaths = $variablesLocator->getModuleVariable('aModulePaths');
 
         if (is_array($disabledModules) && count($disabledModules) > 0) {
             foreach ($disabledModules as $disabledModuleId) {
-                $disabledModuleDirectory = $disabledModuleId;
-                if (is_array($modulePaths) && array_key_exists($disabledModuleId, $modulePaths)) {
-                    if (isset($modulePaths[$disabledModuleId])) {
-                        $disabledModuleDirectory = $modulePaths[$disabledModuleId];
-                    }
-                }
+
+                $disabledModuleDirectory = $this->getModuleDirectoryByModuleId($disabledModuleId);
+
                 foreach ($classChain as $key => $moduleClass) {
                     if (strpos($moduleClass, $disabledModuleDirectory . "/") === 0) {
                         unset($classChain[$key]);
@@ -157,6 +153,33 @@ class ModuleChainsGenerator
         }
 
         return $classChain;
+    }
+
+    /**
+     * SPIKE: extract function to match moduleId with installation path
+     *        Example: aModulePaths = array('MyTestModule' => 'myvendor/mymodule',
+     *                                      'oepaypal'     => 'oe/oepaypal')
+     *
+     * TODD: Think about case sensitivity issues
+     *
+     * Get module path relative to source/modules for given module id.
+     *
+     *
+     * @return string
+     */
+    public function getModuleDirectoryByModuleId($moduleId)
+    {
+        $variablesLocator = $this->getModuleVariablesLocator();
+        $modulePaths = $variablesLocator->getModuleVariable('aModulePaths');
+
+        $moduleDirectory = $moduleId;
+        if (is_array($modulePaths) && array_key_exists($moduleId, $modulePaths)) {
+            if (isset($modulePaths[$moduleId])) {
+                $moduleDirectory = $modulePaths[$moduleId];
+            }
+        }
+
+        return $moduleDirectory;
     }
 
     /**
