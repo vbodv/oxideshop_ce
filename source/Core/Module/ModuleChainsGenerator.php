@@ -131,9 +131,7 @@ class ModuleChainsGenerator
      */
     public function filterInactiveExtensions($classChain)
     {
-        $variablesLocator = $this->getModuleVariablesLocator();
-        $disabledModules = $variablesLocator->getModuleVariable('aDisabledModules');
-        $disabledModules = is_array($disabledModules) ? $disabledModules : array();
+        $disabledModules = $this->getDisabledModuleIds();
 
         foreach ($disabledModules as $disabledModuleId) {
             $disabledModuleDirectory = $this->getModuleDirectoryByModuleId($disabledModuleId);
@@ -150,6 +148,21 @@ class ModuleChainsGenerator
         }
 
         return $classChain;
+    }
+
+    /**
+     * Get Ids of all deactivated module.
+     * If none are deactivated, returns an empty array.
+     *
+     * @return array
+     */
+    public function getDisabledModuleIds()
+    {
+        $variablesLocator = $this->getModuleVariablesLocator();
+        $disabledModules = $variablesLocator->getModuleVariable('aDisabledModules');
+        $disabledModules = is_array($disabledModules) ? $disabledModules : array();
+
+        return $disabledModules;
     }
 
     /**
