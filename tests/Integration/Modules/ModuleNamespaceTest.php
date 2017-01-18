@@ -111,7 +111,7 @@ class ModuleNamespaceTest extends BaseModuleTestCase
      * @param array  $resultToAsserts
      * @param array  $priceAsserts
      */
-    public function _testModuleWorksAfterActivation($installModules, $moduleName,  $moduleId, $resultToAsserts, $priceAsserts)
+    public function testModuleWorksAfterActivation($installModules, $moduleName,  $moduleId, $resultToAsserts, $priceAsserts)
     {
         $environment = new Environment();
         $environment->prepare($installModules);
@@ -138,7 +138,7 @@ class ModuleNamespaceTest extends BaseModuleTestCase
      * @param array  $resultToAsserts
      * @param array  $priceAsserts
      */
-    public function _testModuleDeactivation($installModules, $moduleName, $moduleId, $resultToAsserts, $priceAsserts)
+    public function testModuleDeactivation($installModules, $moduleName, $moduleId, $resultToAsserts, $priceAsserts)
     {
         $environment = new Environment();
         $environment->prepare($installModules);
@@ -154,7 +154,6 @@ class ModuleNamespaceTest extends BaseModuleTestCase
 
         $price = oxNew('oxPrice');
         $this->assertFalse(is_a($price, $priceAsserts['class']), 'Price object class not as expected ' . get_class($price));
-
         #$price = $this->assertPrice(array('factor' => 1));
     }
 
@@ -175,6 +174,31 @@ class ModuleNamespaceTest extends BaseModuleTestCase
 
         ##Beware the case
         $this->assertEquals('myTestmodule', $chain->getModuleDirectoryByModuleId('myTestmodule'));
+    }
+
+    /**
+     * Test ModuleChainsGenerator::getDisabledModuleIds
+     */
+    public function testModuleChainsGenerator_getDisabledModuleIds()
+    {
+        $disabledModules = array('bla', 'foo', 'wahoo');
+        $this->getConfig()->saveShopConfVar('aarr', 'aDisabledModules', $disabledModules);
+
+        $utilsObject = new TestUtilsObject;
+        $chain = $utilsObject->getTheModuleChainsGenerator();
+        $this->assertEquals($disabledModules, $chain->getDisabledModuleIds());
+    }
+
+    /**
+     * Test ModuleChainsGenerator::getDisabledModuleIds
+     */
+    public function testModuleChainsGenerator_getDisabledModuleIds_NoneDisabled()
+    {
+        $this->getConfig()->saveShopConfVar('bool', 'aDisabledModules', false);
+
+        $utilsObject = new TestUtilsObject;
+        $chain = $utilsObject->getTheModuleChainsGenerator();
+        $this->assertEquals(array(), $chain->getDisabledModuleIds());
     }
 
     /**
