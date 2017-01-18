@@ -202,6 +202,27 @@ class ModuleNamespaceTest extends BaseModuleTestCase
     }
 
     /**
+     * Test ModuleChainsGenerator::cleanModuleFromClassChainByPath
+     */
+    public function testModuleChainsGenerator_cleanModuleFromClassChainByPath()
+    {
+        $environment = new Environment();
+        $environment->prepare(array('without_own_module_namespace'));
+
+        $disabledModules = array('bla', 'foo', 'without_own_module_namespace');
+        $this->getConfig()->saveShopConfVar('aarr', 'aDisabledModules', $disabledModules);
+
+        $utilsObject = new TestUtilsObject;
+        $chain = $utilsObject->getTheModuleChainsGenerator();
+
+        $fullChain = array('without_own_module_namespace/Application/Model/TestModuleTwoPrice');
+        $this->assertEquals($fullChain, $chain->getFullChain('OxidEsales\Eshop\Core\Price', 'oxprice'));
+
+        $cleanedChain = $chain->cleanModuleFromClassChainByPath('without_own_module_namespace', $fullChain);
+        $this->assertEquals(array(), $cleanedChain);
+    }
+
+    /**
      * Data provider case for namespaced module
      *
      * @return array

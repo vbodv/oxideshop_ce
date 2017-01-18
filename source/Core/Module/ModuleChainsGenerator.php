@@ -71,7 +71,6 @@ class ModuleChainsGenerator
         }
 
         return $className;
-
     }
 
     /**
@@ -122,6 +121,7 @@ class ModuleChainsGenerator
                 $fullChain = array_merge(reset($classChains), next($classChains));
             }
         }
+
         return $fullChain;
     }
 
@@ -170,14 +170,15 @@ class ModuleChainsGenerator
      *
      * @return array
      */
-    public function cleanModuleFromClassChainByPath ($moduleId, $classChain)
+    public function cleanModuleFromClassChainByPath($moduleId, $classChain)
     {
         foreach ($classChain as $key => $moduleClass) {
             $moduleDirectory = $this->getModuleDirectoryByModuleId($moduleId);
-            if ($this->modulePathMatch($moduleClass, $moduleDirectory)){
+            if ($this->modulePathMatch($moduleClass, $moduleDirectory)) {
                 unset($classChain[$key]);
             }
         }
+
         return $classChain;
     }
 
@@ -196,7 +197,7 @@ class ModuleChainsGenerator
         $match = false;
         if (strpos($moduleClass, $moduleDirectory . "/") === 0) {
             $match = true;
-        } elseif (strpos($moduleDirectory, ".") && (strpos($moduleDirectory, strtolower($moduleClass)) === 0) ) {
+        } elseif (strpos($moduleDirectory, ".") && (strpos($moduleDirectory, strtolower($moduleClass)) === 0)) {
             // If module consists of one file without own dir (getting module.php as id, instead of module)
             $match = true;
         }
