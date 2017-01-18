@@ -33,7 +33,10 @@ use oxRegistry;
  */
 class ModuleChainsGenerator
 {
-    /** @var ModuleVariablesLocator */
+
+    /**
+     * @var ModuleVariablesLocator
+     */
     private $moduleVariablesLocator;
 
     /**
@@ -134,20 +137,70 @@ class ModuleChainsGenerator
         $disabledModules = $this->getDisabledModuleIds();
 
         foreach ($disabledModules as $disabledModuleId) {
-            $disabledModuleDirectory = $this->getModuleDirectoryByModuleId($disabledModuleId);
-            foreach ($classChain as $key => $moduleClass) {
-                if (strpos($moduleClass, $disabledModuleDirectory . "/") === 0) {
-                    unset($classChain[$key]);
-                } elseif (strpos($disabledModuleDirectory, ".")) {
-                    // If module consists of one file without own dir (getting module.php as id, instead of module)
-                    if (strpos($disabledModuleDirectory, strtolower($moduleClass)) === 0) {
-                        unset($classChain[$key]);
-                    }
-                }
-            }
+            $classChain = $this->cleanModuleFromClassChain($disabledModuleId, $classChain);
         }
 
         return $classChain;
+    }
+
+    /**
+     * Clean classes from chain for given module id.
+     *
+     * @param $moduleId
+     * @param $classChain
+     *
+     * @return array
+     */
+    public function cleanModuleFromClassChain($moduleId, $classChain)
+    {
+        //WIP, need to also handle aModuleExtensions
+
+        $cleanedClassChain = $this->cleanModuleFromClassChainByPath($moduleId, $classChain);
+        return $cleanedClassChain;
+    }
+
+    /**
+     * Clean classes from chain for given module id.
+     * Classes might be in module chain by path (old way) or by module namespace(new way).
+     * This function removes all classes from class chain for classes inside a deactivated module's directory.
+     *
+     * @param $moduleId
+     * @param $classChain
+     *
+     * @return array
+     */
+    public function cleanModuleFromClassChainByPath ($moduleId, $classChain)
+    {
+        foreach ($classChain as $key => $moduleClass) {
+            $moduleDirectory = $this->getModuleDirectoryByModuleId($moduleId);
+            if ($this->modulePathMatch($moduleClass, $moduleDirectory)){
+                unset($classChain[$key]);
+            }
+        }
+        return $classChain;
+    }
+
+    /**
+     * Check if given class is connected to given module directory.
+     * NOTE: for old style modules, the shop config variable 'aModules' contains the path to the module file
+     *       relative to shop/modules directory.
+     *
+     * @param $moduleClass
+     * @param $moduleDirectory
+     *
+     * @return bool
+     */
+    protected function modulePathMatch($moduleClass, $moduleDirectory)
+    {
+        $match = false;
+        if (strpos($moduleClass, $moduleDirectory . "/") === 0) {
+            $match = true;
+        } elseif (strpos($moduleDirectory, ".") && (strpos($moduleDirectory, strtolower($moduleClass)) === 0) ) {
+            // If module consists of one file without own dir (getting module.php as id, instead of module)
+            $match = true;
+        }
+
+        return $match;
     }
 
     /**
