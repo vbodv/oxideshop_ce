@@ -133,20 +133,17 @@ class ModuleChainsGenerator
     {
         $variablesLocator = $this->getModuleVariablesLocator();
         $disabledModules = $variablesLocator->getModuleVariable('aDisabledModules');
+        $disabledModules = is_array($disabledModules) ? $disabledModules : array();
 
-        if (is_array($disabledModules) && count($disabledModules) > 0) {
-            foreach ($disabledModules as $disabledModuleId) {
-
-                $disabledModuleDirectory = $this->getModuleDirectoryByModuleId($disabledModuleId);
-
-                foreach ($classChain as $key => $moduleClass) {
-                    if (strpos($moduleClass, $disabledModuleDirectory . "/") === 0) {
+        foreach ($disabledModules as $disabledModuleId) {
+            $disabledModuleDirectory = $this->getModuleDirectoryByModuleId($disabledModuleId);
+            foreach ($classChain as $key => $moduleClass) {
+                if (strpos($moduleClass, $disabledModuleDirectory . "/") === 0) {
+                    unset($classChain[$key]);
+                } elseif (strpos($disabledModuleDirectory, ".")) {
+                    // If module consists of one file without own dir (getting module.php as id, instead of module)
+                    if (strpos($disabledModuleDirectory, strtolower($moduleClass)) === 0) {
                         unset($classChain[$key]);
-                    } elseif (strpos($disabledModuleDirectory, ".")) {
-                        // If module consists of one file without own dir (getting module.php as id, instead of module)
-                        if (strpos($disabledModuleDirectory, strtolower($moduleClass)) === 0) {
-                            unset($classChain[$key]);
-                        }
                     }
                 }
             }
