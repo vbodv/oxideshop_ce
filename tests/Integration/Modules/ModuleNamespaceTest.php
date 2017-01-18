@@ -209,9 +209,6 @@ class ModuleNamespaceTest extends BaseModuleTestCase
         $environment = new Environment();
         $environment->prepare(array('without_own_module_namespace'));
 
-        $disabledModules = array('bla', 'foo', 'without_own_module_namespace');
-        $this->getConfig()->saveShopConfVar('aarr', 'aDisabledModules', $disabledModules);
-
         $utilsObject = new TestUtilsObject;
         $chain = $utilsObject->getTheModuleChainsGenerator();
 
@@ -219,6 +216,24 @@ class ModuleNamespaceTest extends BaseModuleTestCase
         $this->assertEquals($fullChain, $chain->getFullChain('OxidEsales\Eshop\Core\Price', 'oxprice'));
 
         $cleanedChain = $chain->cleanModuleFromClassChainByPath('without_own_module_namespace', $fullChain);
+        $this->assertEquals(array(), $cleanedChain);
+    }
+
+    /**
+     * Test ModuleChainsGenerator::cleanModuleFromClassChainByPath
+     */
+    public function testModuleChainsGenerator_cleanModuleFromClassChainByModuleId()
+    {
+        $environment = new Environment();
+        $environment->prepare(array('with_own_module_namespace'));
+
+        $utilsObject = new TestUtilsObject;
+        $chain = $utilsObject->getTheModuleChainsGenerator();
+
+        $fullChain = array('OxidEsales\EshopTestModule\Application\Model\TestModuleOnePrice');
+        $this->assertEquals($fullChain, $chain->getFullChain('OxidEsales\Eshop\Core\Price', 'oxprice'));
+
+        $cleanedChain = $chain->cleanModuleFromClassChainByModuleId('EshopTestModuleOne', $fullChain);
         $this->assertEquals(array(), $cleanedChain);
     }
 
