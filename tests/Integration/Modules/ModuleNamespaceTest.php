@@ -24,6 +24,18 @@ namespace Integration\Modules;
 require_once __DIR__ . '/BaseModuleTestCase.php';
 
 
+class TestUtilsObject extends \OxidEsales\EshopCommunity\Core\UtilsObject
+{
+    public function getTheModuleChainsGenerator() {
+        return $this->getModuleChainsGenerator();
+    }
+
+    public function getTheClassNameProvider() {
+        return $this->getClassNameProvider();
+    }
+
+}
+
 class ModuleNamespaceTest extends BaseModuleTestCase
 {
     const TEST_PRICE = 10.0;
@@ -71,6 +83,22 @@ class ModuleNamespaceTest extends BaseModuleTestCase
     }
 
     /**
+     * @return array
+     */
+    public function providerNamespacedModuleDeactivation()
+    {
+        $second = $this->caseModuleNamespace();
+        $second[3]['disabledModules'] = array('EshopTestModuleOne');
+        $second[3]['files'] = array();
+        $second[3]['events'] = array();
+        $second[3]['versions'] = array();
+
+        return array(
+            $second
+        );
+    }
+
+    /**
      * Tests if module was activated.
      *
      * @group module
@@ -83,7 +111,7 @@ class ModuleNamespaceTest extends BaseModuleTestCase
      * @param array  $resultToAsserts
      * @param array  $priceAsserts
      */
-    public function testModuleWorksAfterActivation($installModules, $moduleName,  $moduleId, $resultToAsserts, $priceAsserts)
+    public function _testModuleWorksAfterActivation($installModules, $moduleName,  $moduleId, $resultToAsserts, $priceAsserts)
     {
         $environment = new Environment();
         $environment->prepare($installModules);
@@ -110,7 +138,7 @@ class ModuleNamespaceTest extends BaseModuleTestCase
      * @param array  $resultToAsserts
      * @param array  $priceAsserts
      */
-    public function testModuleDeactivation($installModules, $moduleName, $moduleId, $resultToAsserts, $priceAsserts)
+    public function _testModuleDeactivation($installModules, $moduleName, $moduleId, $resultToAsserts, $priceAsserts)
     {
         $environment = new Environment();
         $environment->prepare($installModules);
@@ -128,6 +156,25 @@ class ModuleNamespaceTest extends BaseModuleTestCase
         $this->assertFalse(is_a($price, $priceAsserts['class']), 'Price object class not as expected ' . get_class($price));
 
         #$price = $this->assertPrice(array('factor' => 1));
+    }
+
+    /**
+     * Test ModuleChainsGenerator::getModuleDirectoryByModuleId
+     */
+    public function testModuleChainsGenerator_getModuleDirectoryByModuleId()
+    {
+        $modulePaths = array('bla' => 'foo/bar', 'MyTestModule' => 'myvendor/mymodule');
+        $this->getConfig()->saveShopConfVar('aarr', 'aModulePaths', $modulePaths);
+
+        $utilsObject = new TestUtilsObject;
+        $chain = $utilsObject->getTheModuleChainsGenerator();
+
+        $this->assertEquals('urgs', $chain->getModuleDirectoryByModuleId('urgs'));
+        $this->assertEquals('foo/bar', $chain->getModuleDirectoryByModuleId('bla'));
+        $this->assertEquals('myvendor/mymodule', $chain->getModuleDirectoryByModuleId('MyTestModule'));
+
+        ##Beware the case
+        $this->assertEquals('myTestmodule', $chain->getModuleDirectoryByModuleId('myTestmodule'));
     }
 
     /**
