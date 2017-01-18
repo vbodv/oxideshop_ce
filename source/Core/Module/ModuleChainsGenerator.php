@@ -57,6 +57,31 @@ class ModuleChainsGenerator
         if (!$classAlias) {
             $classAlias = $className;
         }
+
+        $fullChain = $this->getFullChain($className, $classAlias);
+        $activeChain = array();
+        if (!empty($fullChain)) {
+            $activeChain = $this->filterInactiveExtensions($fullChain);
+        }
+        if (!empty($activeChain)) {
+            $className = $this->createClassExtensions($activeChain, $classAlias);
+        }
+
+        return $className;
+
+    }
+
+    /**
+     * SPIKE: exracted function to build full class chain
+     *
+     * @param string $className
+     * @param string $classAlias
+     *
+     * @return array
+     */
+    public function getFullChain($className, $classAlias)
+    {
+        $fullChain = array();
         $lowerCaseClassAlias = strtolower($classAlias);
         $lowerCaseClassName = strtolower($className);
 
@@ -93,15 +118,8 @@ class ModuleChainsGenerator
                 /** @var array $fullChain merges the first and then the second array from the $classChains */
                 $fullChain = array_merge(reset($classChains), next($classChains));
             }
-
-            $activeChain = $this->filterInactiveExtensions($fullChain);
-
-            if (!empty($activeChain)) {
-                $className = $this->createClassExtensions($activeChain, $classAlias);
-            }
         }
-
-        return $className;
+        return $fullChain;
     }
 
     /**
