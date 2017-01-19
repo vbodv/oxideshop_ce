@@ -343,6 +343,14 @@ class ModuleChainsGenerator
 
                     return false;
                 }
+            } else {
+                if (!class_exists($extensionClass)) {
+                    // @todo: invalidate file cache
+                    $this->handleSpecialCases($class, $extensionClass);
+                    $this->onModuleExtensionCreationError($extensionPath, $extensionClass);
+
+                    return false;
+                }
             }
         }
 
