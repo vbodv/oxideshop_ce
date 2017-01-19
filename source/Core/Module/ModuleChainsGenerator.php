@@ -93,31 +93,35 @@ class ModuleChainsGenerator
         $allExtendedClasses = array_keys($modules);
         $currentExtendedClasses = array_intersect($allExtendedClasses, [$lowerCaseClassName, $lowerCaseClassAlias]);
         if (!empty($currentExtendedClasses)) {
-            /**
+            /*
              * there may be 2 class chains, matching the same class:
              * - one for the class alias like 'oxUser' - metadata v1.1
              * - another for the real class name like 'OxidEsales\Eshop\Application\Model\User' - metadata v1.2
              * These chains must be merged in the same order as they appear in the modules array
              */
             $classChains = [];
-            /** Get the position of the class name */
+            /* Get the position of the class name */
             if (false !== $position = array_search($lowerCaseClassName, $allExtendedClasses)) {
                 $classChains[$position] = explode("&", $modules[$lowerCaseClassName]);
             }
-            /** Get the position of the alias class name */
+            /* Get the position of the alias class name */
             if (false !== $position = array_search($lowerCaseClassAlias, $allExtendedClasses)) {
                 $classChains[$position] = explode("&", $modules[$lowerCaseClassAlias]);
             }
 
-            /** Notice that the array keys will be ordered, but do not necessarily start at 0 */
+            /* Notice that the array keys will be ordered, but do not necessarily start at 0 */
             ksort($classChains);
             $fullChain = [];
             if (1 === count($classChains)) {
-                /** @var array $fullChain uses the one and only element of the array */
+                /**
+                 * @var array $fullChain uses the one and only element of the array
+                 */
                 $fullChain = reset($classChains);
             }
             if (2 === count($classChains)) {
-                /** @var array $fullChain merges the first and then the second array from the $classChains */
+                /**
+                 * @var array $fullChain merges the first and then the second array from the $classChains
+                 */
                 $fullChain = array_merge(reset($classChains), next($classChains));
             }
         }
