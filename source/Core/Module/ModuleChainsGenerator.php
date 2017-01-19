@@ -178,7 +178,7 @@ class ModuleChainsGenerator
 
         $toBeRemovedFromChain = array();
         if (isset($registeredExtensions[$moduleId])) {
-            $toBeRemovedFromChain = array_combine($registeredExtensions[$moduleId],$registeredExtensions[$moduleId]);
+            $toBeRemovedFromChain = array_combine($registeredExtensions[$moduleId], $registeredExtensions[$moduleId]);
         }
 
         foreach ($classChain as $key => $moduleClass) {
@@ -257,7 +257,6 @@ class ModuleChainsGenerator
      * TODD: Think about case sensitivity issues
      *
      * Get module path relative to source/modules for given module id.
-     *
      *
      * @return string
      */
