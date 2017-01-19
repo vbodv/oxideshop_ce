@@ -718,16 +718,18 @@ class ModuleList extends \oxSuperCfg
      */
     private function _getInvalidExtensions($sModuleId)
     {
-        $aModules = $this->getModuleExtensions($sModuleId);
+        $extendedClasses = $this->getModuleExtensions($sModuleId);
         $aDeletedExt = array();
 
-        foreach ($aModules as $sOxClass => $aModulesList) {
-            foreach ($aModulesList as $sModulePath) {
+        foreach ($extendedClasses as $oxidEshopClass => $moduleClasses) {
+            foreach ($moduleClasses as $sModulePath) {
                 if (!$this->isNamespacedClass($sModulePath)) {
                     $sExtPath = $this->getConfig()->getModulesDir() . $sModulePath . '.php';
                     if (!file_exists($sExtPath)) {
-                        $aDeletedExt[$sOxClass][] = $sModulePath;
+                        $aDeletedExt[$oxidEshopClass][] = $sModulePath;
                     }
+                } else {
+                    //@todo: handle this case
                 }
             }
         }
