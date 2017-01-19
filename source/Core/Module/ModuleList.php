@@ -25,6 +25,8 @@ namespace OxidEsales\EshopCommunity\Core\Module;
 use oxDb;
 use oxModuleCache;
 use oxRegistry;
+#use OxidEsales\Eshop\Core\Module\ModuleVariablesLocator;
+use OxidEsales\Eshop\Core\ModuleVariablesLocator;
 
 /**
  * Modules list class.
@@ -308,6 +310,9 @@ class ModuleList extends \oxSuperCfg
 
         //removing from config tables and templates blocks table
         $this->_removeFromDatabase($aDeletedModuleIds);
+
+        //SPIKE
+        ModuleVariablesLocator::resetModuleVariables();
     }
 
     /**
