@@ -74,6 +74,7 @@ class OnlineModuleNotifierTest extends BaseModuleTestCase
         $modules->module = array();
 
         $aModulesInfo = array();
+        $aModulesInfo[] = array('id' => 'EshopTestModuleOne', 'version' => '1.0.0', 'activeInShop' => array());
         $aModulesInfo[] = array('id' => 'extending_1_class', 'version' => '1.0', 'activeInShop' => array($sShopUrl));
         $aModulesInfo[] = array('id' => 'extending_1_class_3_extensions', 'version' => '1.0', 'activeInShop' => array($sShopUrl));
         $aModulesInfo[] = array('id' => 'extending_3_blocks', 'version' => '1.0', 'activeInShop' => array());
@@ -89,6 +90,7 @@ class OnlineModuleNotifierTest extends BaseModuleTestCase
         $aModulesInfo[] = array('id' => 'with_2_templates', 'version' => '1.0', 'activeInShop' => array());
         $aModulesInfo[] = array('id' => 'with_events', 'version' => '1.0', 'activeInShop' => array());
         $aModulesInfo[] = array('id' => 'with_everything', 'version' => '1.0', 'activeInShop' => array($sShopUrl));
+        $aModulesInfo[] = array('id' => 'without_own_module_namespace', 'version' => '1.0.0', 'activeInShop' => array());
 
         foreach ($aModulesInfo as $aModuleInfo) {
             $module = new \StdClass();
