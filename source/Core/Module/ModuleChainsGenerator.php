@@ -152,8 +152,8 @@ class ModuleChainsGenerator
      * Classes might be in module chain by path (old way) or by module namespace(new way).
      * This function removes all classes from class chain for classes inside a deactivated module's directory.
      *
-     * @param $moduleId
-     * @param $classChain
+     * @param string $moduleId
+     * @param array  $classChain
      *
      * @return array
      */
@@ -170,8 +170,8 @@ class ModuleChainsGenerator
      * Clean classes from chain for given module id.
      * This function removes all classes from class chain that are in aModuleExtensions and belong to a deactivated module.
      *
-     * @param $moduleId
-     * @param $classChain
+     * @param string $moduleId
+     * @param array  $classChain
      *
      * @return mixed
      */
@@ -198,8 +198,8 @@ class ModuleChainsGenerator
      * Clean classes from chain for given module id.
      * This function removes all classes from class chain for classes inside a deactivated module's directory.
      *
-     * @param $moduleId
-     * @param $classChain
+     * @param string $moduleId
+     * @param array  $classChain
      *
      * @return array
      */
@@ -220,8 +220,8 @@ class ModuleChainsGenerator
      * NOTE: for old style modules, the shop config variable 'aModules' contains the path to the module file
      *       relative to shop/modules directory.
      *
-     * @param $moduleClass
-     * @param $moduleDirectory
+     * @param string $moduleClass
+     * @param string $moduleDirectory
      *
      * @return bool
      */
@@ -261,6 +261,8 @@ class ModuleChainsGenerator
      * TODD: Think about case sensitivity issues
      *
      * Get module path relative to source/modules for given module id.
+     *
+     * @param string $moduleId
      *
      * @return string
      */
@@ -393,8 +395,6 @@ class ModuleChainsGenerator
      * @param string $moduleClass
      *
      * @throws \oxSystemComponentException
-     *
-     * @return null
      */
     protected function onModuleExtensionCreationError($classExtension, $moduleClass)
     {
@@ -413,8 +413,6 @@ class ModuleChainsGenerator
      * Disables module, adds to aDisabledModules config.
      *
      * @param array $modulePath Full module path
-     *
-     * @return null
      */
     public function disableModule($modulePath)
     {
@@ -429,7 +427,7 @@ class ModuleChainsGenerator
     }
 
     /**
-     * Getter for ModuleVariablesLocato
+     * Getter for ModuleVariablesLocator
      *
      * @return ModuleVariablesLocator
      */
@@ -441,7 +439,7 @@ class ModuleChainsGenerator
     /**
      * Getter for module array
      *
-     * @param ModuleVariablesLocator $variablesLocator ModuleVariablesLocator
+     * @param ModuleVariablesLocator $variablesLocator
      *
      * @return array
      */
