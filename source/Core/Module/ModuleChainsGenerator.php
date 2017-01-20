@@ -393,6 +393,8 @@ class ModuleChainsGenerator
      * @param string $moduleClass
      *
      * @throws \oxSystemComponentException
+     *
+     * @return null
      */
     protected function onModuleExtensionCreationError($classExtension, $moduleClass)
     {
@@ -411,6 +413,8 @@ class ModuleChainsGenerator
      * Disables module, adds to aDisabledModules config.
      *
      * @param array $modulePath Full module path
+     *
+     * @return null
      */
     public function disableModule($modulePath)
     {
@@ -425,6 +429,8 @@ class ModuleChainsGenerator
     }
 
     /**
+     * Getter for ModuleVariablesLocato
+     *
      * @return ModuleVariablesLocator
      */
     public function getModuleVariablesLocator()
@@ -433,7 +439,9 @@ class ModuleChainsGenerator
     }
 
     /**
-     * @param ModuleVariablesLocator $variablesLocator
+     * Getter for module array
+     *
+     * @param ModuleVariablesLocator $variablesLocator ModuleVariablesLocator
      *
      * @return array
      */
