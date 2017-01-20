@@ -25,7 +25,6 @@ namespace OxidEsales\EshopCommunity\Core\Module;
 use oxDb;
 use oxModuleCache;
 use oxRegistry;
-use OxidEsales\Eshop\Core\Module\ModuleVariablesLocator;
 
 /**
  * Modules list class.
