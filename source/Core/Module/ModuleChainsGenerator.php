@@ -159,7 +159,6 @@ class ModuleChainsGenerator
      */
     public function cleanModuleFromClassChain($moduleId, $classChain)
     {
-        //WIP, need to also handle aModuleExtensions
         $cleanedClassChain = $this->cleanModuleFromClassChainByModuleId($moduleId, $classChain);
         $cleanedClassChain = $this->cleanModuleFromClassChainByPath($moduleId, $cleanedClassChain);
 

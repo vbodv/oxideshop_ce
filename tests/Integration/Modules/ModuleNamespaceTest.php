@@ -154,7 +154,7 @@ class ModuleNamespaceTest extends BaseModuleTestCase
 
         $price = oxNew('oxPrice');
         $this->assertFalse(is_a($price, $priceAsserts['class']), 'Price object class not as expected ' . get_class($price));
-        #$price = $this->assertPrice(array('factor' => 1));
+        $this->assertPrice(array('factor' => 1));
     }
 
     /**
