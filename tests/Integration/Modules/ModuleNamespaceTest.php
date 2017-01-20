@@ -168,7 +168,9 @@ class ModuleNamespaceTest extends BaseModuleTestCase
     }
 
     /**
-     * Tests if module was activated and then properly deactivated.
+     * Tests if module was activated and then properly deactivated when we have two modules.
+     * NOTE: do not instantiate price and test, as we already have some class alias in this PHP instance from the
+     *       test above.
      *
      * @group module
      *
@@ -180,12 +182,8 @@ class ModuleNamespaceTest extends BaseModuleTestCase
      * @param array  $resultToAsserts (array key 0 -> before, array key 1 -> after case)
      * @param array  $priceAsserts
      */
-    public function testModuleDeactivationTwoModules($installModules, $moduleName, $moduleId, $resultToAsserts, $priceAsserts)
+    public function testModuleDeactivationTwoModules($installModules, $moduleName, $moduleId, $resultToAsserts)
     {
-        $this->markTestIncomplete('Model class PHP instance issue, test case can only run standalone in a PHP instance.
-                                   Cannot be run together with testModuleWorksAfterActivation and testModuleDeactivation.
-                                   Need to use another model class for testing than oxPrice again.');
-
         $environment = new Environment();
         $environment->prepare($installModules);
 
@@ -193,11 +191,10 @@ class ModuleNamespaceTest extends BaseModuleTestCase
         $module->load($moduleName);
         $this->deactivateModule($module, $moduleId);
         $this->activateModule($module, $moduleId);
-        $this->assertPrice($priceAsserts[0]);
         $this->runAsserts($resultToAsserts[0]);
 
         // have a direct look at the class chain
-        $utilsObject = new TestUtilsObject;
+        $utilsObject = new SPIKETestUtilsObject;
         $chain = $utilsObject->getTheModuleChainsGenerator();
         $class = 'OxidEsales\Eshop\Core\Price';
         $classAlias = 'oxprice';
@@ -205,18 +202,6 @@ class ModuleNamespaceTest extends BaseModuleTestCase
                            '1' => 'OxidEsales\EshopTestModule\Application\Model\TestModuleOnePrice');
         $this->assertEquals($fullChain, $chain->getFullChain($class, $classAlias));
         $this->assertEquals($fullChain, $chain->filterInactiveExtensions($fullChain));
-
-        // Check the extension chain
-        // (only for CE for now, for other shop editions we will only see a difference in the core classes and that's
-        // not what we are interested in here)
-        if ('CE' == $this->getTestConfig()->getShopEdition()) {
-            $price = oxNew('oxprice');
-            $expectedParents = array('TestModuleTwoPrice',
-                                     'oxPrice',
-                                     'OxidEsales\EshopCommunity\Core\Price');
-
-            $this->assertEquals(array_combine($expectedParents,$expectedParents), class_parents($price));
-        }
 
         // deactivate module
         $this->deactivateModule($module, $moduleId); //this is done via module installer
@@ -226,21 +211,6 @@ class ModuleNamespaceTest extends BaseModuleTestCase
         $activeChain = array('0' => 'without_own_module_namespace/Application/Model/TestModuleTwoPrice');
         $this->assertEquals($fullChain, $chain->getFullChain($class, $classAlias));
         $this->assertEquals($activeChain, $chain->filterInactiveExtensions($fullChain));
-
-        //IMPORTANT: We can only test by removing the 'outer' module from the chain, otherwise  we already have a
-        // class alias/extension chain for the first module class and no way to remove a middle class in this PHP instance.
-        // Check the extension chain again, the deactivated module must be gone from that chain
-        // (only for CE for now, for other shop editions we will only see a difference in the core classes and that's
-        // not what we are interested in here)
-        if ('CE' == $this->getTestConfig()->getShopEdition()) {
-            $price = oxNew('oxprice');
-            $expectedParents = array('oxPrice',
-                                     'OxidEsales\EshopCommunity\Core\Price');
-
-            $this->assertEquals(array_combine($expectedParents,$expectedParents), class_parents($price));
-        }
-
-        $this->assertPrice($priceAsserts[1]);
     }
 
     /**
