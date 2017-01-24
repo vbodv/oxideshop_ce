@@ -28,38 +28,6 @@ use OxidEsales\TestingLibrary\ServiceCaller;
 use OxidEsales\TestingLibrary\Services\Files\Remove;
 use OxidEsales\TestingLibrary\Services\Library\FileHandler;
 
-
-class testModuleList extends \OxidEsales\EshopCommunity\Core\Module\ModuleList
-{
-     public function getTheInvalidExtensions($sModuleId)
-     {
-         /*
-         $extendedClasses = $this->getModuleExtensions($sModuleId);
-         $deletedExtensions = array();
-
-         foreach ($extendedClasses as $oxidEshopClass => $moduleClasses) {
-             foreach ($moduleClasses as $sModulePath) {
-                 if (!$this->isNamespacedClass($sModulePath)) {
-                     $completeExtensionPath = $this->getConfig()->getModulesDir() . $sModulePath . '.php';
-
-                     if (!file_exists($completeExtensionPath)) {
-                         $deletedExtensions[$oxidEshopClass][] = $sModulePath;
-                     }
-                 } else {
-                     if (!class_exists($sModulePath, false)) {
-                         $deletedExtensions[$oxidEshopClass][] = $sModulePath;
-                     }
-                 }
-             }
-         }
-
-         return $deletedExtensions;
-         */
-     }
-
-}
-
-
 /**
  * Module functionality functionality.
  *
@@ -98,23 +66,10 @@ class ModuleNamespaceTest extends ModuleBaseTest
      */
     public function testPhysicallyDeleteNamespacedModuleWithoutDeactivation()
     {
-        $this->markTestIncomplete('WIP'):
-
         $this->loginAdmin('Extensions', 'Modules');
         $this->activateModule(self::TITLE_MODULE_OLDSTYLE);
-       # $this->assertNoProblem();
-       # $this->checkFrontend(3 * 3); // price multiplies more than expected, some flaw in module
-
-       # $this->loginAdmin('Extensions', 'Modules');
         $this->activateModule(self::TITLE_MODULE_NAMESPACE);
-       # $this->assertNoProblem();
-       # $this->checkFrontend(3 * 3 * 2 * 2); // price multiplies more than expected, some flaw in module
-
-
-        $test = oxNew('OxidEsales\EshopCommunity\Tests\Acceptance\Admin\testModuleList');
-        var_dump($test->getModuleExtensions(self::ID_MODULE_NAMESPACE));
-
-        /*
+       # $this->assertNoProblem(); //
         $this->checkFrontend(3 * 3 * 2 * 2); // price multiplies more than expected, some flaw in module
 
         $this->deleteModule(self::TEST_MODULE_NAMESPACE);
@@ -122,11 +77,10 @@ class ModuleNamespaceTest extends ModuleBaseTest
         $this->loginAdmin('Extensions', 'Modules');
         $this->frame('edit');
         $this->assertTextPresent('Problematic Files');
-        $this->assertTextPresent('EshopTestModuleOne/metadata.php');
+        $this->assertTextPresent(self::ID_MODULE_NAMESPACE . '/metadata.php');
         $this->clickAndWait('yesButton');
 
         $this->checkFrontend(3 * 3); // price multiplies more than expected, some flaw in module
-*/
     }
 
     /**
@@ -136,6 +90,10 @@ class ModuleNamespaceTest extends ModuleBaseTest
      */
     protected function checkFrontend($factor = 1)
     {
+        #$this->clearCache();
+        $this->clearCookies();
+        #$this->clearTemp();
+
         $this->openShop();
         $this->openArticle(self::TEST_ARTICLE_OXID, true);
 
@@ -151,7 +109,7 @@ class ModuleNamespaceTest extends ModuleBaseTest
     {
         $this->selectMenu('Extensions', 'Modules');
         $this->frame('edit');
-        #$this->assertTextNotPresent('Problematic Files');
+        $this->assertTextNotPresent('Problematic Files');
     }
 
 }
