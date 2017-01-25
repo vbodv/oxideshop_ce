@@ -22,12 +22,6 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Acceptance\Admin;
 
-use OxidEsales\Eshop\Application\Controller\ContentController;
-use OxidEsales\EshopCommunity\Tests\Acceptance\AdminTestCase;
-use OxidEsales\TestingLibrary\ServiceCaller;
-use OxidEsales\TestingLibrary\Services\Files\Remove;
-use OxidEsales\TestingLibrary\Services\Library\FileHandler;
-
 /**
  * Module functionality functionality.
  *
@@ -53,11 +47,35 @@ class ModuleNamespaceTest extends ModuleBaseTest
     {
         parent::setUp();
 
+        // make sure the namespaced test module is in place
+        $this->deleteModule(self::TEST_MODULE_NAMESPACE);
+        $this->restoreTestModule(self::TEST_MODULE_NAMESPACE);
+        $this->clearCache();
+        $this->clearCookies();
+        $this->clearTemp();
+
         //TODO: check if test works for subshop as well (which login to use, do we need to provide shopid somewhere ...)
         $testConfig = $this->getTestConfig();
         if ($testConfig->isSubShop()) {
             $this->markTestSkipped('Test is not for SubShop');
         }
+    }
+
+    /**
+     * Test deactivating a namespace module.
+     */
+    public function testDeactivateNamespaceModule()
+    {
+        $this->loginAdmin('Extensions', 'Modules');
+        $this->activateModule(self::TITLE_MODULE_OLDSTYLE);
+        $this->activateModule(self::TITLE_MODULE_NAMESPACE);
+        $this->checkFrontend(3 * 3 * 2 * 2); // price multiplies more than expected, some flaw in module
+
+        $this->clearCookies();
+        $this->loginAdmin('Extensions', 'Modules');
+        $this->deactivateModule(self::TITLE_MODULE_NAMESPACE);
+        #$this->assertNoProblem(); // commented cause it interferes with #2 atm
+        $this->checkFrontend(3 * 3); // price multiplies more than expected, some flaw in module
     }
 
     /**
@@ -69,9 +87,32 @@ class ModuleNamespaceTest extends ModuleBaseTest
         $this->loginAdmin('Extensions', 'Modules');
         $this->activateModule(self::TITLE_MODULE_OLDSTYLE);
         $this->activateModule(self::TITLE_MODULE_NAMESPACE);
-       # $this->assertNoProblem(); //
+        # $this->assertNoProblem(); // commented cause it interferes with #2 atm
         $this->checkFrontend(3 * 3 * 2 * 2); // price multiplies more than expected, some flaw in module
 
+        $this->deleteModule(self::TEST_MODULE_NAMESPACE);
+
+        $this->loginAdmin('Extensions', 'Modules');
+        $this->frame('edit');
+        $this->assertTextPresent('Problematic Files');
+        $this->assertTextPresent(self::ID_MODULE_NAMESPACE . '/metadata.php');
+        $this->clickAndWait('yesButton');
+
+        $this->checkFrontend(3 * 3); // price multiplies more than expected, some flaw in module
+    }
+
+    /**
+     * Physically remove an activated module from shop without deactivating it.
+     * Shop should detect this and request cleanup in shop admin backend.
+     *
+     * Same as before with a slight difference: we dactivate the module first, the physically remove it from shop
+     */
+    public function testPhysicallyDeleteNamespacedModuleWithDeactivation()
+    {
+        $this->loginAdmin('Extensions', 'Modules');
+        $this->activateModule(self::TITLE_MODULE_OLDSTYLE);
+        $this->activateModule(self::TITLE_MODULE_NAMESPACE);
+        $this->deactivateModule(self::TITLE_MODULE_NAMESPACE);
         $this->deleteModule(self::TEST_MODULE_NAMESPACE);
 
         $this->loginAdmin('Extensions', 'Modules');
@@ -87,12 +128,13 @@ class ModuleNamespaceTest extends ModuleBaseTest
      * Test modules affect the frontend price.
      *
      * @param integer $factor
+     * @param bool    $clearCookies
      */
-    protected function checkFrontend($factor = 1)
+    protected function checkFrontend($factor = 1, $clearCookies = true)
     {
-        #$this->clearCache();
-        $this->clearCookies();
-        #$this->clearTemp();
+        if ($clearCookies) {
+            $this->clearCookies();
+        }
 
         $this->openShop();
         $this->openArticle(self::TEST_ARTICLE_OXID, true);
