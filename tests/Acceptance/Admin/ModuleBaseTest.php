@@ -25,16 +25,15 @@ namespace OxidEsales\EshopCommunity\Tests\Acceptance\Admin;
 use OxidEsales\EshopCommunity\Tests\Acceptance\AdminTestCase;
 use OxidEsales\TestingLibrary\ServiceCaller;
 use OxidEsales\TestingLibrary\Services\Files\Remove;
-use OxidEsales\TestingLibrary\Services\Library\FileHandler;
+use OxidEsales\TestingLibrary\FileCopier;
 
 /**
- * Module functonality functionality.
+ * Module functionality.
  *
  * @group module
  */
 abstract class ModuleBaseTest extends AdminTestCase
 {
-
     /**
      * Delete all module files from shop
      *
@@ -70,6 +69,20 @@ abstract class ModuleBaseTest extends AdminTestCase
         $this->assertTextPresent("OXID");
         $this->assertTextPresent("-");
         $this->assertTextPresent("-");
+    }
+
+    /**
+     * Helper function for module deactivation
+     *
+     * @param string $module
+     */
+    protected function deactivateModule($moduleTitle)
+    {
+        $this->openListItem($moduleTitle);
+        $this->frame("edit");
+        $this->clickAndWait("//form[@id='myedit']//input[@value='Deactivate']", "list");
+        $this->waitForFrameToLoad('list');
+        $this->assertElementPresent("//form[@id='myedit']//input[@value='Activate']");
     }
 
     protected function assertActivationButtonIsPresent()
@@ -117,5 +130,23 @@ abstract class ModuleBaseTest extends AdminTestCase
             ]
         );
         $oServiceCaller->callService(Remove::class);
+    }
+
+    /**
+     * Copy module files to shop.
+     *
+     * @param string $moduleDirectory
+     */
+    protected function restoreTestModule($moduleDirectory)
+    {
+        $config = $this->getTestConfig();
+        $testDataPath = realpath(__DIR__ . '/testData/modules/' . $moduleDirectory);
+        if ($testDataPath) {
+            $target = $config->getRemoteDirectory() ? $config->getRemoteDirectory() : $config->getShopPath();
+            $target .= 'modules/';
+            $fileCopier = new FileCopier();
+            $fileCopier->createEmptyDirectory($target . $moduleDirectory);
+            $fileCopier->copyFiles($testDataPath, $target . $moduleDirectory);
+        }
     }
 }
