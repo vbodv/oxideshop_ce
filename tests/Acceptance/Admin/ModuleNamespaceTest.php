@@ -74,7 +74,7 @@ class ModuleNamespaceTest extends ModuleBaseTest
         $this->clearCookies();
         $this->loginAdmin('Extensions', 'Modules');
         $this->deactivateModule(self::TITLE_MODULE_NAMESPACE);
-        #$this->assertNoProblem(); // commented cause it interferes with #2 atm
+        $this->assertNoProblem(); // commented cause it interferes with #2 atm
         $this->checkFrontend(3 * 3); // price multiplies more than expected, some flaw in module
     }
 
@@ -87,7 +87,7 @@ class ModuleNamespaceTest extends ModuleBaseTest
         $this->loginAdmin('Extensions', 'Modules');
         $this->activateModule(self::TITLE_MODULE_OLDSTYLE);
         $this->activateModule(self::TITLE_MODULE_NAMESPACE);
-        # $this->assertNoProblem(); // commented cause it interferes with #2 atm
+        $this->assertNoProblem(); // commented cause it interferes with #2 atm
         $this->checkFrontend(3 * 3 * 2 * 2); // price multiplies more than expected, some flaw in module
 
         $this->deleteModule(self::TEST_MODULE_NAMESPACE);

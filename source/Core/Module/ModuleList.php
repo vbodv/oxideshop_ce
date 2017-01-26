@@ -721,16 +721,21 @@ class ModuleList extends \oxSuperCfg
 
         foreach ($extendedClasses as $oxidEshopClass => $moduleClasses) {
             foreach ($moduleClasses as $sModulePath) {
-                if (!$this->isNamespacedClass($sModulePath)) {
-                    $completeExtensionPath = $this->getConfig()->getModulesDir() . $sModulePath . '.php';
 
-                    if (!file_exists($completeExtensionPath)) {
-                        $deletedExtensions[$oxidEshopClass][] = $sModulePath;
-                    }
-                } else {
-                    if (!class_exists($sModulePath, false)) {
-                        $deletedExtensions[$oxidEshopClass][] = $sModulePath;
-                    }
+                #NOTE: to fix #2 we still need to check for the file
+                # What we need is a match of namespace to path
+                # When we stick to 'modules belong inside module directory' we can do that.
+                # Checking if class exists does not work with the not yet aliased virtual parent classes for namespaced modules
+                # We could check composer.json in shop and in modules dir for namespace to file map
+
+                $completeExtensionPath = $this->getConfig()->getModulesDir() . $sModulePath . '.php';
+                if ($this->isNamespacedClass($sModulePath)) {
+                    $namespaceModulePath = str_replace('OxidEsales\EshopAcceptanceTestModule', 'with_own_module_namespace', $sModulePath);
+                    $namespaceModulePath = str_replace('\\', '/', $namespaceModulePath);
+                    $completeExtensionPath = $this->getConfig()->getModulesDir() . $namespaceModulePath . '.php';
+                }
+                if (!file_exists($completeExtensionPath)) {
+                    $deletedExtensions[$oxidEshopClass][] = $sModulePath;
                 }
             }
         }
