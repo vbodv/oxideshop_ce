@@ -27,9 +27,6 @@ namespace OxidEsales\EshopCommunity\Core;
  * Each edition has its own map file. The map files will be merged like this: CE <- PE <- EE
  * So the mapping to a concrete class will be overwritten, if a class exists in a different edition.
  *
- * NOTE: exceptions aren't working at the moment with the virtual namespaces (throwing them is the problem).
- *       Use the OxidEsales\EshopCommunity namespace instead!
- *
  * @inheritdoc
  */
 class VirtualNameSpaceClassMap extends \OxidEsales\EshopCommunity\Core\Edition\ClassMap
@@ -427,9 +424,9 @@ class VirtualNameSpaceClassMap extends \OxidEsales\EshopCommunity\Core\Edition\C
             'OxidEsales\Eshop\Application\Model\Wrapping' => \OxidEsales\EshopCommunity\Application\Model\Wrapping::class,
             'OxidEsales\Eshop\Core\AdminLogSqlDecorator' => \OxidEsales\EshopCommunity\Core\AdminLogSqlDecorator::class,
             'OxidEsales\Eshop\Core\ApplicationServer' => \OxidEsales\EshopCommunity\Core\ApplicationServer::class,
+            'OxidEsales\Eshop\Core\Autoload\BcAliasAutoloader' => \OxidEsales\EshopCommunity\Core\Autoload\BcAliasAutoloader::class,
             'OxidEsales\Eshop\Core\Autoload\ModuleAutoload' => \OxidEsales\EshopCommunity\Core\Autoload\ModuleAutoload::class,
             'OxidEsales\Eshop\Core\Autoload\NotOverridableClassAutoload' => \OxidEsales\EshopCommunity\Core\Autoload\NotOverridableClassAutoload::class,
-            'OxidEsales\Eshop\Core\Autoload\ShopAutoload' => \OxidEsales\EshopCommunity\Core\Autoload\ShopAutoload::class,
             'OxidEsales\Eshop\Core\Autoload\VirtualNamespaceClassAutoload' => \OxidEsales\EshopCommunity\Core\Autoload\VirtualNamespaceClassAutoload::class,
             'OxidEsales\Eshop\Core\Base' => \OxidEsales\EshopCommunity\Core\Base::class,
             'OxidEsales\Eshop\Core\ClassMap' => \OxidEsales\EshopCommunity\Core\ClassMap::class,
@@ -469,6 +466,26 @@ class VirtualNameSpaceClassMap extends \OxidEsales\EshopCommunity\Core\Edition\C
             'OxidEsales\Eshop\Core\Edition\EditionSelector' => \OxidEsales\EshopCommunity\Core\Edition\EditionSelector::class,
             'OxidEsales\Eshop\Core\Email' => \OxidEsales\EshopCommunity\Core\Email::class,
             'OxidEsales\Eshop\Core\Encryptor' => \OxidEsales\EshopCommunity\Core\Encryptor::class,
+            'OxidEsales\Eshop\Core\Exception\ArticleException' => \OxidEsales\EshopCommunity\Core\Exception\ArticleException::class,
+            'OxidEsales\Eshop\Core\Exception\ArticleInputException' => \OxidEsales\EshopCommunity\Core\Exception\ArticleInputException::class,
+            'OxidEsales\Eshop\Core\Exception\ConnectionException' => \OxidEsales\EshopCommunity\Core\Exception\ConnectionException::class,
+            'OxidEsales\Eshop\Core\Exception\CookieException' => \OxidEsales\EshopCommunity\Core\Exception\CookieException::class,
+            'OxidEsales\Eshop\Core\Exception\DatabaseConnectionException' => \OxidEsales\EshopCommunity\Core\Exception\DatabaseConnectionException::class,
+            'OxidEsales\Eshop\Core\Exception\DatabaseException' => \OxidEsales\EshopCommunity\Core\Exception\DatabaseException::class,
+            'OxidEsales\Eshop\Core\Exception\DatabaseNotConfiguredException' => \OxidEsales\EshopCommunity\Core\Exception\DatabaseNotConfiguredException::class,
+            'OxidEsales\Eshop\Core\Exception\ExceptionHandler' => \OxidEsales\EshopCommunity\Core\Exception\ExceptionHandler::class,
+            'OxidEsales\Eshop\Core\Exception\ExceptionToDisplay' => \OxidEsales\EshopCommunity\Core\Exception\ExceptionToDisplay::class,
+            'OxidEsales\Eshop\Core\Exception\FileException' => \OxidEsales\EshopCommunity\Core\Exception\FileException::class,
+            'OxidEsales\Eshop\Core\Exception\InputException' => \OxidEsales\EshopCommunity\Core\Exception\InputException::class,
+            'OxidEsales\Eshop\Core\Exception\LanguageException' => \OxidEsales\EshopCommunity\Core\Exception\LanguageException::class,
+            'OxidEsales\Eshop\Core\Exception\NoArticleException' => \OxidEsales\EshopCommunity\Core\Exception\NoArticleException::class,
+            'OxidEsales\Eshop\Core\Exception\ObjectException' => \OxidEsales\EshopCommunity\Core\Exception\ObjectException::class,
+            'OxidEsales\Eshop\Core\Exception\OutOfStockException' => \OxidEsales\EshopCommunity\Core\Exception\OutOfStockException::class,
+            'OxidEsales\Eshop\Core\Exception\ShopException' => \OxidEsales\EshopCommunity\Core\Exception\ShopException::class,
+            'OxidEsales\Eshop\Core\Exception\StandardException' => \OxidEsales\EshopCommunity\Core\Exception\StandardException::class,
+            'OxidEsales\Eshop\Core\Exception\SystemComponentException' => \OxidEsales\EshopCommunity\Core\Exception\SystemComponentException::class,
+            'OxidEsales\Eshop\Core\Exception\UserException' => \OxidEsales\EshopCommunity\Core\Exception\UserException::class,
+            'OxidEsales\Eshop\Core\Exception\VoucherException' => \OxidEsales\EshopCommunity\Core\Exception\VoucherException::class,
             'OxidEsales\Eshop\Core\Field' => \OxidEsales\EshopCommunity\Core\Field::class,
             'OxidEsales\Eshop\Core\FileCache' => \OxidEsales\EshopCommunity\Core\FileCache::class,
             'OxidEsales\Eshop\Core\FileSystem\FileSystem' => \OxidEsales\EshopCommunity\Core\FileSystem\FileSystem::class,

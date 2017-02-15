@@ -22,6 +22,7 @@
 
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EshopCommunity\Core\Request;
+use OxidEsales\EshopCommunity\Core\UtilsObject;
 
 if (!defined('ESHOP_CONFIG_FILE')) {
     define('ESHOP_CONFIG_FILE', 'config.inc.php');
@@ -66,44 +67,6 @@ if (!function_exists('redirectIfShopNotConfigured')) {
         header("Connection: close");
 
         die($message);
-    }
-}
-
-if (!function_exists('showErrorIfAutoloaderIsMissing')) {
-    function showErrorIfAutoloaderIsMissing($fileName)
-    {
-        if (file_exists($fileName)) {
-            return;
-        }
-
-        $message = printf(
-            "Autoloader file '%s' was not found! Please run 'composer install' to generate it.",
-            $fileName
-        );
-
-        die($message);
-    }
-}
-
-if (!function_exists('registerComposerAutoload')) {
-    /**
-     * Registers auto-loader for shop namespaced classes.
-     */
-    function registerComposerAutoload()
-    {
-        class AutoloadConfigFile
-        {
-            public function __construct()
-            {
-                showErrorIfConfigIsMissing();
-                include ESHOP_CONFIG_FILE;
-            }
-        }
-        $configFile = new AutoloadConfigFile();
-        $autoloaderFileName = $configFile->vendorDirectory . '/autoload.php';
-
-        showErrorIfAutoloaderIsMissing($autoloaderFileName);
-        require_once $autoloaderFileName;
     }
 }
 
@@ -314,7 +277,7 @@ function oxNew($className)
 {
     startProfile('oxNew');
     $arguments = func_get_args();
-    $object = call_user_func_array(array(oxUtilsObject::getInstance(), "oxNew"), $arguments);
+    $object = call_user_func_array(array(UtilsObject::getInstance(), "oxNew"), $arguments);
     stopProfile('oxNew');
 
     return $object;

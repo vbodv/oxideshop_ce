@@ -46,13 +46,16 @@ class NotOverridableClassAutoload
     /**
      * Creates class alias from class which is defined in class map.
      *
-     * @param string $sClass Class name.
+     * @param string $class Class name.
      */
-    public function autoload($sClass)
+    public function autoload($class)
     {
-        $sClass = strtolower($sClass);
-        if (array_key_exists($sClass, $this->getClassMap())) {
-            class_alias($this->map[$sClass], $sClass);
+        $class = strtolower($class);
+        if (array_key_exists($class, $this->getClassMap())) {
+            // Uncomment to debug:  echo __CLASS__ . '::' . __FUNCTION__ . ' CREATE ALIAS ' . $this->map[$class] .' - '. $class . PHP_EOL;
+            class_alias($this->map[$class], $class);
+
+            return true;
         }
     }
 

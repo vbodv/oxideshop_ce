@@ -633,7 +633,7 @@ class ShopControl extends \oxSuperCfg
      */
     protected function _isDebugMode()
     {
-        return (bool) oxRegistry::get("OxConfigFile")->getVar('iDebug');
+        return (bool) Registry::get("OxConfigFile")->getVar('iDebug');
     }
 
     /**

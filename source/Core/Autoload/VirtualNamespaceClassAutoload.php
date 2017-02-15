@@ -52,10 +52,14 @@ class VirtualNamespaceClassAutoload
      *
      * @param string $class Class name.
      */
-    public function autoload($class)
+    public function autoload($classVirtualName)
     {
-        if (array_key_exists($class, $this->getClassMap())) {
-            class_alias($this->map[$class], $class);
+        if (array_key_exists($classVirtualName, $this->getClassMap())) {
+            $realClassName = $this->map[$classVirtualName];
+            // Uncomment to debug:  echo __CLASS__ . '::' . __FUNCTION__ . ' CREATE ALIAS ' . $realClassName .' - '. $classVirtualName . PHP_EOL;
+            class_alias($realClassName, $classVirtualName);
+
+            return true;
         }
     }
 

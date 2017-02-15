@@ -21,7 +21,7 @@
  */
 namespace OxidEsales\EshopCommunity\Core\Autoload;
 
-use oxUtilsObject;
+use OxidEsales\EshopCommunity\Core\UtilsObject;
 
 /**
  * Autoloader for module classes and extensions.
@@ -48,6 +48,7 @@ class ModuleAutoload
 
         if ($classPath = $this->getFilePath($class)) {
             include $classPath;
+            // Uncomment to debug:  echo __CLASS__ . '::' . __FUNCTION__ . ' LOADED ' . $class . PHP_EOL;
         } else {
             $class = preg_replace('/_parent$/i', '', $class);
 
@@ -71,7 +72,7 @@ class ModuleAutoload
     {
         $filePath = '';
 
-        $moduleFiles = oxUtilsObject::getInstance()->getModuleVar('aModuleFiles');
+        $moduleFiles = UtilsObject::getInstance()->getModuleVar('aModuleFiles');
         if (is_array($moduleFiles)) {
             $basePath = getShopBasePath();
             foreach ($moduleFiles as $moduleId => $classPaths) {
@@ -95,7 +96,7 @@ class ModuleAutoload
      */
     protected function createExtensionClassChain($class)
     {
-        $utilsObject = oxUtilsObject::getInstance();
+        $utilsObject = UtilsObject::getInstance();
 
         $extensions = $utilsObject->getModuleVar('aModules');
         if (is_array($extensions)) {

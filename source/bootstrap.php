@@ -15,24 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with OXID eShop Community Edition.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @link      http://www.oxid-esales.com
+ * @link          http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2016
- * @version   OXID eShop CE
+ * @version       OXID eShop CE
  */
 
 use OxidEsales\EshopCommunity\Core\ConfigFile;
 use OxidEsales\EshopCommunity\Core\Registry;
 
-if (defined('E_DEPRECATED')) {
-    //E_DEPRECATED is disabled particularly for PHP 5.3 as some 3rd party modules still uses deprecated functionality
-    error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
-} else {
-    error_reporting(E_ALL ^ E_NOTICE);
-}
+//E_DEPRECATED is disabled particularly for PHP 5.3 as some 3rd party modules still uses deprecated functionality
+error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
 
-if (!defined('OX_BASE_PATH')) {
-    define('OX_BASE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
-}
+define('INSTALLATION_ROOT_PATH', dirname(__DIR__));
+define('OX_BASE_PATH', INSTALLATION_ROOT_PATH . DIRECTORY_SEPARATOR . 'source' . DIRECTORY_SEPARATOR);
+define('VENDOR_PATH', INSTALLATION_ROOT_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR);
+
+// Require and register composer autoloader
+require_once VENDOR_PATH . 'autoload.php';
+
+// Require and register backwardscompatible autoloader
+require_once OX_BASE_PATH . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'Autoload' . DIRECTORY_SEPARATOR . 'BcAliasAutoloader.php';
+
 
 // custom functions file
 if (file_exists(OX_BASE_PATH . 'modules/functions.php')) {
@@ -46,15 +49,11 @@ require_once OX_BASE_PATH . 'oxfunctions.php';
 showErrorIfConfigIsMissing();
 redirectIfShopNotConfigured();
 
-// Composer autoloader.
-registerComposerAutoload();
-
 //init config.inc.php file reader
 $oConfigFile = new ConfigFile(OX_BASE_PATH . "config.inc.php");
 Registry::set("oxConfigFile", $oConfigFile);
 
 registerVirtualNamespaceAutoLoad();
-registerShopAutoLoad();
 registerModuleAutoload();
 
 

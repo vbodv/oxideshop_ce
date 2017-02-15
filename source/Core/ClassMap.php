@@ -29,13 +29,15 @@ class ClassMap extends \OxidEsales\EshopCommunity\Core\Edition\ClassMap
 {
 
     /**
+     * Note: all array keys must be lowercase
+     *
      * @return array
      */
     public function getOverridableMap()
     {
         return [
             'oxdbmetadatahandler'                  => \OxidEsales\Eshop\Core\DbMetaDataHandler::class,
-            'oxCcValidator'                        => \OxidEsales\Eshop\Core\CreditCardValidator::class,
+            'oxccvalidator'                        => \OxidEsales\Eshop\Core\CreditCardValidator::class,
             'language'                             => \OxidEsales\Eshop\Application\Controller\Admin\LanguageController::class,
             'module'                               => \OxidEsales\Eshop\Application\Controller\Admin\ModuleController::class,
             'theme'                                => \OxidEsales\Eshop\Application\Controller\Admin\ThemeController::class,
@@ -492,64 +494,66 @@ class ClassMap extends \OxidEsales\EshopCommunity\Core\Edition\ClassMap
     }
 
     /**
+     * Note: all array keys must be lowercase
+     *
      * @return array
      */
     public function getNotOverridableMap()
     {
         return [
-            'oxadminview'                         => \OxidEsales\EshopCommunity\Application\Controller\Admin\AdminController::class,
-            'oxadmindetails'                      => \OxidEsales\EshopCommunity\Application\Controller\Admin\AdminDetailsController::class,
-            'article_list'                        => \OxidEsales\EshopCommunity\Application\Controller\Admin\ArticleList::class,
-            'ajaxlistcomponent'                   => \OxidEsales\EshopCommunity\Application\Controller\Admin\ListComponentAjax::class,
+            'oxadminview'                          => \OxidEsales\Eshop\Application\Controller\Admin\AdminController::class,
+            'oxadmindetails'                       => \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController::class,
+            'article_list'                         => \OxidEsales\Eshop\Application\Controller\Admin\ArticleList::class,
+            'ajaxlistcomponent'                    => \OxidEsales\Eshop\Application\Controller\Admin\ListComponentAjax::class,
 
-            'oxApplicationServer'                  => \OxidEsales\EshopCommunity\Core\ApplicationServer::class,
-            'oxfilecache'                          => \OxidEsales\EshopCommunity\Core\FileCache::class,
-            'oxmodule'                             => \OxidEsales\EshopCommunity\Core\Module\Module::class,
-            'oxmodulecache'                        => \OxidEsales\EshopCommunity\Core\Module\ModuleCache::class,
-            'oxmodulechainsgenerator'              => \OxidEsales\EshopCommunity\Core\Module\ModuleChainsGenerator::class,
-            'oxmodulefilesvalidator'               => \OxidEsales\EshopCommunity\Core\Module\ModuleFilesValidator::class,
-            'oxmoduleinstaller'                    => \OxidEsales\EshopCommunity\Core\Module\ModuleInstaller::class,
-            'oxmodulelist'                         => \OxidEsales\EshopCommunity\Core\Module\ModuleList::class,
-            'oxmodulemetadataagainstshopvalidator' => \OxidEsales\EshopCommunity\Core\Module\ModuleMetadataAgainstShopValidator::class,
-            'oxmodulemetadatavalidator'            => \OxidEsales\EshopCommunity\Core\Module\ModuleMetadataValidator::class,
-            'oxmodulevalidatorfactory'             => \OxidEsales\EshopCommunity\Core\Module\ModuleValidatorFactory::class,
-            'oxmodulevariableslocator'             => \OxidEsales\EshopCommunity\Core\Module\ModuleVariablesLocator::class,
-            'oxonlinecaller'                       => \OxidEsales\EshopCommunity\Core\OnlineCaller::class,
-            'oxonlinelicensecheck'                 => \OxidEsales\EshopCommunity\Core\OnlineLicenseCheck::class,
-            'oxonlinelicensecheckcaller'           => \OxidEsales\EshopCommunity\Core\OnlineLicenseCheckCaller::class,
-            'oxonlinelicensecheckrequest'          => \OxidEsales\EshopCommunity\Core\OnlineLicenseCheckRequest::class,
-            'oxonlinelicensecheckresponse'         => \OxidEsales\EshopCommunity\Core\OnlineLicenseCheckResponse::class,
-            'oxonlinemodulesnotifierrequest'       => \OxidEsales\EshopCommunity\Core\OnlineModulesNotifierRequest::class,
-            'oxonlinemoduleversionnotifier'        => \OxidEsales\EshopCommunity\Core\OnlineModuleVersionNotifier::class,
-            'oxonlinemoduleversionnotifiercaller'  => \OxidEsales\EshopCommunity\Core\OnlineModuleVersionNotifierCaller::class,
-            'oxonlinerequest'                      => \OxidEsales\EshopCommunity\Core\OnlineRequest::class,
-            'oxonlineserveremailbuilder'           => \OxidEsales\EshopCommunity\Core\OnlineServerEmailBuilder::class,
-            'oxserverchecker'                      => \OxidEsales\EshopCommunity\Core\ServerChecker::class,
-            'oxserverprocessor'                    => \OxidEsales\EshopCommunity\Core\ServerProcessor::class,
-            'oxserversmanager'                     => \OxidEsales\EshopCommunity\Core\ServersManager::class,
-            'oxshopidcalculator'                   => \OxidEsales\EshopCommunity\Core\ShopIdCalculator::class,
-            'oxsubshopspecificfilecache'           => \OxidEsales\EshopCommunity\Core\SubShopSpecificFileCache::class,
-            'oxsystemeventhandler'                 => \OxidEsales\EshopCommunity\Core\SystemEventHandler::class,
-            'oxtheme'                              => \OxidEsales\EshopCommunity\Core\Theme::class,
-            'oxutilsobject'                        => \OxidEsales\EshopCommunity\Core\UtilsObject::class,
+            'oxapplicationserver'                  => \OxidEsales\Eshop\Core\ApplicationServer::class,
+            'oxfilecache'                          => \OxidEsales\Eshop\Core\FileCache::class,
+            'oxmodule'                             => \OxidEsales\Eshop\Core\Module\Module::class,
+            'oxmodulecache'                        => \OxidEsales\Eshop\Core\Module\ModuleCache::class,
+            'oxmodulechainsgenerator'              => \OxidEsales\Eshop\Core\Module\ModuleChainsGenerator::class,
+            'oxmodulefilesvalidator'               => \OxidEsales\Eshop\Core\Module\ModuleFilesValidator::class,
+            'oxmoduleinstaller'                    => \OxidEsales\Eshop\Core\Module\ModuleInstaller::class,
+            'oxmodulelist'                         => \OxidEsales\Eshop\Core\Module\ModuleList::class,
+            'oxmodulemetadataagainstshopvalidator' => \OxidEsales\Eshop\Core\Module\ModuleMetadataAgainstShopValidator::class,
+            'oxmodulemetadatavalidator'            => \OxidEsales\Eshop\Core\Module\ModuleMetadataValidator::class,
+            'oxmodulevalidatorfactory'             => \OxidEsales\Eshop\Core\Module\ModuleValidatorFactory::class,
+            'oxmodulevariableslocator'             => \OxidEsales\Eshop\Core\Module\ModuleVariablesLocator::class,
+            'oxonlinecaller'                       => \OxidEsales\Eshop\Core\OnlineCaller::class,
+            'oxonlinelicensecheck'                 => \OxidEsales\Eshop\Core\OnlineLicenseCheck::class,
+            'oxonlinelicensecheckcaller'           => \OxidEsales\Eshop\Core\OnlineLicenseCheckCaller::class,
+            'oxonlinelicensecheckrequest'          => \OxidEsales\Eshop\Core\OnlineLicenseCheckRequest::class,
+            'oxonlinelicensecheckresponse'         => \OxidEsales\Eshop\Core\OnlineLicenseCheckResponse::class,
+            'oxonlinemodulesnotifierrequest'       => \OxidEsales\Eshop\Core\OnlineModulesNotifierRequest::class,
+            'oxonlinemoduleversionnotifier'        => \OxidEsales\Eshop\Core\OnlineModuleVersionNotifier::class,
+            'oxonlinemoduleversionnotifiercaller'  => \OxidEsales\Eshop\Core\OnlineModuleVersionNotifierCaller::class,
+            'oxonlinerequest'                      => \OxidEsales\Eshop\Core\OnlineRequest::class,
+            'oxonlineserveremailbuilder'           => \OxidEsales\Eshop\Core\OnlineServerEmailBuilder::class,
+            'oxserverchecker'                      => \OxidEsales\Eshop\Core\ServerChecker::class,
+            'oxserverprocessor'                    => \OxidEsales\Eshop\Core\ServerProcessor::class,
+            'oxserversmanager'                     => \OxidEsales\Eshop\Core\ServersManager::class,
+            'oxshopidcalculator'                   => \OxidEsales\Eshop\Core\ShopIdCalculator::class,
+            'oxsubshopspecificfilecache'           => \OxidEsales\Eshop\Core\SubShopSpecificFileCache::class,
+            'oxsystemeventhandler'                 => \OxidEsales\Eshop\Core\SystemEventHandler::class,
+            'oxtheme'                              => \OxidEsales\Eshop\Core\Theme::class,
+            'oxutilsobject'                        => \OxidEsales\Eshop\Core\UtilsObject::class,
 
-            'oxsystemcomponentexception'           => \OxidEsales\EshopCommunity\Core\Exception\SystemComponentException::class,
-            'oxexceptiontodisplay'                 => \OxidEsales\EshopCommunity\Core\Exception\ExceptionToDisplay::class,
-            'oxconnectionexception'                => \OxidEsales\EshopCommunity\Core\Exception\ConnectionException::class,
-            'oxvoucherexception'                   => \OxidEsales\EshopCommunity\Core\Exception\VoucherException::class,
-            'oxuserexception'                      => \OxidEsales\EshopCommunity\Core\Exception\UserException::class,
-            'oxshopexception'                      => \OxidEsales\EshopCommunity\Core\Exception\ShopException::class,
-            'oxoutofstockexception'                => \OxidEsales\EshopCommunity\Core\Exception\OutOfStockException::class,
-            'oxobjectexception'                    => \OxidEsales\EshopCommunity\Core\Exception\ObjectException::class,
-            'oxnoarticleexception'                 => \OxidEsales\EshopCommunity\Core\Exception\NoArticleException::class,
-            'oxinputexception'                     => \OxidEsales\EshopCommunity\Core\Exception\InputException::class,
-            'oxfileexception'                      => \OxidEsales\EshopCommunity\Core\Exception\FileException::class,
-            'oxexceptionhandler'                   => \OxidEsales\EshopCommunity\Core\Exception\ExceptionHandler::class,
-            'oxexception'                          => \OxidEsales\EshopCommunity\Core\Exception\StandardException::class,
-            'oxcookieexception'                    => \OxidEsales\EshopCommunity\Core\Exception\CookieException::class,
-            'oxarticleinputexception'              => \OxidEsales\EshopCommunity\Core\Exception\ArticleInputException::class,
-            'oxarticleexception'                   => \OxidEsales\EshopCommunity\Core\Exception\ArticleException::class,
-            'oxlanguageexception'                  => \OxidEsales\EshopCommunity\Core\Exception\LanguageException::class,
+            'oxsystemcomponentexception'           => \OxidEsales\Eshop\Core\Exception\SystemComponentException::class,
+            'oxexceptiontodisplay'                 => \OxidEsales\Eshop\Core\Exception\ExceptionToDisplay::class,
+            'oxconnectionexception'                => \OxidEsales\Eshop\Core\Exception\ConnectionException::class,
+            'oxvoucherexception'                   => \OxidEsales\Eshop\Core\Exception\VoucherException::class,
+            'oxuserexception'                      => \OxidEsales\Eshop\Core\Exception\UserException::class,
+            'oxshopexception'                      => \OxidEsales\Eshop\Core\Exception\ShopException::class,
+            'oxoutofstockexception'                => \OxidEsales\Eshop\Core\Exception\OutOfStockException::class,
+            'oxobjectexception'                    => \OxidEsales\Eshop\Core\Exception\ObjectException::class,
+            'oxnoarticleexception'                 => \OxidEsales\Eshop\Core\Exception\NoArticleException::class,
+            'oxinputexception'                     => \OxidEsales\Eshop\Core\Exception\InputException::class,
+            'oxfileexception'                      => \OxidEsales\Eshop\Core\Exception\FileException::class,
+            'oxexceptionhandler'                   => \OxidEsales\Eshop\Core\Exception\ExceptionHandler::class,
+            'oxexception'                          => \OxidEsales\Eshop\Core\Exception\StandardException::class,
+            'oxcookieexception'                    => \OxidEsales\Eshop\Core\Exception\CookieException::class,
+            'oxarticleinputexception'              => \OxidEsales\Eshop\Core\Exception\ArticleInputException::class,
+            'oxarticleexception'                   => \OxidEsales\Eshop\Core\Exception\ArticleException::class,
+            'oxlanguageexception'                  => \OxidEsales\Eshop\Core\Exception\LanguageException::class,
 
         ];
     }

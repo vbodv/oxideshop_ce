@@ -190,6 +190,8 @@ class ModuleChainsGenerator
             $extensionParentClass = $extensionClass . "_parent";
 
             if (!class_exists($extensionParentClass, false)) {
+                print_r(get_declared_classes());
+                // Uncomment to debug:  echo __CLASS__ . '::' . __FUNCTION__ . ' CREATING ALIAS ' . $class . ' -' . $extensionParentClass . PHP_EOL;
                 class_alias($class, $extensionParentClass);
             }
 
