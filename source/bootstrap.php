@@ -33,10 +33,6 @@ define('VENDOR_PATH', INSTALLATION_ROOT_PATH . DIRECTORY_SEPARATOR . 'vendor' . 
 // Require and register composer autoloader
 require_once VENDOR_PATH . 'autoload.php';
 
-// Require and register backwardscompatible autoloader
-require_once OX_BASE_PATH . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'Autoload' . DIRECTORY_SEPARATOR . 'BcAliasAutoloader.php';
-
-
 // custom functions file
 if (file_exists(OX_BASE_PATH . 'modules/functions.php')) {
     include_once OX_BASE_PATH . 'modules/functions.php';
@@ -56,6 +52,8 @@ Registry::set("oxConfigFile", $oConfigFile);
 registerVirtualNamespaceAutoLoad();
 registerModuleAutoload();
 
+// Require and register backwards compatible autoloader
+require_once OX_BASE_PATH . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'Autoload' . DIRECTORY_SEPARATOR . 'BcAliasAutoloader.php';
 
 //sets default PHP ini params
 ini_set('session.name', 'sid');

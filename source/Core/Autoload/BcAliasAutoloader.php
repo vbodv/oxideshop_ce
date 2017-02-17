@@ -36,6 +36,13 @@ class BcAliasAutoloader
     private $reverseBackwardsCompatibilityClassMap; // real class name => lowercase(old class name)
     private $virtualClassMap; // virtual class name => real class name
 
+
+    public function __construct()
+    {
+        $classMap = include_once __DIR__ . DIRECTORY_SEPARATOR . 'BackwardsCompatibilityClassMap.php';
+        $this->backwardsCompatibilityClassMap = array_map('strtolower', $classMap);
+    }
+
     /**
      * @param string $class
      *
@@ -48,6 +55,18 @@ class BcAliasAutoloader
         $bcAlias = null;
         $virtualAlias = null;
         $realClass = null;
+
+        if ($this->isRealClassRequest($class)) {
+            $search = ['OxidEsales\\EshopCommunity\\', 'OxidEsales\\EshopProfessional\\', 'OxidEsales\\EshopEnterprise\\',];
+            $replace = ['OxidEsales\\Eshop\\'];
+            $virtualClass = str_replace($search, $replace, $class);
+            if (array_key_exists($virtualClass, $this->backwardsCompatibilityClassMap)) {
+                $backwardsCompatibleClassName = $this->backwardsCompatibilityClassMap[$virtualClass];
+                class_alias('\\' . $class, $backwardsCompatibleClassName, false);
+            }
+
+            return false;
+        }
 
         if ($this->isBcAliasRequest($class)) {
             $bcAlias = $class;
@@ -62,15 +81,18 @@ class BcAliasAutoloader
         if ($virtualAlias) {
             $realClass = $this->getRealClassForVirtualAlias($virtualAlias);
         }
-        if ($realClass) {
-            $this->forceClassLoading($realClass);
-        }
-        $declaredClasses = get_declared_classes();
-        if ($bcAlias && ! in_array(strtolower($bcAlias), $declaredClasses)) {
 
+        if (!$realClass) {
+            return false;
+        }
+
+        $this->forceClassLoading($realClass);
+
+        $declaredClasses = get_declared_classes();
+        if ($bcAlias && !in_array(strtolower($bcAlias), $declaredClasses)) {
             class_alias($realClass, $bcAlias);
         }
-        if ($virtualAlias && ! in_array(strtolower($virtualAlias), $declaredClasses)) {
+        if ($virtualAlias && !in_array(strtolower($virtualAlias), $declaredClasses)) {
             class_alias($realClass, $virtualAlias);
 
             return true; // Implies also generating of $bcAlias
@@ -84,16 +106,30 @@ class BcAliasAutoloader
      *
      * @return bool
      */
+    public function isRealClassRequest($class)
+    {
+        $pattern = '/^(?i:oxidesales\\eshopcommunity|oxidesales\\eshopprofessional|oxidesales\\eshopenterprise)/';
+        $result = preg_match($pattern, $class) === 1 ? true : false;
+
+        return $result;
+    }
+
+    /**
+     * @param string $class
+     *
+     * @return bool
+     */
     private function isBcAliasRequest($class)
     {
         $classMap = $this->getBackwardsCompatibilityClassMap();
 
-        return key_exists(strtolower($class), $classMap);
+        return in_array(strtolower($class), $classMap);
     }
 
     private function getVirtualAliasForBcAlias($class)
     {
-        $classMap = $this->getBackwardsCompatibilityClassMap();
+        $classMap = array_flip($this->getBackwardsCompatibilityClassMap());
+
         return $classMap[strtolower($class)];
     }
 
@@ -104,19 +140,14 @@ class BcAliasAutoloader
      */
     private function isVirtualClassRequest($class)
     {
-        $virtualClassMap = $this->getVirtualClassMap();
-        return in_array($class, $virtualClassMap);
-        //return strpos($class, 'OxidEsales\\Eshop\\') !== false;
+        return strpos($class, 'OxidEsales\\Eshop\\') === 0;
     }
 
     private function getBcAliasForVirtualAlias($class)
     {
-
-        $reverseBcClassMap = $this->getReverseClassMap();
-        if (key_exists($class, $reverseBcClassMap)) {
-            return $reverseBcClassMap[$class];
-        } else {
-            return null;
+        $classMap = $this->getBackwardsCompatibilityClassMap();
+        if (key_exists($class, $classMap)) {
+            return $classMap[$class];
         }
     }
 
@@ -177,13 +208,6 @@ class BcAliasAutoloader
      */
     private function getBackwardsCompatibilityClassMap()
     {
-        if (!$this->backwardsCompatibilityClassMap) {
-            $this->backwardsCompatibilityClassMap = array_merge(
-                $this->getClassMapProvider()->getOverridableClassMap(),
-                $this->getClassMapProvider()->getNotOverridableClassMap()
-            );
-        }
-
         return $this->backwardsCompatibilityClassMap;
     }
 
@@ -213,4 +237,4 @@ class BcAliasAutoloader
 
 }
 // Uncomment to debug:  echo __CLASS__ . '::' . __FUNCTION__  . ' TRYING TO LOAD ' . $class . PHP_EOL;
-spl_autoload_register([new BcAliasAutoloader(), 'autoload']);
+spl_autoload_register([new BcAliasAutoloader(), 'autoload'], true, true);
