@@ -26,6 +26,7 @@ use oxBase;
 use OxidEsales\EshopCommunity\Core\Edition\EditionSelector;
 use OxidEsales\EshopCommunity\Core\Module\ModuleChainsGenerator;
 use OxidEsales\EshopCommunity\Core\Module\ModuleVariablesLocator;
+use OxidEsales\Eshop\Core\Exception\SystemComponentException;
 use ReflectionClass;
 use ReflectionException;
 
@@ -259,7 +260,7 @@ class UtilsObject
             $realClassName = $this->getClassName($className);
             //expect __autoload() (oxfunctions.php) to do its job when class_exists() is called
             if (!class_exists($realClassName)) {
-                /** @var $exception SystemComponentException */
+                /** @var $exception oxSystemComponentException */
                 $exception = oxNew(SystemComponentException::class);
                 $exception->setMessage('EXCEPTION_SYSTEMCOMPONENT_CLASSNOTFOUND');
                 $exception->setComponent($className);
