@@ -29,7 +29,7 @@ use oxAdminDetails;
 /**
  * Admin general export manager.
  */
-class GenericImportMain extends oxAdminDetails
+class GenericImportMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
 
     /**

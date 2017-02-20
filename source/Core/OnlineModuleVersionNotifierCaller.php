@@ -36,7 +36,7 @@ use oxOnlineModulesNotifierRequest;
  *
  * @ignore   This class will not be included in documentation.
  */
-class OnlineModuleVersionNotifierCaller extends \oxOnlineCaller
+class OnlineModuleVersionNotifierCaller extends \OxidEsales\Eshop\Core\OnlineCaller
 {
 
     /** Online Module Version Notifier web service url. */

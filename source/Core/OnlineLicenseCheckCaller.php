@@ -36,7 +36,7 @@ use oxOnlineLicenseCheckResponse ;
  *
  * @ignore   This class will not be included in documentation.
  */
-class OnlineLicenseCheckCaller extends \oxOnlineCaller
+class OnlineLicenseCheckCaller extends \OxidEsales\Eshop\Core\OnlineCaller
 {
 
     /** Online License Key Check web service url. */
