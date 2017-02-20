@@ -25,7 +25,6 @@ namespace OxidEsales\EshopCommunity\Application\Model;
 use Exception;
 use oxDb;
 use oxField;
-use OxidEsales\Eshop\Application\Model\Contract\ArticleInterface;
 use OxidEsales\Eshop\Core\Registry;
 use oxList;
 use oxPrice;
@@ -47,7 +46,7 @@ define('OXARTICLE_LINKTYPE_RECOMM', 5);
  * discounts, etc.
  *
  */
-class Article extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements ArticleInterface, \oxIUrl
+class Article extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements \OxidEsales\Eshop\Application\Model\Contract\ArticleInterface, \OxidEsales\Eshop\Core\Contract\IUrl
 {
 
     /**
