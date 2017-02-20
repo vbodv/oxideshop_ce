@@ -31,7 +31,7 @@ use stdClass;
  * Discounts manager.
  *
  */
-class Discount extends \oxI18n
+class Discount extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
 {
 
     /**

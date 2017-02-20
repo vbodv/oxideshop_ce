@@ -29,7 +29,7 @@ use DateTime;
 /**
  * Date manipulation utility class
  */
-class UtilsDate extends \oxSuperCfg
+class UtilsDate extends \OxidEsales\Eshop\Core\Base
 {
 
     /**

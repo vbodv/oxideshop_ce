@@ -32,7 +32,7 @@ use stdClass;
  * UserBasketItem class, responsible for storing most important fields
  *
  */
-class BasketItem extends \oxSuperCfg
+class BasketItem extends \OxidEsales\Eshop\Core\Base
 {
 
     /**

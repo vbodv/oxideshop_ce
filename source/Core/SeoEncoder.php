@@ -32,7 +32,7 @@ use OxidEsales\EshopCommunity\Core\Exception\StandardException;
  * Seo encoder base
  *
  */
-class SeoEncoder extends \oxSuperCfg
+class SeoEncoder extends \OxidEsales\Eshop\Core\Base
 {
 
     /**

@@ -30,7 +30,7 @@ use oxView;
  * Administrator login form.
  * Performs administrator login form data collection.
  */
-class LoginController extends \oxAdminView
+class LoginController extends \OxidEsales\Eshop\Application\Controller\Admin\AdminController
 {
     /** Login page view id. */
     const VIEW_ID = 'login';

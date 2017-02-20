@@ -29,7 +29,7 @@ use oxDb;
  * Shop manager.
  * Performs configuration and object loading or deletion.
  */
-class Shop extends \oxI18n
+class Shop extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
 {
     /** @var string Name of current class. */
     protected $_sClassName = 'oxshop';

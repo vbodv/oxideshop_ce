@@ -36,7 +36,7 @@ use oxUtilsObject;
  * Order manager. Arranges user ordering data, checks/validates
  * it, on success stores ordering data to DB.
  */
-class OrderController extends \oxUBase
+class OrderController extends \OxidEsales\Eshop\Application\Controller\FrontendController
 {
 
     /**

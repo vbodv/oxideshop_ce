@@ -34,7 +34,7 @@ use oxNoArticleException;
  *
  * @subpackage oxcmp
  */
-class BasketComponent extends \oxView
+class BasketComponent extends \OxidEsales\Eshop\Core\Controller\BaseController
 {
 
     /**

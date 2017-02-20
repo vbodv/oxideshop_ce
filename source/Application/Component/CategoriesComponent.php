@@ -29,7 +29,7 @@ use oxRegistry;
  *
  * @subpackage oxcmp
  */
-class CategoriesComponent extends \oxView
+class CategoriesComponent extends \OxidEsales\Eshop\Core\Controller\BaseController
 {
 
     /**

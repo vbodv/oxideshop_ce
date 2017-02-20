@@ -29,7 +29,7 @@ use oxCategory;
 /**
  * Article detailed information widget.
  */
-class ArticleDetails extends \oxWidget
+class ArticleDetails extends \OxidEsales\Eshop\Application\Component\Widget\WidgetController
 {
 
     /**

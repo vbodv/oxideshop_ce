@@ -33,7 +33,7 @@ use oxuserbasket;
  * Basket reservations handler class
  *
  */
-class BasketReservation extends \oxSuperCfg
+class BasketReservation extends \OxidEsales\Eshop\Core\Base
 {
 
     /**

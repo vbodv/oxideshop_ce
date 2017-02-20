@@ -31,7 +31,7 @@ use oxBasket;
  * Performs session managing function, such as variables deletion,
  * initialisation and other session functions.
  */
-class Session extends \oxSuperCfg
+class Session extends \OxidEsales\Eshop\Core\Base
 {
 
     /**

@@ -29,7 +29,7 @@ use OxidEsales\Eshop\Core\Database\Adapter\Doctrine\Database;
 /**
  * Manages object (users, discounts, deliveries...) assignment to groups.
  */
-class Object2Group extends \oxBase
+class Object2Group extends \OxidEsales\Eshop\Core\Model\BaseModel
 {
     /** @var boolean Load the relation even if from other shop */
     protected $_blDisableShopCheck = true;

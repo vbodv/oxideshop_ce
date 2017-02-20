@@ -28,7 +28,7 @@ use OxidEsales\Eshop\Application\Model\Country;
 /**
  * Company VAT identification number checker. Check if number belongs to the country.
  */
-class CompanyVatInCountryChecker extends \oxCompanyVatInChecker implements \oxICountryAware
+class CompanyVatInCountryChecker extends \OxidEsales\Eshop\Core\CompanyVatInChecker implements  \OxidEsales\Eshop\Core\Contract\ICountryAware
 {
 
     /**

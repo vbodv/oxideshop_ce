@@ -29,7 +29,7 @@ use oxField;
 /**
  * Article seo config class
  */
-class ArticleSeo extends \Object_Seo
+class ArticleSeo extends \OxidEsales\Eshop\Application\Controller\Admin\ObjectSeo
 {
 
     /**

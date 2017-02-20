@@ -31,7 +31,7 @@ use oxRegistry;
  * @internal Do not make a module extension for this class.
  * @see      http://oxidforge.org/en/core-oxid-eshop-classes-must-not-be-extended.html
  */
-class Theme extends \oxSuperCfg
+class Theme extends \OxidEsales\Eshop\Core\Base
 {
 
     /**

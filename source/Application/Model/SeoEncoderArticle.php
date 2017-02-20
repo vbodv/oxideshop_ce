@@ -32,7 +32,7 @@ use oxCategory;
  * Seo encoder for articles
  *
  */
-class SeoEncoderArticle extends \oxSeoEncoder
+class SeoEncoderArticle extends \OxidEsales\Eshop\Core\SeoEncoder
 {
 
     /**

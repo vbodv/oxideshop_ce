@@ -27,7 +27,7 @@ namespace OxidEsales\EshopCommunity\Application\Model;
  * Checks and sets payment method data, executes payment.
  *
  */
-class PaymentGateway extends \oxSuperCfg
+class PaymentGateway extends \OxidEsales\Eshop\Core\Base
 {
 
     /**

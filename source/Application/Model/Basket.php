@@ -37,7 +37,7 @@ use oxVoucherException;
  * Basket manager
  *
  */
-class Basket extends \oxSuperCfg
+class Basket extends \OxidEsales\Eshop\Core\Base
 {
 
     /**

@@ -30,7 +30,7 @@ use oxRegistry;
  * Article file download page.
  *
  */
-class DownloadController extends \oxUBase
+class DownloadController extends \OxidEsales\Eshop\Application\Controller\FrontendController
 {
     /**
      * Prevents from loading any component as this controller

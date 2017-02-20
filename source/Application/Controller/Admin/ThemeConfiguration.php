@@ -33,7 +33,7 @@ use oxException;
  * and etc.
  * Admin Menu: Shop settings -> Shipping & Handling -> Main Sets.
  */
-class ThemeConfiguration extends \Shop_Config
+class ThemeConfiguration extends \OxidEsales\Eshop\Application\Controller\Admin\ShopConfiguration
 {
 
     protected $_sTheme = null;

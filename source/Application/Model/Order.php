@@ -35,7 +35,7 @@ use oxDb;
  * Performs creation assigning, updating, deleting and other order functions.
  *
  */
-class Order extends \oxBase
+class Order extends \OxidEsales\Eshop\Core\Model\BaseModel
 {
 
     // defining order state constants

@@ -35,7 +35,7 @@ use SoapFault;
 /**
  * Online VAT id checker class.
  */
-class OnlineVatIdCheck extends \oxCompanyVatInChecker
+class OnlineVatIdCheck extends \OxidEsales\Eshop\Core\CompanyVatInChecker
 {
 
     /**

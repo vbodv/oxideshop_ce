@@ -29,7 +29,7 @@ use oxPrice;
  * Lightweight variant handler. Implemnets only absolutely needed oxArticle methods.
  *
  */
-class SimpleVariant extends \oxI18n implements \oxIUrl
+class SimpleVariant extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements \OxidEsales\Eshop\Core\Contract\IUrl
 {
 
     /**

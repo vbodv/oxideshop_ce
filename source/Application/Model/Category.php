@@ -32,7 +32,7 @@ use oxField;
  * of categories nodes. By recursion methods are set structure of category.
  *
  */
-class Category extends \oxI18n implements \oxIUrl
+class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements \OxidEsales\Eshop\Core\Contract\IUrl
 {
 
     /**

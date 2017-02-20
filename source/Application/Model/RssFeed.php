@@ -31,7 +31,7 @@ use stdClass;
  * loads needed rss data
  *
  */
-class RssFeed extends \oxSuperCfg
+class RssFeed extends \OxidEsales\Eshop\Core\Base
 {
 
     /**

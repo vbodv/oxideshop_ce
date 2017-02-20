@@ -36,7 +36,7 @@ use oxConnectionException;
  * information, deletion and other.
  *
  */
-class User extends \oxBase
+class User extends \OxidEsales\Eshop\Core\Model\BaseModel
 {
 
     /**

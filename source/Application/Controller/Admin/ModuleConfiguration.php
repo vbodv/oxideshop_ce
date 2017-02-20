@@ -32,7 +32,7 @@ use oxException;
  * and etc.
  * Admin Menu: Shop settings -> Shipping & Handling -> Main Sets.
  */
-class ModuleConfiguration extends \Shop_Config
+class ModuleConfiguration extends \OxidEsales\Eshop\Application\Controller\Admin\ShopConfiguration
 {
     /** @var string Template name. */
     protected $_sModule = 'shop_config.tpl';

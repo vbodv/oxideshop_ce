@@ -33,7 +33,7 @@ use oxRegistry;
  * meta tags (for search engines). Result - "list.tpl" template.
  * OXID eShop -> (Any selected shop product category).
  */
-class ArticleListController extends \oxUBase
+class ArticleListController extends \OxidEsales\Eshop\Application\Controller\FrontendController
 {
     /**
      * Count of all articles in list.

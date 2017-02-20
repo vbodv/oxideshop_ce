@@ -38,7 +38,7 @@ use oxVariantSelectList;
  * as crosselling, similarlist, picture gallery list, etc.
  * OXID eShop -> (Any chosen product).
  */
-class ArticleDetailsController extends \oxUBase
+class ArticleDetailsController extends \OxidEsales\Eshop\Application\Controller\FrontendController
 {
     /**
      * Current class default template name.

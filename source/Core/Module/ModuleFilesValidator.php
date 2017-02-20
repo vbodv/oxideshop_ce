@@ -31,7 +31,7 @@ use oxModule;
  * @internal Do not make a module extension for this class.
  * @see      http://oxidforge.org/en/core-oxid-eshop-classes-must-not-be-extended.html
  */
-class ModuleFilesValidator implements \oxIModuleValidator
+class ModuleFilesValidator implements \OxidEsales\Eshop\Core\Contract\IModuleValidator
 {
 
     /**

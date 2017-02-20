@@ -34,7 +34,7 @@ use oxModuleInstaller;
  * and etc.
  * Admin Menu: Shop settings -> Shipping & Handling -> Main Sets.
  */
-class ModuleMain extends \oxAdminDetails
+class ModuleMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
 
     /**

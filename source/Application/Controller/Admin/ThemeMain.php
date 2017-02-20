@@ -32,7 +32,7 @@ use oxException;
  * and etc.
  * Admin Menu: Shop settings -> Shipping & Handling -> Main Sets.
  */
-class ThemeMain extends \oxAdminDetails
+class ThemeMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
 
     /**

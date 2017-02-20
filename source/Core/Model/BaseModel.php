@@ -38,7 +38,7 @@ use oxField;
 use oxDb;
 use oxUtilsObject;
 
-class BaseModel extends \oxSuperCfg
+class BaseModel extends \OxidEsales\Eshop\Core\Base
 {
 
     /**

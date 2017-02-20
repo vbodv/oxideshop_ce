@@ -47,7 +47,7 @@ define('OXARTICLE_LINKTYPE_RECOMM', 5);
  * discounts, etc.
  *
  */
-class Article extends \oxI18n implements ArticleInterface, \oxIUrl
+class Article extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements ArticleInterface, \oxIUrl
 {
 
     /**
