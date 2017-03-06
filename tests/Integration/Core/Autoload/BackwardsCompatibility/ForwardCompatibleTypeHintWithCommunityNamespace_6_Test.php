@@ -27,6 +27,9 @@ class ForwardCompatibleTypeHintWithCommunityNamespace_6_Test extends \PHPUnit_Fr
 
     /**
      * Test the backwards compatibility with camel cased type hints
+     *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testForwardCompatibleTypeHintWithCommunityNamespace()
     {

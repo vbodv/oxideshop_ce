@@ -27,6 +27,9 @@ class BackwardsCompatibleInstanceOfNewClass_1_Test extends \PHPUnit_Framework_Te
 
     /**
      * Test the backwards compatibility of class instances created with oxNew and the alias class name
+     *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testBackwardsCompatibleInstanceOfNewClass()
     {

@@ -28,6 +28,9 @@ class ForwardCompatibleCatchingVirtualStandardException_5_Test extends \PHPUnit_
     /**
      * Try to catch an \oxException when a given Exception is thrown
      *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     *
      * @throws \Exception $exception
      */
     public function testForwardCompatibleCatchingVirtualStandardException()

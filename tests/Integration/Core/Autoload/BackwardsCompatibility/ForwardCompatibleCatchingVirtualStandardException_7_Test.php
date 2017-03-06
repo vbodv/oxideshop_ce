@@ -28,14 +28,13 @@ class ForwardCompatibleCatchingVirtualStandardException_7_Test extends \PHPUnit_
     /**
      * Try to catch an \oxException when a given Exception is thrown
      *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     *
      * @throws \Exception $exception
      */
     public function testForwardCompatibleCatchingVirtualStandardException()
     {
-        $this->markTestSkipped(
-            'This test will fail on Travis and CI as it MUST run in an own PHP process, which is not possible.'
-        );
-
         $exception = new \OxidEsales\EshopCommunity\Core\Exception\StandardException();
         try {
             throw $exception;

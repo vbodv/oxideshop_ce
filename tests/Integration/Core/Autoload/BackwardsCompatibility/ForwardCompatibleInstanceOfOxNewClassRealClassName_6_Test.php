@@ -27,12 +27,15 @@ class ForwardCompatibleInstanceOfOxNewClassRealClassName_6_Test extends \OxidEsa
 
     /**
      * Test the backwards compatibility of class instances created with oxNew and the alias class name
+     *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testForwardCompatibleInstanceOfOxNewClassRealClassName()
     {
         if ('CE' !== $this->getConfig()->getEdition()) {
             $this->markTestSkipped(
-                'This test will fail on Travis and CI as it MUST run in an own PHP process, which is not possible.'
+                'This test is for OXID eShop Community Edition only.'
             );
         }
 

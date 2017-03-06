@@ -28,6 +28,9 @@ class BackwardsCompatibleCatchingOxExceptionAbsoluteNamespace_2_Test extends \PH
     /**
      * Try to catch an \oxException when a given Exception is thrown
      *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     *
      * @throws \Exception $exception
      */
     public function testBackwardsCompatibleCatchingOxExceptionAbsoluteNamespace()

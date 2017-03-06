@@ -30,14 +30,13 @@ class BackwardsCompatibleCatchingOxExceptionAbsoluteNamespace_7_Test extends \PH
      * Creating and instance using \OxidEsales\EshopCommunity\Core\Exception\StandardException::class will return an
      * object, which is not an instance of oxException
      *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     *
      * @throws \Exception $exception
      */
     public function testBackwardsCompatibleCatchingOxExceptionAbsoluteNamespace()
     {
-        $this->markTestSkipped(
-            'This test will fail on Travis and CI as it MUST run in an own PHP process, which is not possible.'
-        );
-
         $exception = new \OxidEsales\EshopCommunity\Core\Exception\StandardException();
         try {
             throw $exception;
