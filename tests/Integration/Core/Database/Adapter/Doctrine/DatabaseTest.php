@@ -571,6 +571,19 @@ class DatabaseTest extends DatabaseInterfaceImplementationTest
         );
     }
 
+    public function testTwoSelectsInExecute()
+    {
+        $this->database->execute("SELECT 1");
+        $this->database->execute("SELECT 1");
+
+        /*
+         The second call throws an exception like this:
+            type: PDOException
+            code: 2014
+            message: Cannot execute queries while other unbuffered queries are active.  Consider using PDOStatement::fetchAll().  Alternatively, if your code is only ever going to run against mysql, you may enable query buffering by setting the PDO::MYSQL_ATTR_USE_BUFFERED_QUERY attribute.
+        */
+    }
+
     /**
      * Assert, that the given array is unique.
      *
