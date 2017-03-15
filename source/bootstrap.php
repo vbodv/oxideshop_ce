@@ -127,6 +127,15 @@ $configFile = new \OxidEsales\Eshop\Core\ConfigFile(OX_BASE_PATH . "config.inc.p
 \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\ConfigFile::class, $configFile);
 unset($configFile);
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+// create a log channel
+$logger = new Logger('debug');
+$logger->pushHandler(new StreamHandler(dirname(OX_LOG_FILE) . DIRECTORY_SEPARATOR . 'mono.log', Logger::DEBUG));
+
+\OxidEsales\Eshop\Core\Registry::setLogger($logger);
+
 /**
  * Custom bootstrap functionality.
  * Registry is a

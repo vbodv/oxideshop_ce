@@ -31,7 +31,6 @@ use oxUtils;
  */
 class Registry
 {
-
     /**
      * Instance array
      *
@@ -95,8 +94,6 @@ class Registry
         }
 
         self::$instances[$key] = $instance;
-
-        return;
     }
 
     /**
@@ -152,7 +149,7 @@ class Registry
      *
      * @static
      *
-     * @return \OxidEsales\Eshop\Core\UtilsObject
+     * @return OxidEsales\Eshop\Core\UtilsObject
      */
     public static function getUtilsObject()
     {
@@ -164,7 +161,7 @@ class Registry
      *
      * @static
      *
-     * @return \OxidEsales\Eshop\Core\Routing\ControllerClassNameResolver
+     * @return OxidEsales\Eshop\Core\Routing\ControllerClassNameResolver
      */
     public static function getControllerClassNameResolver()
     {
@@ -191,7 +188,6 @@ class Registry
     public static function instanceExists($className)
     {
         $key = self::getStorageKey($className);
-
         return isset(self::$instances[$key]);
     }
 
@@ -223,6 +219,20 @@ class Registry
         return self::$virtualNameSpaceClassMap;
     }
 
+    public static function setLogger(\Psr\Log\LoggerInterface $logger)
+    {
+        self::$instances['PsrLogger'] = $logger;
+    }
+
+    public static function getLogger()
+    {
+        if (!isset(self::$instances['PsrLogger'])) {
+            self::$instances['PsrLogger'] = new \Psr\Log\NullLogger();
+        }
+
+        return self::$instances['PsrLogger'];
+    }
+
     /**
      * Figure out which key to use for instance cache.
      *
@@ -238,7 +248,6 @@ class Registry
             $virtualKey = isset($bcMap[$key]) ? $bcMap[$key] : $key;
             $key = $virtualKey;
         }
-
         return strtolower($key);
     }
 
@@ -247,7 +256,7 @@ class Registry
      * IMPORTANT: the utilsobject is not delivered from Registry::instances this way, so Registry::set
      *           will have no effect on which UtilsObject is delivered.
      *           Also Registry::instanceExists will always return false for UtilsObject.
-     * This does only affect BC class name and virtual namespace, not the edition own classes atm.
+     * This does only affect BC classname and virtual namespace, not the edition own classes atm.
      *
      * @param string $key       Class key used for instance caching.
      * @param string $className Class name.
@@ -261,7 +270,6 @@ class Registry
         } else {
             $object = oxNew($className);
         }
-
         return $object;
     }
 }

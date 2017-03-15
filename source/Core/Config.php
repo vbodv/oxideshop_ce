@@ -30,6 +30,8 @@ use OxidEsales\Eshop\Application\Controller\OxidStartController;
 use OxidEsales\Eshop\Application\Model\Shop;
 use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Module\ModuleTemplatePathCalculator;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use stdClass;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 
@@ -42,8 +44,10 @@ define('MAX_64BIT_INTEGER', '18446744073709551615');
  * @mixin \OxidEsales\EshopEnterprise\Core\Config
  * @mixin \OxidEsales\EshopProfessional\Core\Config
  */
-class Config extends \OxidEsales\Eshop\Core\Base
+class Config extends \OxidEsales\Eshop\Core\Base implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     const DEFAULT_CONFIG_KEY = 'fq45QS09_fqyx09239QQ';
 
     // this column of params are defined in config.inc.php file,
@@ -337,6 +341,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     public function getConfigParam($name, $default = null)
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         $this->init();
 
         if (isset($this->_aConfigParams[$name])) {
@@ -358,6 +364,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     public function setConfigParam($name, $value)
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         if (isset($this->$name)) {
             $this->$name = $value;
         } else {
@@ -370,6 +378,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     protected function _processSeoCall()
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         // TODO: refactor shop bootstrap and parse url params as soon as possible
         if (isSearchEngineUrl()) {
             oxNew('oxSeoDecoder')->processSeoCall();
@@ -384,6 +394,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     public function init()
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         // Duplicated init protection
         if ($this->_blInit) {
             return;
@@ -449,6 +461,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     public function reinitialize()
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         $this->_blInit = false;
         $this->init();
     }
@@ -458,6 +472,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     protected function loadAdditionalConfiguration()
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
     }
 
     /**
@@ -465,6 +481,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     protected function initializeShop()
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         $this->_processSeoCall();
         $this->getSession()->start();
     }
@@ -474,6 +492,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     protected function _loadVarsFromFile()
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         //config variables from config.inc.php takes priority over the ones loaded from db
         include getShopBasePath() . '/config.inc.php';
 
@@ -493,6 +513,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     protected function _setDefaults()
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         $this->setConfigParam('sTheme', 'azure');
 
         if (is_null($this->getConfigParam('sDefaultLang'))) {
@@ -536,6 +558,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     protected function _loadCustomConfig()
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         $custConfig = getShopBasePath() . '/cust_config.inc.php';
         if (is_readable($custConfig)) {
             include $custConfig;
@@ -553,6 +577,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     protected function _loadVarsFromDb($shopID, $onlyVars = null, $module = '')
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         $db = oxDb::getDb();
 
         $moduleSql = $module ? " oxmodule LIKE " . $db->quote($module . "%") : " oxmodule='' ";
@@ -640,6 +666,8 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     public function pageClose()
     {
+        $this->logger->debug(__CLASS__ . '::' . __FUNCTION__);
+
         if ($this->hasActiveViewsChain()) {
             // do not commit session until active views chain exists
             return;

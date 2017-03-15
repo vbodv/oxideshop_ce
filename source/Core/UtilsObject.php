@@ -22,7 +22,6 @@
 
 namespace OxidEsales\EshopCommunity\Core;
 
-use OxidEsales\Eshop\Core\Edition\EditionSelector;
 use OxidEsales\Eshop\Core\Exception\SystemComponentException;
 use OxidEsales\Eshop\Core\Module\ModuleChainsGenerator;
 use OxidEsales\Eshop\Core\Module\ModuleVariablesLocator;
@@ -126,7 +125,7 @@ class UtilsObject
     public static function setClassInstance($className, $instance)
     {
         //Get storage key as the class might be aliased.
-        $storageKey = Registry::getStorageKey($className);
+        $storageKey = \OxidEsales\Eshop\Core\Registry::getStorageKey($className);
 
         static::$_aClassInstances[$storageKey] = $instance;
     }
@@ -154,7 +153,7 @@ class UtilsObject
         }
 
         //Get storage key as the class might be aliased.
-        $storageKey = Registry::getStorageKey($className);
+        $storageKey = \OxidEsales\Eshop\Core\Registry::getStorageKey($className);
 
         if ($className && isset(static::$_aInstanceCache[$storageKey])) {
             unset(static::$_aInstanceCache[$storageKey]);
@@ -219,16 +218,26 @@ class UtilsObject
         }
 
         //Get storage key as the class might be aliased.
-        $storageKey = Registry::getStorageKey($className);
+        $storageKey = \OxidEsales\Eshop\Core\Registry::getStorageKey($className);
 
         //UtilsObject::$_aClassInstances is only intended to be used in unit tests.
         if (defined('OXID_PHP_UNIT') && isset(static::$_aClassInstances[$storageKey])) {
-            return static::$_aClassInstances[$storageKey];
+            $object = static::$_aClassInstances[$storageKey];
+            if ( $object instanceof \Psr\Log\LoggerAwareInterface) {
+                $object->setLogger(\OxidEsales\Eshop\Core\Registry::getLogger());
+            }
+
+            return $object;
         }
         if (!defined('OXID_PHP_UNIT') && $shouldUseCache) {
             $cacheKey = ($argumentsCount) ? $storageKey . md5(serialize($arguments)) : $storageKey;
             if (isset(static::$_aInstanceCache[$cacheKey])) {
-                return clone static::$_aInstanceCache[$cacheKey];
+                $object = clone static::$_aInstanceCache[$cacheKey];
+                if ( $object instanceof \Psr\Log\LoggerAwareInterface) {
+                    $object->setLogger(\OxidEsales\Eshop\Core\Registry::getLogger());
+                }
+
+                return $object;
             }
         }
 
@@ -243,6 +252,7 @@ class UtilsObject
                 $exception->setMessage('EXCEPTION_SYSTEMCOMPONENT_CLASSNOTFOUND');
                 $exception->setComponent($className);
                 $exception->debugOut();
+
                 throw $exception;
             }
 
@@ -252,6 +262,9 @@ class UtilsObject
         $object = new $realClassName(...$arguments);
         if ($shouldUseCache && $object instanceof \OxidEsales\Eshop\Core\Model\BaseModel) {
             static::$_aInstanceCache[$cacheKey] = clone $object;
+        }
+        if ( $object instanceof \Psr\Log\LoggerAwareInterface) {
+            $object->setLogger(\OxidEsales\Eshop\Core\Registry::getLogger());
         }
 
         return $object;
