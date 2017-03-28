@@ -23,7 +23,7 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Core;
 
 use \oxArticle;
 
-use OxidEsales\EshopCommunity\Core\Exception\SystemComponentException;
+use OxidEsales\Eshop\Core\Exception\SystemComponentException;
 use \stdClass;
 use \oxField;
 use \oxTestModules;

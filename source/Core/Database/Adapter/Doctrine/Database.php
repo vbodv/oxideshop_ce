@@ -957,6 +957,7 @@ class Database implements DatabaseInterface
                 $exceptionClass = DatabaseErrorException::class;
         }
 
+        // We don't use oxNew here, cause we want to avoid an exception in it - this would end up in uncaught exception!
         /** @var \oxException $convertedException */
         $convertedException = new $exceptionClass($message, $code, $exception);
 

@@ -21,7 +21,7 @@
  */
 namespace OxidEsales\EshopCommunity\Tests\Unit\Core\Smarty;
 
-use OxidEsales\EshopCommunity\Core\Exception\SystemComponentException;
+use OxidEsales\Eshop\Core\Exception\SystemComponentException;
 use \testModuleSimilarName_parent;
 use \oxRegistry;
 use \oxTestModules;

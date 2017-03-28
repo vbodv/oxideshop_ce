@@ -165,7 +165,6 @@ class ModuleChainsGeneratorTest extends UnitTestCase
 
     protected function createModuleClassFile($extensionPath)
     {
-
         $modulesDirectory = Registry::get("oxConfigFile")->getVar("sShopDir");
         $moduleClassFilePath = "$modulesDirectory/modules/$extensionPath.php";
         if (!is_dir(dirname($moduleClassFilePath))) {
@@ -174,6 +173,7 @@ class ModuleChainsGeneratorTest extends UnitTestCase
             }
         }
 
+        // To avoid unnecessary whitespaces in the test output, we let the heredoc start on the first column of the first line.
         $class = basename($extensionPath);
         $classDefinition = <<<EOT
 <?php
