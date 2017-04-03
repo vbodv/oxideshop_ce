@@ -234,7 +234,7 @@ class ServersManager
     protected function getAllServersDataConfigsFromDb()
     {
         $oDb = oxDb::getDb(oxDb::FETCH_MODE_ASSOC);
-        $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $oConfig = oxRegistry::getConfig();
 
         $sConfigsQuery = "SELECT oxvarname, " . $oConfig->getDecodeValueQuery() .
             " as oxvarvalue FROM oxconfig WHERE oxvarname like ? AND oxshopid = ?";
@@ -269,7 +269,7 @@ class ServersManager
      */
     private function getConfigValueFromDB($sVarName)
     {
-        $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $oConfig = oxRegistry::getConfig();
         $oDb = oxDb::getDb();
 
         $sConfigsQuery = "SELECT " . $oConfig->getDecodeValueQuery() .
@@ -288,7 +288,7 @@ class ServersManager
      */
     protected function saveToDb($sServerId, $aServerData)
     {
-        $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $oConfig = oxRegistry::getConfig();
         $sVarName = self::CONFIG_NAME_FOR_SERVER_INFO.$sServerId;
         $sConfigKey = $oConfig->getConfigParam('sConfigKey');
         $sValue = serialize($aServerData);
