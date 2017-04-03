@@ -274,7 +274,7 @@ class SystemEventHandler
     }
 
     /**
-     * Return oxConfig from registry.
+     * Return Config from registry.
      *
      * @return \OxidEsales\Eshop\Core\Config
      */
