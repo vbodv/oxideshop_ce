@@ -83,7 +83,7 @@ class ServersManager
     }
 
     /**
-     * Creates oxApplicationServer from given server id and data.
+     * Creates ApplicationServer from given server id and data.
      *
      * @param string $sServerId
      * @param array  $aData
@@ -149,10 +149,10 @@ class ServersManager
      */
     public function deleteServer($sServerId)
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
         $sShopId = $oConfig->getBaseShopId();
         $sVarName = self::CONFIG_NAME_FOR_SERVER_INFO.$sServerId;
-        $oDb = oxDb::getDb();
+        $oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb();
         $sQ = "DELETE FROM oxconfig WHERE oxvarname = ? and oxshopid = ?";
         $oDb->execute($sQ, array($sVarName, $sShopId));
     }
@@ -167,7 +167,7 @@ class ServersManager
     public function markInActiveServers($aServersData = null)
     {
         foreach ($aServersData as $sServerId => $aServerData) {
-            if ($aServerData['timestamp'] < \OxidEsales\Eshop\Core\Registry::getUtilsDate()->getTime() - self::NODE_AVAILABILITY_CHECK_PERIOD) {
+            if ($aServerData['timestamp'] < \OxidEsales\Eshop\Core\Registry::get("oxUtilsDate")->getTime() - self::NODE_AVAILABILITY_CHECK_PERIOD) {
                 $oServer = $this->getServer($sServerId);
                 $oServer->setIsValid(false);
                 $this->saveServer($oServer);
@@ -187,7 +187,7 @@ class ServersManager
     public function deleteInActiveServers($aServersData)
     {
         foreach ($aServersData as $sServerId => $aServerData) {
-            if ($aServerData['timestamp'] < \OxidEsales\Eshop\Core\Registry::getUtilsDate()->getTime() - self::INACTIVE_NODE_STORAGE_PERIOD) {
+            if ($aServerData['timestamp'] < \OxidEsales\Eshop\Core\Registry::get("oxUtilsDate")->getTime() - self::INACTIVE_NODE_STORAGE_PERIOD) {
                 $this->deleteServer($sServerId);
                 unset($aServersData[$sServerId]);
             }
@@ -203,12 +203,12 @@ class ServersManager
     public function getServersData()
     {
         $aServersData = array();
-        $resultFromDatabase = $this->getAllServersDataConfigsFromDb();
-        if ($resultFromDatabase != false && $resultFromDatabase->count() > 0) {
-            while (!$resultFromDatabase->EOF) {
-                $sServerId = $this->parseServerIdFromConfig($resultFromDatabase->fields['oxvarname']);
-                $aServersData[$sServerId] = (array)unserialize($resultFromDatabase->fields['oxvarvalue']);
-                $resultFromDatabase->fetchRow();
+        $result = $this->getAllServersDataConfigsFromDb();
+        if ($result != false && $result->recordCount() > 0) {
+            while (!$result->EOF) {
+                $sServerId = $this->parseServerIdFromConfig($result->fields['oxvarname']);
+                $aServersData[$sServerId] = (array)unserialize($result->fields['oxvarvalue']);
+                $result->moveNext();
             }
         }
         return $aServersData;
@@ -235,13 +235,13 @@ class ServersManager
      */
     protected function getAllServersDataConfigsFromDb()
     {
-        $database = oxDb::getDb(oxDb::FETCH_MODE_ASSOC);
-        $oConfig = oxRegistry::getConfig();
+        $oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb(\OxidEsales\Eshop\Core\DatabaseProvider::FETCH_MODE_ASSOC);
+        $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
 
         $sConfigsQuery = "SELECT oxvarname, " . $oConfig->getDecodeValueQuery() .
             " as oxvarvalue FROM oxconfig WHERE oxvarname like ? AND oxshopid = ?";
 
-        return $database->select($sConfigsQuery, array(self::CONFIG_NAME_FOR_SERVER_INFO."%", $oConfig->getBaseShopId()));
+        return $oDb->select($sConfigsQuery, array(self::CONFIG_NAME_FOR_SERVER_INFO."%", $oConfig->getBaseShopId()));
     }
 
     /**
@@ -271,8 +271,8 @@ class ServersManager
      */
     private function getConfigValueFromDB($sVarName)
     {
-        $oConfig = oxRegistry::getConfig();
-        $oDb = oxDb::getDb();
+        $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb();
 
         $sConfigsQuery = "SELECT " . $oConfig->getDecodeValueQuery() .
             " as oxvarvalue FROM oxconfig WHERE oxvarname = ? AND oxshopid = ?";
@@ -290,18 +290,18 @@ class ServersManager
      */
     protected function saveToDb($sServerId, $aServerData)
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
         $sVarName = self::CONFIG_NAME_FOR_SERVER_INFO.$sServerId;
         $sConfigKey = $oConfig->getConfigParam('sConfigKey');
         $sValue = serialize($aServerData);
         $sVarType = 'arr';
         $sShopId = $oConfig->getBaseShopId();
-        $oDb = oxDb::getDb();
+        $oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb();
         if ($this->getConfigValueFromDB($sVarName) !== false) {
             $sQ = "UPDATE oxconfig SET oxvarvalue=ENCODE( ?, ?) WHERE oxvarname = ? and oxshopid = ?";
             $oDb->execute($sQ, array($sValue, $sConfigKey, $sVarName, $sShopId));
         } else {
-            $sOxid = oxUtilsObject::getInstance()->generateUID();
+            $sOxid = \OxidEsales\Eshop\Core\UtilsObject::getInstance()->generateUID();
 
             $sQ = "insert into oxconfig (oxid, oxshopid, oxmodule, oxvarname, oxvartype, oxvarvalue)
                values(?, ?, '', ?, ?, ENCODE( ?, ?) )";
