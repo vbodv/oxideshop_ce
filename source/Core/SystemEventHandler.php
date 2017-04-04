@@ -152,7 +152,7 @@ class SystemEventHandler
      */
     public function onShopStart()
     {
-        $this->_validateOnline();
+        $this->validateOnline();
 
         $this->_validateOffline();
     }
@@ -160,7 +160,7 @@ class SystemEventHandler
     /**
      * Check if shop is valid online.
      */
-    protected function _validateOnline()
+    protected function validateOnline()
     {
         try {
             $oProcessor = $this->_getServerProcessor();

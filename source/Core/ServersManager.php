@@ -23,6 +23,8 @@
 namespace OxidEsales\EshopCommunity\Core;
 
 use oxRegistry;
+use oxDb;
+use oxUtilsObject;
 
 /**
  * Manages application servers information.
@@ -201,12 +203,12 @@ class ServersManager
     public function getServersData()
     {
         $aServersData = array();
-        $result = $this->getAllServersDataConfigsFromDb();
-        if ($result != false && $result->recordCount() > 0) {
-            while (!$result->EOF) {
-                $sServerId = $this->parseServerIdFromConfig($result->fields['oxvarname']);
-                $aServersData[$sServerId] = (array)unserialize($result->fields['oxvarvalue']);
-                $result->moveNext();
+        $resultFromDatabase = $this->getAllServersDataConfigsFromDb();
+        if ($resultFromDatabase != false && $resultFromDatabase->count() > 0) {
+            while (!$resultFromDatabase->EOF) {
+                $sServerId = $this->parseServerIdFromConfig($resultFromDatabase->fields['oxvarname']);
+                $aServersData[$sServerId] = (array)unserialize($resultFromDatabase->fields['oxvarvalue']);
+                $resultFromDatabase->fetchRow();
             }
         }
         return $aServersData;
@@ -233,13 +235,13 @@ class ServersManager
      */
     protected function getAllServersDataConfigsFromDb()
     {
-        $oDb = oxDb::getDb(oxDb::FETCH_MODE_ASSOC);
+        $database = oxDb::getDb(oxDb::FETCH_MODE_ASSOC);
         $oConfig = oxRegistry::getConfig();
 
         $sConfigsQuery = "SELECT oxvarname, " . $oConfig->getDecodeValueQuery() .
             " as oxvarvalue FROM oxconfig WHERE oxvarname like ? AND oxshopid = ?";
 
-        return $oDb->select($sConfigsQuery, array(self::CONFIG_NAME_FOR_SERVER_INFO."%", $oConfig->getBaseShopId()));
+        return $database->select($sConfigsQuery, array(self::CONFIG_NAME_FOR_SERVER_INFO."%", $oConfig->getBaseShopId()));
     }
 
     /**
