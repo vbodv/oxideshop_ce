@@ -115,7 +115,7 @@ class Vendor extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements 
             $this->_iNrOfArticles = \OxidEsales\Eshop\Core\Registry::get("oxUtilsCount")->getVendorArticleCount($this->getId());
         }
 
-        $this->oxvendor__oxnrofarticles = new oxField($this->_iNrOfArticles, \OxidEsales\Eshop\Core\Field::T_RAW);
+        $this->oxvendor__oxnrofarticles = new \OxidEsales\Eshop\Core\Field($this->_iNrOfArticles, \OxidEsales\Eshop\Core\Field::T_RAW);
     }
 
     /**
@@ -143,9 +143,9 @@ class Vendor extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements 
     protected function _setRootObjectData()
     {
         $this->setId('root');
-        $this->oxvendor__oxicon = new oxField('', \OxidEsales\Eshop\Core\Field::T_RAW);
-        $this->oxvendor__oxtitle = new oxField(\OxidEsales\Eshop\Core\Registry::getLang()->translateString('BY_VENDOR', $this->getLanguage(), false), \OxidEsales\Eshop\Core\Field::T_RAW);
-        $this->oxvendor__oxshortdesc = new oxField('', \OxidEsales\Eshop\Core\Field::T_RAW);
+        $this->oxvendor__oxicon = new \OxidEsales\Eshop\Core\Field('', \OxidEsales\Eshop\Core\Field::T_RAW);
+        $this->oxvendor__oxtitle = new \OxidEsales\Eshop\Core\Field(\OxidEsales\Eshop\Core\Registry::getLang()->translateString('BY_VENDOR', $this->getLanguage(), false), \OxidEsales\Eshop\Core\Field::T_RAW);
+        $this->oxvendor__oxshortdesc = new \OxidEsales\Eshop\Core\Field('', \OxidEsales\Eshop\Core\Field::T_RAW);
 
         return true;
     }

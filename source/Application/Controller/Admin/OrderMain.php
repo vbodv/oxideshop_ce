@@ -69,7 +69,7 @@ class OrderMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDeta
                 $oOrder->blIsPaid = true;
                 /** @var \OxidEsales\Eshop\Core\UtilsDate $oUtilsDate */
                 $oUtilsDate = \OxidEsales\Eshop\Core\Registry::get("oxUtilsDate");
-                $oOrder->$sOxPaidField = new oxField($oUtilsDate->formatDBDate($oOrder->$sOxPaidField->value));
+                $oOrder->$sOxPaidField = new \OxidEsales\Eshop\Core\Field($oUtilsDate->formatDBDate($oOrder->$sOxPaidField->value));
             }
 
             $this->_aViewData["edit"] = $oOrder;
@@ -178,7 +178,7 @@ class OrderMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDeta
         $oOrder = oxNew(\OxidEsales\Eshop\Application\Model\Order::class);
         if ($oOrder->load($soxId)) {
             // #632A
-            $oOrder->oxorder__oxsenddate = new oxField(date("Y-m-d H:i:s", \OxidEsales\Eshop\Core\Registry::get("oxUtilsDate")->getTime()));
+            $oOrder->oxorder__oxsenddate = new \OxidEsales\Eshop\Core\Field(date("Y-m-d H:i:s", \OxidEsales\Eshop\Core\Registry::get("oxUtilsDate")->getTime()));
             $oOrder->save();
 
             // #1071C
@@ -212,7 +212,7 @@ class OrderMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDeta
     {
         $oOrder = oxNew(\OxidEsales\Eshop\Application\Model\Order::class);
         if ($oOrder->load($this->getEditObjectId())) {
-            $oOrder->oxorder__oxsenddate = new oxField("0000-00-00 00:00:00");
+            $oOrder->oxorder__oxsenddate = new \OxidEsales\Eshop\Core\Field("0000-00-00 00:00:00");
             $oOrder->save();
 
             $this->onOrderReset();
