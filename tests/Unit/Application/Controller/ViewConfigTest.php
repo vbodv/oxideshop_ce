@@ -529,7 +529,8 @@ class ViewConfigTest extends \OxidTestCase
         $config->setConfigParam("sShopDir", $fakeShopDirectory);
 
         $message = "Requested file not found for module test1 (" . $fakeShopDirectory . "modules/test1/out/blocks/non_existing_template.tpl)";
-        $this->setExpectedException('\OxidEsales\EshopCommunity\Core\Exception\FileException', $message);
+        $this->setExpectedException(\OxidEsales\EshopCommunity\Core\Exception\FileException::class, $message);
+        $this->stubExceptionToNotWriteToLog(\OxidEsales\EshopCommunity\Core\Exception\FileException::class, 'oxFileException');
 
         /** @var oxViewConfig|PHPUnit_Framework_MockObject_MockObject $viewConfig */
         $viewConfig = $this->getMock('oxViewConfig', array('getConfig'));
