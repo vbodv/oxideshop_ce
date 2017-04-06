@@ -1163,7 +1163,7 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
      * @param string $sModule module name (directory name in modules dir)
      * @param string $sFile   file name to lookup
      *
-     * @throws oxFileException
+     * @throws \OxidEsales\Eshop\Core\Exception\FileException
      *
      * @return string
      */
