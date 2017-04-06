@@ -232,7 +232,7 @@ class ListTest extends \OxidTestCase
         $oAction->oxactions__oxtitle = new oxField('action2', oxField::T_RAW);
         $oAction->save();
 
-        $oList = new oxlist('oxactions');
+        $oList = new \OxidEsales\Eshop\Core\Model\ListModel('oxactions');
         $oList->setSqlLimit(1, 1);
         $oList->selectString('select * from oxactions where oxid like "\_%"');
 

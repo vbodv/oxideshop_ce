@@ -833,7 +833,7 @@ class LocatorTest extends \OxidTestCase
         $this->assertNotNull($oLocator->_oNextProduct);
         $this->assertEquals($oLocator->_oNextProduct->getId(), $sNextId);
 
-        $this->assertEquals(0, $oLocator->UNITgetProductPos($oArticle, new oxlist(), $oLocatorTarget));
+        $this->assertEquals(0, $oLocator->UNITgetProductPos($oArticle, new \OxidEsales\Eshop\Core\Model\ListModel(), $oLocatorTarget));
     }
 
     /**
@@ -853,7 +853,7 @@ class LocatorTest extends \OxidTestCase
         $array['1234567A'] = '1234567A';
         $array['6b6e718666bc8867719ab25a8020a978'] = '6b6e718666bc8867719ab25a8020a978';
 
-        $list= new oxlist();
+        $list= new \OxidEsales\Eshop\Core\Model\ListModel();
         $list->assign($array);
 
         $locator = new testOxLocator();

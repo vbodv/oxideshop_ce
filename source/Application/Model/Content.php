@@ -123,7 +123,7 @@ class Content extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
      */
     public function setCategoryId($sCategoryId)
     {
-        $this->oxcontents__oxcatid = new oxField($sCategoryId);
+        $this->oxcontents__oxcatid = new \OxidEsales\Eshop\Core\Field($sCategoryId);
     }
 
     /**

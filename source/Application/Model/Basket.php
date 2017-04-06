@@ -1211,8 +1211,8 @@ class Basket extends \OxidEsales\Eshop\Core\Base
             //if total discount was set on order recalculation
             $oTotalPrice = $this->getTotalDiscount();
             $oDiscount = oxNew(\OxidEsales\Eshop\Application\Model\Discount::class);
-            $oDiscount->oxdiscount__oxaddsum = new oxField($oTotalPrice->getPrice());
-            $oDiscount->oxdiscount__oxaddsumtype = new oxField('abs');
+            $oDiscount->oxdiscount__oxaddsum = new \OxidEsales\Eshop\Core\Field($oTotalPrice->getPrice());
+            $oDiscount->oxdiscount__oxaddsumtype = new \OxidEsales\Eshop\Core\Field('abs');
             $aDiscounts[] = $oDiscount;
         } else {
             // discounts for basket

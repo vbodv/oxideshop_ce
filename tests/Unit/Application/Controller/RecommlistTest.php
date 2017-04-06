@@ -304,7 +304,7 @@ class RecommlistTest extends \OxidTestCase
 
     public function testGetReviews()
     {
-        oxTestModules::addFunction('oxreview', 'loadList', '{$o=new oxlist();$o[0]="asd";$o->args=$aA;return $o;}');
+        oxTestModules::addFunction('oxreview', 'loadList', '{$o=new \OxidEsales\Eshop\Core\Model\ListModel();$o[0]="asd";$o->args=$aA;return $o;}');
         $oRecomm = $this->getProxyClass("recommlist");
         $oRecommtList = oxNew('oxRecommList');
         $oRecommtList->setId('testid');

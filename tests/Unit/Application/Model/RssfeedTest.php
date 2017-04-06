@@ -988,7 +988,7 @@ class RssfeedTest extends \OxidTestCase
         oxTestModules::addFunction('oxrssfeed', 'getRecommListsUrl', '{ return "surl"; }');
         oxTestModules::addFunction('oxrssfeed', 'getRecommListsTitle', '{ return "dastitle"; }');
 
-        oxTestModules::addFunction('oxrecommlist', 'getRecommListsByIds', '{ $o=new oxList();$o->load = "loaded".str_replace(array(" ", "\n"), "", var_export($aA, 1));return $o; }');
+        oxTestModules::addFunction('oxrecommlist', 'getRecommListsByIds', '{ $o=new \OxidEsales\Eshop\Core\Model\ListModel();$o->load = "loaded".str_replace(array(" ", "\n"), "", var_export($aA, 1));return $o; }');
         oxTestModules::addFunction('oxrssfeed', '_getRecommListItems', '{ return $aA[0]->load; }');
 
         $oRss = oxNew('oxRssFeed');

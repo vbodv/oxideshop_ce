@@ -367,12 +367,12 @@ class RecommlistTest extends \OxidTestCase
 
     public function testGetReviews()
     {
-        oxTestModules::addFunction('oxreview', 'loadList', '{$o=new oxlist();$o->args=$aA;return $o;}');
+        oxTestModules::addFunction('oxreview', 'loadList', '{$o=new \OxidEsales\Eshop\Core\Model\ListModel();$o->args=$aA;return $o;}');
         $oRecomm = oxNew('oxRecommList');
         $oRecomm->setId('testid');
         $oResult = $oRecomm->getReviews();
         $this->assertEquals(null, $oResult);
-        oxTestModules::addFunction('oxreview', 'loadList', '{$o=new oxlist();$o[0]="asd";$o->args=$aA;return $o;}');
+        oxTestModules::addFunction('oxreview', 'loadList', '{$o=new \OxidEsales\Eshop\Core\Model\ListModel();$o[0]="asd";$o->args=$aA;return $o;}');
         $oResult = $oRecomm->getReviews();
         $this->assertEquals("oxrecommlist", $oResult->args[0]);
         $this->assertEquals("testid", $oResult->args[1]);

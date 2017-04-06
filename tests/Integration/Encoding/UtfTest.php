@@ -1649,7 +1649,7 @@ class UtfTest extends \OxidTestCase
         $oArticle->oxarticles__oxtitle = $this->getMock('oxField', array('__get'));
         $oArticle->oxarticles__oxtitle->expects($this->exactly(2))->method('__get')->will($this->returnValue($sValue));
 
-        $oArtList = new oxlist();
+        $oArtList = new \OxidEsales\Eshop\Core\Model\ListModel();
         $oArtList->offsetSet(0, $oArticle);
         $oArtList->offsetSet(1, $oArticle);
 
@@ -1721,7 +1721,7 @@ class UtfTest extends \OxidTestCase
 
         $oArt = oxNew('oxArticle');
         $oArt->setArticleLongDesc($sValue);
-        $oArtList = new oxlist();
+        $oArtList = new \OxidEsales\Eshop\Core\Model\ListModel();
         $oArtList->offsetSet(0, $oArt);
         $oView = $this->getMock('alist', array('getArticleList', '_prepareMetaDescription', '_getCatPathString'));
         $oView->expects($this->once())->method('getArticleList')->will($this->returnValue($oArtList));

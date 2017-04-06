@@ -165,7 +165,7 @@ class ManufacturerList extends \OxidEsales\Eshop\Core\Model\ListModel
      */
     protected function _addCategoryFields($oManufacturer)
     {
-        $oManufacturer->oxcategories__oxid = new oxField($oManufacturer->oxmanufacturers__oxid->value);
+        $oManufacturer->oxcategories__oxid = new \OxidEsales\Eshop\Core\Field($oManufacturer->oxmanufacturers__oxid->value);
         $oManufacturer->oxcategories__oxicon = $oManufacturer->oxmanufacturers__oxicon;
         $oManufacturer->oxcategories__oxtitle = $oManufacturer->oxmanufacturers__oxtitle;
         $oManufacturer->oxcategories__oxdesc = $oManufacturer->oxmanufacturers__oxshortdesc;

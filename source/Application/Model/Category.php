@@ -869,9 +869,9 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
                 $this->setId();
             }
 
-            $this->oxcategories__oxrootid = new oxField($oParent->oxcategories__oxrootid->value, \OxidEsales\Eshop\Core\Field::T_RAW);
-            $this->oxcategories__oxleft = new oxField($oParent->oxcategories__oxright->value, \OxidEsales\Eshop\Core\Field::T_RAW);
-            $this->oxcategories__oxright = new oxField($oParent->oxcategories__oxright->value + 1, \OxidEsales\Eshop\Core\Field::T_RAW);
+            $this->oxcategories__oxrootid = new \OxidEsales\Eshop\Core\Field($oParent->oxcategories__oxrootid->value, \OxidEsales\Eshop\Core\Field::T_RAW);
+            $this->oxcategories__oxleft = new \OxidEsales\Eshop\Core\Field($oParent->oxcategories__oxright->value, \OxidEsales\Eshop\Core\Field::T_RAW);
+            $this->oxcategories__oxright = new \OxidEsales\Eshop\Core\Field($oParent->oxcategories__oxright->value + 1, \OxidEsales\Eshop\Core\Field::T_RAW);
 
             return parent::_insert();
         } else {
@@ -880,9 +880,9 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
                 $this->setId();
             }
 
-            $this->oxcategories__oxrootid = new oxField($this->getId(), \OxidEsales\Eshop\Core\Field::T_RAW);
-            $this->oxcategories__oxleft = new oxField(1, \OxidEsales\Eshop\Core\Field::T_RAW);
-            $this->oxcategories__oxright = new oxField(2, \OxidEsales\Eshop\Core\Field::T_RAW);
+            $this->oxcategories__oxrootid = new \OxidEsales\Eshop\Core\Field($this->getId(), \OxidEsales\Eshop\Core\Field::T_RAW);
+            $this->oxcategories__oxleft = new \OxidEsales\Eshop\Core\Field(1, \OxidEsales\Eshop\Core\Field::T_RAW);
+            $this->oxcategories__oxright = new \OxidEsales\Eshop\Core\Field(2, \OxidEsales\Eshop\Core\Field::T_RAW);
 
             return parent::_insert();
         }
