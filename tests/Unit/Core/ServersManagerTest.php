@@ -96,16 +96,8 @@ class ServersManagerTest extends \OxidTestCase
         $oServerList = oxNew('oxServersManager');
         $oServerList->saveServer($oServer);
 
-        $aExpectedServerData = array(
-            'serverNameHash1' => array(
-                'id'                => 'serverNameHash1',
-                'timestamp'         => 'timestamp',
-                'ip'                => '127.0.0.1',
-                'lastFrontendUsage' => 'frontendUsageTimestamp',
-                'lastAdminUsage'    => 'adminUsageTimestamp',
-                'isValid'           => true
-            ));
-        $this->assertEquals($aExpectedServerData, $oServerList->getServersData());
+        $applicationServerList = $oServerList->getServersData();
+        $this->assertEquals($oServer, $applicationServerList->offsetGet('serverNameHash1'));
     }
 
     public function testUpdatingServer()
@@ -136,20 +128,8 @@ class ServersManagerTest extends \OxidTestCase
         $oServerList = oxNew('oxServersManager');
         $oServerList->saveServer($oServer);
 
-        $aExpectedServerData = array(
-            'serverNameHash1' => array(),
-            'serverNameHash2' => array(
-                'id'                => 'serverNameHash2',
-                'timestamp'         => 'timestampUpdated',
-                'ip'                => '127.0.0.255',
-                'lastFrontendUsage' => 'frontendUsageTimestampUpdated',
-                'lastAdminUsage'    => 'adminUsageTimestampUpdated',
-                'isValid'           => true
-            ),
-            'serverNameHash3' => array(),
-        );
-
-        $this->assertEquals($aExpectedServerData, $oServerList->getServersData());
+        $applicationServerList = $oServerList->getServersData();
+        $this->assertEquals($oServer, $applicationServerList->offsetGet('serverNameHash2'));
     }
 
     public function testUpdatingEmptyServer()
@@ -167,17 +147,8 @@ class ServersManagerTest extends \OxidTestCase
         $oServerList = oxNew('oxServersManager');
         $oServerList->saveServer($oServer);
 
-        $aExpectedServerData = array(
-            'serverNameHash1' => array(
-                'id'                => 'serverNameHash1',
-                'timestamp'         => 'timestampUpdated',
-                'ip'                => '127.0.0.1',
-                'lastFrontendUsage' => 'frontendUsageTimestampUpdated',
-                'lastAdminUsage'    => 'adminUsageTimestampUpdated',
-                'isValid'           => false
-            ),
-        );
-        $this->assertEquals($aExpectedServerData, $oServerList->getServersData());
+        $applicationServerList = $oServerList->getServersData();
+        $this->assertEquals($oServer, $applicationServerList->offsetGet('serverNameHash1'));
     }
 
     public function testGetServerNodes()
@@ -208,15 +179,15 @@ class ServersManagerTest extends \OxidTestCase
         $oManager = oxNew('oxServersManager');
         $aServersData = $oManager->getServersData();
 
-        $this->assertNotNull($aServersData['serverNameHash1']);
-        $this->assertNotNull($aServersData['serverNameHash2']);
+        $this->assertNotNull($aServersData->offsetGet('serverNameHash1'));
+        $this->assertNotNull($aServersData->offsetGet('serverNameHash2'));
 
         $oManager->deleteServer('serverNameHash1');
 
         $aServersData2 = $oManager->getServersData();
 
-        $this->assertNull($aServersData2['serverNameHash1']);
-        $this->assertNotNull($aServersData2['serverNameHash2']);
+        $this->assertNull($aServersData2->offsetGet('serverNameHash1'));
+        $this->assertNotNull($aServersData2->offsetGet('serverNameHash2'));
     }
 
     public function testMarkInactive()

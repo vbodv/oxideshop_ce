@@ -97,7 +97,7 @@ class ServersManager
 
         $oAppServer->setId($sServerId);
         $oAppServer->setTimestamp($this->getServerParameter($aData, 'timestamp'));
-        $oAppServer->setIp($this->getServerParameter($aData, 'serverIp'));
+        $oAppServer->setIp($this->getServerParameter($aData, 'ip'));
         $oAppServer->setLastFrontendUsage($this->getServerParameter($aData, 'lastFrontendUsage'));
         $oAppServer->setLastAdminUsage($this->getServerParameter($aData, 'lastAdminUsage'));
         $oAppServer->setIsValid($this->getServerParameter($aData, 'isValid'));
@@ -125,17 +125,20 @@ class ServersManager
      */
     public function getServers()
     {
-        $aServersData = $this->getServersData();
-        $aServersData = $this->markInActiveServers($aServersData);
-        $aServersData = $this->deleteInActiveServers($aServersData);
+        $appServerList = $this->getServersData();
+        $appServerList = $this->markInActiveServers($appServerList);
+        $appServerList = $this->deleteInActiveServers($appServerList);
 
         $aValidServers = array();
-
-        foreach ($aServersData as $aServer) {
-            if ($aServer['isValid']) {
-                unset($aServer['isValid']);
-                unset($aServer['timestamp']);
-                $aValidServers[] = $aServer;
+        /** @var ApplicationServer $oServer */
+        foreach ($appServerList->getApplicationServers() as $oServer) {
+            if ($oServer->isValid()) {
+                $aValidServers[] = array(
+                    'id'                => $oServer->getId(),
+                    'ip'                => $oServer->getIp(),
+                    'lastFrontendUsage' => $oServer->getLastFrontendUsage(),
+                    'lastAdminUsage'    => $oServer->getLastAdminUsage()
+                );
             }
         }
 
@@ -160,58 +163,84 @@ class ServersManager
     /**
      * Mark servers as inactive if they are not used anymore.
      *
-     * @param array $aServersData Information of all servers data
+     * @param ApplicationServerList $appServerList Information of all servers data
      *
-     * @return array $aServersData Information of all servers data
+     * @return ApplicationServerList $appServerList Information of all servers data
      */
-    public function markInActiveServers($aServersData = null)
+    public function markInActiveServers($appServerList)
     {
-        foreach ($aServersData as $sServerId => $aServerData) {
-            if ($aServerData['timestamp'] < \OxidEsales\Eshop\Core\Registry::get("oxUtilsDate")->getTime() - self::NODE_AVAILABILITY_CHECK_PERIOD) {
-                $oServer = $this->getServer($sServerId);
+        /** @var ApplicationServer $oServer */
+        foreach ($appServerList->getApplicationServers() as $oServer) {
+            if ($this->needToCheckApplicationServerAvailability($oServer->getTimestamp())) {
                 $oServer->setIsValid(false);
                 $this->saveServer($oServer);
-                $aServersData[$sServerId]['isValid'] = false;
+                $appServerList->offsetSet($oServer->getId(), $oServer);
             }
         }
-        return $aServersData;
+        return $appServerList;
+    }
+
+    /**
+     * Check if application server availability check period is over.
+     *
+     * @param int $timestamp A timestamp when last time server was checked.
+     *
+     * @return bool
+     */
+    protected function needToCheckApplicationServerAvailability($timestamp)
+    {
+        return (bool) ($timestamp < \OxidEsales\Eshop\Core\Registry::get("oxUtilsDate")->getTime() - self::NODE_AVAILABILITY_CHECK_PERIOD);
     }
 
     /**
      * Removes information about old and not used servers.
      *
-     * @param array $aServersData Information of all servers data
+     * @param ApplicationServerList $appServerList Information of all servers data
      *
-     * @return array $aServersData Information of all servers data
+     * @return ApplicationServerList $appServerList Information of all servers data
      */
-    public function deleteInActiveServers($aServersData)
+    public function deleteInActiveServers($appServerList)
     {
-        foreach ($aServersData as $sServerId => $aServerData) {
-            if ($aServerData['timestamp'] < \OxidEsales\Eshop\Core\Registry::get("oxUtilsDate")->getTime() - self::INACTIVE_NODE_STORAGE_PERIOD) {
-                $this->deleteServer($sServerId);
-                unset($aServersData[$sServerId]);
+        /** @var ApplicationServer $oServer */
+        foreach ($appServerList->getApplicationServers() as $oServer) {
+            if ($this->needToDeleteInactiveApplicationServer($oServer->getTimestamp())) {
+                $this->deleteServer($oServer->getId());
+                $appServerList->offsetUnset($oServer->getId());
             }
         }
-        return $aServersData;
+        return $appServerList;
+    }
+
+    /**
+     * Check if application server availability check period is over.
+     *
+     * @param int $timestamp A timestamp when last time server was checked.
+     *
+     * @return bool
+     */
+    protected function needToDeleteInactiveApplicationServer($timestamp)
+    {
+        return (bool) ($timestamp < \OxidEsales\Eshop\Core\Registry::get("oxUtilsDate")->getTime() - self::INACTIVE_NODE_STORAGE_PERIOD);
     }
 
     /**
      * Returns all servers information array from configuration.
      *
-     * @return array
+     * @return ApplicationServerList
      */
     public function getServersData()
     {
-        $aServersData = array();
+        $appServerList = oxNew(\OxidEsales\Eshop\Core\ApplicationServerList::class);
+
         $resultFromDatabase = $this->getAllServersDataConfigsFromDb();
         if ($resultFromDatabase != false && $resultFromDatabase->count() > 0) {
             while (!$resultFromDatabase->EOF) {
                 $sServerId = $this->parseServerIdFromConfig($resultFromDatabase->fields['oxvarname']);
-                $aServersData[$sServerId] = (array)unserialize($resultFromDatabase->fields['oxvarvalue']);
+                $appServerList->add($sServerId, $this->createServer($sServerId, (array)unserialize($resultFromDatabase->fields['oxvarvalue'])));
                 $resultFromDatabase->fetchRow();
             }
         }
-        return $aServersData;
+        return $appServerList;
     }
 
     /**

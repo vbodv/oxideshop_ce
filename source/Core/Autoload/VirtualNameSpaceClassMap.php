@@ -425,6 +425,7 @@ class VirtualNameSpaceClassMap
             'OxidEsales\Eshop\Application\Model\Wrapping' => \OxidEsales\EshopCommunity\Application\Model\Wrapping::class,
             'OxidEsales\Eshop\Core\AdminLogSqlDecorator' => \OxidEsales\EshopCommunity\Core\AdminLogSqlDecorator::class,
             'OxidEsales\Eshop\Core\ApplicationServer' => \OxidEsales\EshopCommunity\Core\ApplicationServer::class,
+            'OxidEsales\Eshop\Core\ApplicationServerList' => \OxidEsales\EshopCommunity\Core\ApplicationServerList::class,
             'OxidEsales\Eshop\Core\Autoload\VirtualNameSpaceClassMap' => \OxidEsales\EshopCommunity\Core\Autoload\VirtualNameSpaceClassMap::class,
             'OxidEsales\Eshop\Core\Autoload\VirtualNameSpaceClassMapProvider' => \OxidEsales\EshopCommunity\Core\Autoload\VirtualNameSpaceClassMapProvider::class,
             'OxidEsales\Eshop\Core\BackwardsCompatibleClassNameProvider' => \OxidEsales\EshopCommunity\Core\BackwardsCompatibleClassNameProvider::class,
