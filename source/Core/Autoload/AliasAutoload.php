@@ -194,8 +194,12 @@ class AliasAutoload
     private function getBackwardsCompatibilityClassMap()
     {
         if (is_null($this->backwardsCompatibilityClassMap)) {
-            $classMap = include_once __DIR__ . DIRECTORY_SEPARATOR . 'BackwardsCompatibilityClassMap.php';
-            $this->backwardsCompatibilityClassMap = array_map('strtolower', $classMap);
+            if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
+                $this->backwardsCompatibilityClassMap = [];
+            } else {
+                $classMap = include_once __DIR__ . DIRECTORY_SEPARATOR . 'BackwardsCompatibilityClassMap.php';
+                $this->backwardsCompatibilityClassMap = array_map('strtolower', $classMap);
+            }
         }
 
         return $this->backwardsCompatibilityClassMap;
