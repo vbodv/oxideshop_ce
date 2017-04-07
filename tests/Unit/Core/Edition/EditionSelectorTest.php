@@ -95,7 +95,7 @@ class EditionSelectorTest extends UnitTestCase
 
     public function testForcingEditionByConfig()
     {
-        $configFile = oxRegistry::get('oxConfigFile');
+        $configFile = oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
         $configFile->setVar('edition', 'EE');
 
         $editionSelector = new EditionSelector();
@@ -106,7 +106,7 @@ class EditionSelectorTest extends UnitTestCase
 
     public function testForcingEditionByConfigWorksWithLowerCase()
     {
-        $configFile = oxRegistry::get('oxConfigFile');
+        $configFile = oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
         $configFile->setVar('edition', 'ee');
 
         $editionSelector = new EditionSelector();
@@ -123,7 +123,7 @@ class EditionSelectorTest extends UnitTestCase
         $path = $this->createFile('config.inc.php', '<?php $this->edition = "EE";');
         $fakeConfigFile = new ConfigFile($path);
 
-        $configFile = oxRegistry::get('oxConfigFile');
+        $configFile = oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
         oxRegistry::set('oxConfigFile', $fakeConfigFile);
 
         $editionSelector = new EditionSelector();

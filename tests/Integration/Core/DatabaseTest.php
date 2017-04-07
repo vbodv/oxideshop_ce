@@ -96,7 +96,7 @@ class DatabaseTest extends UnitTestCase
     public function testGetDbThrowsDatabaseConnectionException()
     {
         /** @var ConfigFile $configFileBackup Backup of the configFile as stored in Registry. This object must be restored */
-        $configFileBackup = Registry::get('oxConfigFile');
+        $configFileBackup = Registry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
 
         $configFile = $this->getBlankConfigFile();
         Registry::set('oxConfigFile', $configFile);
@@ -116,7 +116,7 @@ class DatabaseTest extends UnitTestCase
     public function testGetDbThrowsDatabaseNotConfiguredException()
     {
         /** @var ConfigFile $configFileBackup Backup of the configFile as stored in Registry. This object must be restored */
-        $configFileBackup = Registry::get('oxConfigFile');
+        $configFileBackup = Registry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
 
         $configFile = $this->getBlankConfigFile();
         $configFile->setVar('dbHost', '<');

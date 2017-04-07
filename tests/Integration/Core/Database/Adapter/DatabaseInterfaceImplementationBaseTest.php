@@ -182,7 +182,7 @@ abstract class DatabaseInterfaceImplementationBaseTest extends UnitTestCase
      */
     protected static function getDatabaseHandler()
     {
-        $configFile = Registry::get('oxConfigFile');
+        $configFile = Registry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
         $dsn = 'mysql:host='. $configFile->getVar('dbHost') .';port='. $configFile->getVar('dbPort') .';dbname=' .$configFile->getVar('dbName') ;
         $username = $configFile->getVar('dbUser');
         $password = $configFile->getVar('dbPwd');

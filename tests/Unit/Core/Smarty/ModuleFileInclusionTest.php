@@ -41,7 +41,7 @@ class ModuleFileInclusionTest extends \OxidTestCase
     public function testModuleInclusion()
     {
         $wrapper = $this->getVfsStreamWrapper();
-        oxRegistry::get("oxConfigFile")->setVar("sShopDir", $wrapper->getRootPath());
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar("sShopDir", $wrapper->getRootPath());
         $wrapper->createStructure(array(
             'modules' => array(
                 'testmoduleinclusion.php' => "<?php

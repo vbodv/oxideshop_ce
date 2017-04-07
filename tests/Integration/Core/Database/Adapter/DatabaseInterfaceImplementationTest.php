@@ -410,7 +410,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
     {
         $rowCount = 2;
         $expectedResult = [[self::FIXTURE_OXID_1], [self::FIXTURE_OXID_2]];
-        $assertionMessage = 'If parameter offet is not set, selectLimit will return the number of records 
+        $assertionMessage = 'If parameter offet is not set, selectLimit will return the number of records
         given in the parameter $rowcount starting from the first record in the result set';
 
         $this->loadFixtureToTestTable();
@@ -1146,7 +1146,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
     {
         $character_set = 'utf8';
 
-        $configFile = Registry::get('oxConfigFile');
+        $configFile = Registry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
         $this->resetDbProperty(oxDb::getInstance());
         $database = oxDb::getInstance();
         $database->setConfigFile($configFile);

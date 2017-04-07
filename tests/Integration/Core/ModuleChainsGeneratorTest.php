@@ -166,7 +166,7 @@ class ModuleChainsGeneratorTest extends UnitTestCase
     protected function createModuleClassFile($extensionPath)
     {
 
-        $modulesDirectory = Registry::get("oxConfigFile")->getVar("sShopDir");
+        $modulesDirectory = Registry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->getVar("sShopDir");
         $moduleClassFilePath = "$modulesDirectory/modules/$extensionPath.php";
         if (!is_dir(dirname($moduleClassFilePath))) {
             if (!mkdir(dirname($moduleClassFilePath), 0755, true)) {

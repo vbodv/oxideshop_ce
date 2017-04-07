@@ -80,7 +80,7 @@ abstract class BaseModuleInheritanceTestCase extends BaseModuleTestCase
      */
     protected function prepareEnvironment($path = __DIR__)
     {
-        $configFile = Registry::get('oxConfigFile');
+        $configFile = Registry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
         $configFile->setVar('sShopDir', realpath($path . '/TestDataInheritance'));
         Registry::set('oxConfigFile', $configFile);
 

@@ -121,7 +121,7 @@ class ShopControlTest extends \OxidTestCase
      */
     public function testStartSystemComponentExceptionHandled_NotDebugMode()
     {
-        oxRegistry::get("oxConfigFile")->setVar('iDebug', 0);
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar('iDebug', 0);
 
         $componentException = $this->getMock(oxSystemComponentException::class, ['debugOut']);
         $componentException->expects($this->atLeastOnce())->method('debugOut');
@@ -148,7 +148,7 @@ class ShopControlTest extends \OxidTestCase
      */
     public function testStartSystemComponentExceptionHandled_onlyInDebugMode()
     {
-        oxRegistry::get("oxConfigFile")->setVar('iDebug', -1);
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar('iDebug', -1);
 
         $componentException = $this->getMock(\OxidEsales\Eshop\Core\Exception\SystemComponentException::class, ['debugOut']);
         $componentException->expects($this->any())->method('debugOut');
@@ -528,7 +528,7 @@ class ShopControlTest extends \OxidTestCase
     public function testIsDebugMode()
     {
         $oControl = $this->getProxyClass("oxShopControl");
-        $oConfigFile = oxRegistry::get('oxConfigFile');
+        $oConfigFile = oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
 
         $oConfigFile->iDebug = -1;
         $this->assertTrue($oControl->UNITisDebugMode());

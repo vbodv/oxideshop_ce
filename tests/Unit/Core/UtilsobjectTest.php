@@ -91,8 +91,8 @@ class UtilsobjectTest extends \OxidTestCase
         $oArticle = oxNew('oxArticle');
         $oArticle->delete('testArticle');
 
-        oxRegistry::get("oxConfigFile")->setVar('blDoNotDisableModuleOnError', $this->getConfigParam('blDoNotDisableModuleOnError'));
-        oxRegistry::get("oxConfigFile")->setVar("sShopDir", $this->getConfigParam('sShopDir'));
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar('blDoNotDisableModuleOnError', $this->getConfigParam('blDoNotDisableModuleOnError'));
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar("sShopDir", $this->getConfigParam('sShopDir'));
 
         parent::tearDown();
     }
@@ -184,7 +184,7 @@ class UtilsobjectTest extends \OxidTestCase
         oxRegistry::getUtilsObject()->setModuleVar("aModules", $aModules);
         $config->setConfigParam("aModules", $aModules);
 
-        $configFile = oxRegistry::get("oxConfigFile");
+        $configFile = oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
         $realShopDir = $configFile->getVar('sShopDir');
         $configFile->setVar('sShopDir', $fakeShopDir);
 
@@ -224,7 +224,7 @@ class UtilsobjectTest extends \OxidTestCase
         oxRegistry::getUtilsObject()->setModuleVar("aModules", $aModules);
         $config->setConfigParam("aModules", $aModules);
 
-        $configFile = oxRegistry::get("oxConfigFile");
+        $configFile = oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
         $realShopDir = $configFile->getVar('sShopDir');
         $configFile->setVar('sShopDir', $fakeShopDir);
 
@@ -308,7 +308,7 @@ class UtilsobjectTest extends \OxidTestCase
         $sClassName = 'oxorder';
         $sClassNameExpect = 'oxorder';
 
-        oxRegistry::get("oxConfigFile")->setVar('blDoNotDisableModuleOnError', false);
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar('blDoNotDisableModuleOnError', false);
 
         $sClassNameWhichExtends = 'oemodulenameoxorder_different3';
         $oUtilsObject = $this->prepareFakeModuleNonExistentClass($sClassName, $sClassNameWhichExtends);
@@ -318,7 +318,7 @@ class UtilsobjectTest extends \OxidTestCase
 
     public function testGetClassName_classNotExistDoNotDisableModuleOnError_errorThrow()
     {
-        oxRegistry::get("oxConfigFile")->setVar('blDoNotDisableModuleOnError', true);
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar('blDoNotDisableModuleOnError', true);
 
         $sClassName = 'oxorder';
         $sClassNameWhichExtends = 'oemodulenameoxorder_different4';
@@ -344,7 +344,7 @@ class UtilsobjectTest extends \OxidTestCase
     private function _prepareFakeModule($class, $extension)
     {
         $wrapper = $this->getVfsStreamWrapper();
-        oxRegistry::get("oxConfigFile")->setVar("sShopDir", $wrapper->getRootPath());
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar("sShopDir", $wrapper->getRootPath());
         $wrapper->createStructure(array(
             'modules' => array(
                 $extension . '.php' => "<?php class $extension extends {$extension}_parent {}"
@@ -369,7 +369,7 @@ class UtilsobjectTest extends \OxidTestCase
     private function prepareFakeModuleNonExistentClass($class, $extension)
     {
         $wrapper = $this->getVfsStreamWrapper();
-        oxRegistry::get("oxConfigFile")->setVar("sShopDir", $wrapper->getRootPath());
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar("sShopDir", $wrapper->getRootPath());
         $wrapper->createStructure(array(
             'modules' => array(
                 $extension . '.php' => "<?php class {$extension}NonExistent extends {$extension}_parent {}"

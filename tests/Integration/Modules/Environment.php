@@ -127,7 +127,7 @@ class Environment
         $oConfig = Registry::getConfig();
         $oConfig->setShopId($this->getShopId());
         $oConfig->setConfigParam('sShopDir', $this->getPathToTestDataDirectory());
-        \OxidEsales\Eshop\Core\Registry::get("oxConfigFile")->setVar("sShopDir", $this->getPathToTestDataDirectory());
+        \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar("sShopDir", $this->getPathToTestDataDirectory());
     }
 
     /**

@@ -39,7 +39,7 @@ class ModuleSimilarClassTest extends \OxidTestCase
     public function testModuleSimilarName()
     {
         $wrapper = $this->getVfsStreamWrapper();
-        oxRegistry::get("oxConfigFile")->setVar("sShopDir", $wrapper->getRootPath());
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar("sShopDir", $wrapper->getRootPath());
         $wrapper->createStructure(array(
             'modules' => array(
                 'testmodulesimilarname.php' => "<?php
@@ -66,7 +66,7 @@ class ModuleSimilarClassTest extends \OxidTestCase
         $this->stubExceptionToNotWriteToLog(SystemComponentException::class, SystemComponentException::class);
 
         $wrapper = $this->getVfsStreamWrapper();
-        oxRegistry::get("oxConfigFile")->setVar("sShopDir", $wrapper->getRootPath());
+        oxRegistry::get(\OxidEsales\Eshop\Core\ConfigFile::class)->setVar("sShopDir", $wrapper->getRootPath());
         $wrapper->createStructure(array(
             'modules' => array(
                 'testmodulesimilarname.php' => "<?php
