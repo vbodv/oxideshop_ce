@@ -230,6 +230,10 @@ class Registry
     public static function getStorageKey($className)
     {
         $key = strtolower($className);
+
+        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
+            return strtolower($key);
+        }
         if (!\OxidEsales\Eshop\Core\NamespaceInformationProvider::isNamespacedClass($className)) {
             $bcMap = self::getBackwardsCompatibilityClassMap();
             $virtualKey = isset($bcMap[$key]) ? $bcMap[$key] : $key;
