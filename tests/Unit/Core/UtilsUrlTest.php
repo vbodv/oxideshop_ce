@@ -279,7 +279,7 @@ class UtilsUrlTest extends \OxidTestCase
         $oSession->setId('SID');
 
         $oUtils = oxNew('oxUtilsUrl');
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
         $sShopUrl = $this->getConfig()->getShopUrl();
 
         $this->assertEquals("$sShopUrl/anyUrl?force_sid=SID", $oUtils->processUrl("$sShopUrl/anyUrl"));
@@ -296,7 +296,7 @@ class UtilsUrlTest extends \OxidTestCase
         $this->setLanguage(1);
 
         $oUtils = oxNew('oxUtilsUrl');
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         $this->assertEquals("anyUrl?lang=1&amp;force_sid=SID", $oUtils->processUrl("anyUrl"));
     }

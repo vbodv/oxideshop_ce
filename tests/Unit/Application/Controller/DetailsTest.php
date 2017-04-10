@@ -816,7 +816,7 @@ class DetailsTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject $oProduct */
         $oProduct = $this->getMock('oxArticle', array('getId', 'addToRatingAverage'));
@@ -848,7 +848,7 @@ class DetailsTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject $oProduct */
         $oProduct = $this->getMock('oxArticle', array('getId', 'addToRatingAverage'));
@@ -878,7 +878,7 @@ class DetailsTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject $oProduct */
         $oProduct = $this->getMock('oxarticle', array('getId', 'addToRatingAverage'));
@@ -913,7 +913,7 @@ class DetailsTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject $oProduct */
         $oProduct = $this->getMock('oxarticle', array('getId', 'addToRatingAverage'));
@@ -949,7 +949,7 @@ class DetailsTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject $oProduct */
         $oProduct = $this->getMock('oxarticle', array('getId', 'addToRatingAverage'));
@@ -979,7 +979,7 @@ class DetailsTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Details|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("details", array("getViewConfig", 'getArticleList'));
@@ -1017,7 +1017,7 @@ class DetailsTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Details|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("details", array("getViewConfig", 'getProduct'));

@@ -267,7 +267,7 @@ class ReviewTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject $oProduct */
         $oProduct = $this->getMock('oxarticle', array('getId', 'addToRatingAverage'));
@@ -294,7 +294,7 @@ class ReviewTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Review|PHPUnit_Framework_MockObject_MockObject $oReview */
         $oReview = $this->getMock('review', array('getReviewUser', '_getActiveObject', 'canAcceptFormData', "_getActiveType"));
@@ -317,7 +317,7 @@ class ReviewTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         $oUser = oxNew('oxUser');
         $oUser->load("oxdefaultadmin");
@@ -348,7 +348,7 @@ class ReviewTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         $oUser = oxNew('oxUser');
         $oUser->load("oxdefaultadmin");
@@ -379,7 +379,7 @@ class ReviewTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         $oUser = oxNew('oxUser');
         $oUser->load("oxdefaultadmin");

@@ -43,7 +43,7 @@ class AccountPasswordTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Password|PHPUnit_Framework_MockObject_MockObject $oView */
         $oView = $this->getMock("Account_Password", array("getUser"));
@@ -66,7 +66,7 @@ class AccountPasswordTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock("oxUser", array("checkPassword"));
@@ -92,7 +92,7 @@ class AccountPasswordTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock("oxUser", array("checkPassword"));
@@ -118,7 +118,7 @@ class AccountPasswordTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock("oxUser", array("checkPassword"));
@@ -145,7 +145,7 @@ class AccountPasswordTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock("oxUser", array("checkPassword", "isSamePassword"));
@@ -174,7 +174,7 @@ class AccountPasswordTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
@@ -270,7 +270,7 @@ class AccountPasswordTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock('oxUser', array('isSamePassword'));

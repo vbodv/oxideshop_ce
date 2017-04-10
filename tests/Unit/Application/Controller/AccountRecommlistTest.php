@@ -80,7 +80,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getActiveRecommList"));
@@ -104,7 +104,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getActiveRecommList"));
@@ -124,7 +124,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getActiveRecommList", "setActiveRecommList"));
@@ -149,7 +149,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getActiveRecommList", "setActiveRecommList"));
@@ -168,7 +168,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getUser"));
@@ -190,7 +190,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getUser", "getActiveRecommList"));
@@ -218,7 +218,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getUser", "getActiveRecommList"));
@@ -254,7 +254,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getUser", "getActiveRecommList"));
@@ -286,7 +286,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getUser", "getActiveRecommList"));
@@ -318,7 +318,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getUser", "getActiveRecommList"));
@@ -423,7 +423,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getViewConfig", 'getUser'));
@@ -446,7 +446,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getViewConfig", 'getActiveRecommList'));
@@ -471,7 +471,7 @@ class AccountRecommlistTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Recommlist|PHPUnit_Framework_MockObject_MockObject $oRecomm */
         $oRecomm = $this->getMock("account_recommlist", array("getViewConfig", 'getActiveRecommList'));

@@ -2305,7 +2305,7 @@ class ViewConfigTest extends \OxidTestCase
 
         $session->expects($this->once())->method('isSessionStarted')->will($this->returnValue($isSessionStarted));
         $session->expects($this->exactly($callTimes))->method('getSessionChallengeToken')->will($this->returnValue($token));
-        oxRegistry::set('oxSession', $session);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $session);
 
         /** @var oxViewConfig $viewConfig */
         $viewConfig = oxNew('oxViewConfig');

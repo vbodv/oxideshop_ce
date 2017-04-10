@@ -52,7 +52,7 @@ class AccountNewsletterTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var Account_Newsletter|PHPUnit_Framework_MockObject_MockObject $oView */
         $oView = $this->getMock("Account_Newsletter", array("getUser"));
@@ -74,7 +74,7 @@ class AccountNewsletterTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxNewsSubscribed|PHPUnit_Framework_MockObject_MockObject $oSubscription */
         $oSubscription = $this->getMock("oxNewsSubscribed", array("setOptInStatus"));
@@ -105,7 +105,7 @@ class AccountNewsletterTest extends \OxidTestCase
         /** @var oxSession|PHPUnit_Framework_MockObject_MockObject $oSession */
         $oSession = $this->getMock('oxSession', array('checkSessionChallenge'));
         $oSession->expects($this->once())->method('checkSessionChallenge')->will($this->returnValue(true));
-        oxRegistry::set('oxSession', $oSession);
+        Registry::set(\OxidEsales\Eshop\Core\Session::class, $oSession);
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock("oxUser", array("setNewsSubscription"));
