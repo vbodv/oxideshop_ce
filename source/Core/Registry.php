@@ -64,7 +64,12 @@ class Registry
      */
     public static function get($className)
     {
-        $key = self::getStorageKey($className);
+        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
+            $key = strtolower($className);
+        } else {
+            $key = self::getStorageKey($className);
+        }
+
         if (!isset(self::$instances[$key])) {
             self::$instances[$key] = self::createObject($key, $className);
         }
@@ -83,7 +88,11 @@ class Registry
      */
     public static function set($className, $instance)
     {
-        $key = self::getStorageKey($className);
+        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
+            $key = strtolower($className);
+        } else {
+            $key = self::getStorageKey($className);
+        }
 
         if (is_null($instance)) {
             unset(self::$instances[$key]);
@@ -187,7 +196,11 @@ class Registry
      */
     public static function instanceExists($className)
     {
-        $key = self::getStorageKey($className);
+        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
+            $key = strtolower($className);
+        } else {
+            $key = self::getStorageKey($className);
+        }
 
         return isset(self::$instances[$key]);
     }
