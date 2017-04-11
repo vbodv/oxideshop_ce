@@ -1263,8 +1263,12 @@ class Config extends \OxidEsales\Eshop\Core\Base
         $cacheKey = $path . "_{$ignoreCust}{$absolute}";
 
         if (($return = Registry::getUtils()->fromStaticCache($cacheKey)) !== null) {
+            $contents = "Cache HIT for $cacheKey";
+            file_put_contents(OX_BASE_PATH . 'log' . DIRECTORY_SEPARATOR .  __FUNCTION__ . '.log', $contents . PHP_EOL, FILE_APPEND);
             return $return;
         }
+        $contents = "Cache MISS for $cacheKey";
+        file_put_contents(OX_BASE_PATH . 'log' . DIRECTORY_SEPARATOR .  __FUNCTION__ . '.log', $contents . PHP_EOL, FILE_APPEND);
 
         $return = $this->getEditionTemplate("{$theme}/{$dir}/{$file}");
 
@@ -1358,6 +1362,9 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     public function getUrl($file, $dir, $admin = null, $ssl = null, $nativeImg = false, $lang = null, $shop = null, $theme = null)
     {
+        $contents = implode(';', func_get_args());
+        file_put_contents(OX_BASE_PATH . 'log' . DIRECTORY_SEPARATOR .  __FUNCTION__ . '.log', $contents . PHP_EOL, FILE_APPEND);
+
         return str_replace(
             $this->getOutDir(),
             $this->getOutUrl($ssl, $admin, $nativeImg),
@@ -1420,6 +1427,9 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     public function getPicturePath($file, $admin = false, $lang = null, $shop = null, $theme = null)
     {
+        $contents = implode(';', func_get_args());
+        file_put_contents(OX_BASE_PATH . 'log' . DIRECTORY_SEPARATOR .  __FUNCTION__ . '.log', $contents . PHP_EOL, FILE_APPEND);
+
         return $this->getDir($file, $this->_sPictureDir, $admin, $lang, $shop, $theme);
     }
 
@@ -1499,6 +1509,9 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     public function getTemplatePath($templateName, $isAdmin)
     {
+        $contents = implode(';', func_get_args());
+        file_put_contents(OX_BASE_PATH . 'log' . DIRECTORY_SEPARATOR .  __FUNCTION__ . '.log', $contents . PHP_EOL, FILE_APPEND);
+
         $finalTemplatePath = $this->getDir($templateName, $this->_sTemplateDir, $isAdmin);
 
         if (!$finalTemplatePath) {
