@@ -28,7 +28,7 @@ define('OX_BASE_PATH', INSTALLATION_ROOT_PATH . DIRECTORY_SEPARATOR . 'source' .
 define('OX_LOG_FILE', OX_BASE_PATH . 'log' . DIRECTORY_SEPARATOR . 'EXCEPTION_LOG.txt');
 define('OX_OFFLINE_FILE', OX_BASE_PATH . 'offline.html');
 define('VENDOR_PATH', INSTALLATION_ROOT_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR);
-define('DISABLE_BC_LAYER', false);
+define('DISABLE_BC_LAYER', true);
 
 /**
  * Where CORE_AUTOLOADER_PATH points depends on how OXID eShop has been installed. If it is installed as part of a

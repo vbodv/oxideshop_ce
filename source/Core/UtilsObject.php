@@ -125,14 +125,7 @@ class UtilsObject
      */
     public static function setClassInstance($className, $instance)
     {
-        //Get storage key as the class might be aliased.
-        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
-            $storageKey = strtolower($className);
-        } else {
-            $storageKey = Registry::getStorageKey($className);
-        }
-
-        static::$_aClassInstances[$storageKey] = $instance;
+        static::$_aClassInstances[$className] = $instance;
     }
 
     /**
@@ -157,12 +150,7 @@ class UtilsObject
             return;
         }
 
-        //Get storage key as the class might be aliased.
-        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
-            $storageKey = strtolower($className);
-        } else {
-            $storageKey = Registry::getStorageKey($className);
-        }
+        $storageKey = $className;
 
         if ($className && isset(static::$_aInstanceCache[$storageKey])) {
             unset(static::$_aInstanceCache[$storageKey]);
@@ -226,12 +214,7 @@ class UtilsObject
             $className = strtolower($className);
         }
 
-        //Get storage key as the class might be aliased.
-        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
-            $storageKey = strtolower($className);
-        } else {
-            $storageKey = Registry::getStorageKey($className);
-        }
+        $storageKey = $className;
 
         //UtilsObject::$_aClassInstances is only intended to be used in unit tests.
         if (defined('OXID_PHP_UNIT') && isset(static::$_aClassInstances[$storageKey])) {

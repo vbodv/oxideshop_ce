@@ -64,16 +64,10 @@ class Registry
      */
     public static function get($className)
     {
-        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
-            $key = strtolower($className);
-        } else {
-            $key = self::getStorageKey($className);
+        if (!isset(self::$instances[$className])) {
+            self::$instances[$className] = self::createObject($className, $className);
         }
-
-        if (!isset(self::$instances[$key])) {
-            self::$instances[$key] = self::createObject($key, $className);
-        }
-        return self::$instances[$key];
+        return self::$instances[$className];
     }
 
     /**
@@ -88,19 +82,13 @@ class Registry
      */
     public static function set($className, $instance)
     {
-        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
-            $key = strtolower($className);
-        } else {
-            $key = self::getStorageKey($className);
-        }
-
         if (is_null($instance)) {
-            unset(self::$instances[$key]);
+            unset(self::$instances[$className]);
 
             return;
         }
 
-        self::$instances[$key] = $instance;
+        self::$instances[$className] = $instance;
 
         return;
     }
@@ -196,13 +184,7 @@ class Registry
      */
     public static function instanceExists($className)
     {
-        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
-            $key = strtolower($className);
-        } else {
-            $key = self::getStorageKey($className);
-        }
-
-        return isset(self::$instances[$key]);
+        return isset(self::$instances[$className]);
     }
 
     /**
@@ -231,29 +213,6 @@ class Registry
         }
 
         return self::$virtualNameSpaceClassMap;
-    }
-
-    /**
-     * Figure out which key to use for instance cache.
-     *
-     * @param string $className
-     *
-     * @return string
-     */
-    public static function getStorageKey($className)
-    {
-        $key = strtolower($className);
-
-        if (defined('DISABLE_BC_LAYER') && (true === DISABLE_BC_LAYER)) {
-            return strtolower($key);
-        }
-        if (!\OxidEsales\Eshop\Core\NamespaceInformationProvider::isNamespacedClass($className)) {
-            $bcMap = self::getBackwardsCompatibilityClassMap();
-            $virtualKey = isset($bcMap[$key]) ? $bcMap[$key] : $key;
-            $key = $virtualKey;
-        }
-
-        return strtolower($key);
     }
 
     /**
