@@ -97,7 +97,7 @@ class ServersManagerTest extends \OxidTestCase
         $oServerList->saveServer($oServer);
 
         $applicationServerList = $oServerList->getServersData();
-        $this->assertEquals($oServer, $applicationServerList->offsetGet('serverNameHash1'));
+        $this->assertEquals($oServer, $applicationServerList['serverNameHash1']);
     }
 
     public function testUpdatingServer()
@@ -129,7 +129,7 @@ class ServersManagerTest extends \OxidTestCase
         $oServerList->saveServer($oServer);
 
         $applicationServerList = $oServerList->getServersData();
-        $this->assertEquals($oServer, $applicationServerList->offsetGet('serverNameHash2'));
+        $this->assertEquals($oServer, $applicationServerList['serverNameHash2']);
     }
 
     public function testUpdatingEmptyServer()
@@ -148,7 +148,7 @@ class ServersManagerTest extends \OxidTestCase
         $oServerList->saveServer($oServer);
 
         $applicationServerList = $oServerList->getServersData();
-        $this->assertEquals($oServer, $applicationServerList->offsetGet('serverNameHash1'));
+        $this->assertEquals($oServer, $applicationServerList['serverNameHash1']);
     }
 
     public function testGetServerNodes()
@@ -179,15 +179,15 @@ class ServersManagerTest extends \OxidTestCase
         $oManager = oxNew('oxServersManager');
         $aServersData = $oManager->getServersData();
 
-        $this->assertNotNull($aServersData->offsetGet('serverNameHash1'));
-        $this->assertNotNull($aServersData->offsetGet('serverNameHash2'));
+        $this->assertNotNull($aServersData['serverNameHash1']);
+        $this->assertNotNull($aServersData['serverNameHash2']);
 
         $oManager->deleteServer('serverNameHash1');
 
         $aServersData2 = $oManager->getServersData();
 
-        $this->assertNull($aServersData2->offsetGet('serverNameHash1'));
-        $this->assertNotNull($aServersData2->offsetGet('serverNameHash2'));
+        $this->assertNull($aServersData2['serverNameHash1']);
+        $this->assertNotNull($aServersData2['serverNameHash2']);
     }
 
     public function testMarkInactive()
