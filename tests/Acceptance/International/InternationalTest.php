@@ -70,6 +70,7 @@ class InternationalTest extends AcceptanceTestCase
         $sInternationalConverter = $editionPathProvider->getDatabaseSqlDirectory() . '/en.sql';
         $this->importSql($sInternationalConverter);
         Registry::set('oxConfig', null);
+        Registry::set('oxLang', null);
 
         parent::addTestData($testSuitePath);
     }
