@@ -22,7 +22,6 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Acceptance\International;
 
-use \OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\Edition\EditionPathProvider;
 use OxidEsales\EshopCommunity\Core\Edition\EditionRootPathProvider;
 use OxidEsales\EshopCommunity\Core\Edition\EditionSelector;
@@ -69,8 +68,6 @@ class InternationalTest extends AcceptanceTestCase
         $editionPathProvider = new EditionPathProvider($editionEntryPointProvider);
         $sInternationalConverter = $editionPathProvider->getDatabaseSqlDirectory() . '/en.sql';
         $this->importSql($sInternationalConverter);
-        Registry::set('oxConfig', null);
-        Registry::set('oxLang', null);
 
         parent::addTestData($testSuitePath);
     }
