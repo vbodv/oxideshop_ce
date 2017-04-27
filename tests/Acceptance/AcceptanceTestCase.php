@@ -78,7 +78,7 @@ abstract class AcceptanceTestCase extends \OxidEsales\TestingLibrary\AcceptanceT
      * Config object has cache for database configuration.
      *
      */
-    public function resetConfig()
+    private function resetConfig()
     {
         $config = Registry::getConfig();
         $config->reinitialize();
