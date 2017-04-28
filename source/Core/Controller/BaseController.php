@@ -23,6 +23,7 @@
 namespace OxidEsales\EshopCommunity\Core\Controller;
 
 use oxCategory;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\ShopVersion;
 use oxRegistry;
 use oxShop;
@@ -587,6 +588,10 @@ class BaseController extends \OxidEsales\Eshop\Core\Base
             $realClassName = \OxidEsales\Eshop\Core\Registry::getUtilsObject()->getClassName($className);
 
             if (false === class_exists($realClassName)) {
+                $realClassName = $this->resolveControllerClass($realClassName);
+            }
+
+            if (false === class_exists($realClassName)) {
                 //If redirect tries to use a not existing class throw an exception.
                 //we'll be redirected to start page directly.
                 $exception =  new \OxidEsales\Eshop\Core\Exception\SystemComponentException();
@@ -616,6 +621,18 @@ class BaseController extends \OxidEsales\Eshop\Core\Base
             //#M341 do not add redirect parameter
             \OxidEsales\Eshop\Core\Registry::getUtils()->redirect($url, (bool) $myConfig->getRequestParameter('redirected'), 302);
         }
+    }
+
+    protected function resolveControllerClass($controllerKey)
+    {
+        $resolvedClass = Registry::getControllerClassNameResolver()->getClassNameById($controllerKey);
+
+        // If unmatched controller id is requested throw exception
+        if (!$resolvedClass) {
+            throw new \OxidEsales\Eshop\Core\Exception\RoutingException($controllerKey);
+        }
+
+        return $resolvedClass;
     }
 
     /**
