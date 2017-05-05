@@ -52,7 +52,7 @@ class ApplicationServerService implements \OxidEsales\Eshop\Core\Contract\Applic
      *
      * @return array
      */
-    public function loadList()
+    public function loadAppServerList()
     {
         return $this->getAppServerDao()->findAll();
     }
@@ -64,7 +64,7 @@ class ApplicationServerService implements \OxidEsales\Eshop\Core\Contract\Applic
      *
      * @return \OxidEsales\Eshop\Core\ApplicationServer
      */
-    public function load($id)
+    public function loadAppServer($id)
     {
         return $this->getAppServerDao()->findById($id);
     }
@@ -74,7 +74,7 @@ class ApplicationServerService implements \OxidEsales\Eshop\Core\Contract\Applic
      *
      * @param string $serverId
      */
-    public function deleteById($serverId)
+    public function deleteAppServerById($serverId)
     {
         return $this->getAppServerDao()->delete($serverId);
     }
@@ -86,7 +86,7 @@ class ApplicationServerService implements \OxidEsales\Eshop\Core\Contract\Applic
      *
      * @return int
      */
-    public function save($appServer)
+    public function saveAppServer($appServer)
     {
         if ($this->getAppServerDao()->findById($appServer->getId()) !== false) {
             $effectedRows = $this->getAppServerDao()->update($appServer);

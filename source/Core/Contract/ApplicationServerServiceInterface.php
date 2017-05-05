@@ -35,7 +35,7 @@ interface ApplicationServerServiceInterface
      *
      * @return \OxidEsales\Eshop\Core\ApplicationServer[]
      */
-    public function loadList();
+    public function loadAppServerList();
 
     /**
      * Load the application server for given id.
@@ -44,14 +44,14 @@ interface ApplicationServerServiceInterface
      *
      * @return \OxidEsales\Eshop\Core\ApplicationServer
      */
-    public function load($id);
+    public function loadAppServer($id);
 
     /**
      * Removes server node information.
      *
      * @param string $serverId
      */
-    public function deleteById($serverId);
+    public function deleteAppServerById($serverId);
 
     /**
      * Saves application server data.
@@ -60,5 +60,5 @@ interface ApplicationServerServiceInterface
      *
      * @return int
      */
-    public function save($appServer);
+    public function saveAppServer($appServer);
 }
