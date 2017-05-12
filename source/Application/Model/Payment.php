@@ -141,7 +141,7 @@ class Payment extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
     /**
      * Payment groups getter. Returns groups list
      *
-     * @return oxList
+     * @return \OxidEsales\Eshop\Core\Model\ListModel
      */
     public function getGroups()
     {

@@ -655,7 +655,7 @@ class Config extends \OxidEsales\Eshop\Core\Base
      * @param string $name Name of parameter.
      * @param bool   $raw  Get unescaped parameter.
      *
-     * @deprecated on b-dev (2015-06-10); Use Request::getRequestParameter() or Request::getRequestEscapedParameter().
+     * @deprecated on b-dev (2015-06-10); Use \OxidEsales\Eshop\Core\RequestRequest::getRequestParameter() or \OxidEsales\Eshop\Core\RequestRequest::getRequestEscapedParameter().
      *
      * @return mixed
      */
