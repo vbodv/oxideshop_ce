@@ -37,7 +37,7 @@ class NamespaceInformationProvider
      *
      * @var array
      */
-    private static $shopEditionNamespaces = [
+    protected static $shopEditionNamespaces = [
         'CE' => 'OxidEsales\\EshopCommunity\\',
         'PE' => 'OxidEsales\\EshopProfessional\\',
         'EE' => 'OxidEsales\\EshopEnterprise\\'
@@ -48,7 +48,7 @@ class NamespaceInformationProvider
      *
      * @var array
      */
-    private static $shopEditionTestNamespaces = [
+    protected static $shopEditionTestNamespaces = [
         'CE' => 'OxidEsales\\EshopCommunity\\Tests\\',
         'PE' => 'OxidEsales\\EshopProfessional\\Tests\\',
         'EE' => 'OxidEsales\\EshopEnterprise\\Tests\\'
@@ -59,7 +59,7 @@ class NamespaceInformationProvider
      *
      * @var string
      */
-    private static $virtualNamespace = 'OxidEsales\\Eshop\\';
+    protected static $virtualNamespace = 'OxidEsales\\Eshop\\';
 
     /**
      * Getter for array with official OXID eShop Edition namespaces.
