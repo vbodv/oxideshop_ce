@@ -33,14 +33,17 @@ class ForwardsCompatibleInstanceOfNewClassVirtualClassName_2_Test extends \PHPUn
         $realClassName = \OxidEsales\EshopCommunity\Application\Model\Article::class;
         $virtualClassName = \OxidEsales\Eshop\Application\Model\Article::class;
         $backwardsCompatibleClassAlias = 'oxarticle';
-        $message = 'Backwards compatible class name - lowercase string';
 
         $object = new $virtualClassName();
 
+        $message = 'An object created with new \OxidEsales\Eshop\Application\Model\Article() is an instance of "oxarticle"';
         $this->assertInstanceOf($backwardsCompatibleClassAlias, $object, $message);
 
+        $message = 'An object created with new \OxidEsales\Eshop\Application\Model\Article() is an instance of \OxidEsales\EshopCommunity\Application\Model\Article::class';
         $this->assertInstanceOf($realClassName, $object, $message);
 
+        $message = 'An object created with new \OxidEsales\Eshop\Application\Model\Article() is an instance of \OxidEsales\Eshop\Application\Model\Article::class';
         $this->assertInstanceOf($virtualClassName, $object, $message);
+
     }
 }

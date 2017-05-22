@@ -33,14 +33,17 @@ class BackwardsCompatibleInstanceOfNewClass_6_Test extends \PHPUnit_Framework_Te
         $realClassName = \OxidEsales\EshopCommunity\Application\Model\Article::class;
         $virtualClassName = \OxidEsales\Eshop\Application\Model\Article::class;
         $backwardsCompatibleClassAlias = 'oxArticle';
-        $message = 'Backwards compatible class name - CamelCase string';
-        
+
         $object = new $backwardsCompatibleClassAlias();
 
+
+        $message = 'An object created with new oxArticle() is an instance of "oxArticle"';
         $this->assertInstanceOf($backwardsCompatibleClassAlias, $object, $message);
 
+        $message = 'An object created with new oxArticle() is an instance of \OxidEsales\EshopCommunity\Application\Model\Article::class';
         $this->assertInstanceOf($realClassName, $object, $message);
 
+        $message = 'An object created with new oxArticle() is an instance of \OxidEsales\Eshop\Application\Model\Article::class';
         $this->assertInstanceOf($virtualClassName, $object, $message);
     }
 }

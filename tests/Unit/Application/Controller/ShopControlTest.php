@@ -651,7 +651,7 @@ class ShopControlTest extends \OxidTestCase
     public function testStartWithUnmatchedRequestControllerIdDebugModeOn()
     {
         $controllerId = 'unmatchedControllerId';
-        $routingException = new \OxidEsales\EshopCommunity\Core\Exception\RoutingException($controllerId);
+        $routingException = new \OxidEsales\Eshop\Core\Exception\RoutingException($controllerId);
 
         $this->setRequestParameter('cl', $controllerId);
         $this->setRequestParameter('fnc', 'testFnc');

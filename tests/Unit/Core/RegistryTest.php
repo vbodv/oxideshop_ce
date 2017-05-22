@@ -16,15 +16,14 @@
  * along with OXID eShop Community Edition.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2016
+ * @copyright (C) OXID eSales AG 2003-2017
  * @version   OXID eShop CE
  */
 namespace OxidEsales\EshopCommunity\Tests\Unit\Core;
 
 use oxConfig;
-use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\Eshop\Core\Registry;
 use oxLang;
-use oxRegistry;
 use oxSession;
 use oxStr;
 use oxUtils;
@@ -33,7 +32,7 @@ use stdClass;
 /**
  * Test case for \OxidEsales\Eshop\Core\Registry
  */
-class RegistryTest extends \OxidTestCase
+class RegistryTest extends \OxidEsales\TestingLibrary\UnitTestCase
 {
 
     /**
@@ -42,22 +41,7 @@ class RegistryTest extends \OxidTestCase
     public function testEditionSpecificObjectIsCreatedCorrect()
     {
         $utilsObject = \OxidEsales\Eshop\Core\Registry::getUtilsObject();
-
-        $edition = $this->getConfig()->getEdition();
-        $expectedClass = 'OxidEsales\EshopCommunity\Core\UtilsObject';
-
-        switch ($edition) {
-            case 'CE':
-                $expectedClass = 'OxidEsales\EshopCommunity\Core\UtilsObject';
-                break;
-            case 'PE':
-                $expectedClass = 'OxidEsales\EshopProfessional\Core\UtilsObject';
-                break;
-            case 'EE':
-                $expectedClass = 'OxidEsales\EshopEnterprise\Core\UtilsObject';
-                break;
-        }
-
+        $expectedClass = \OxidEsales\Eshop\Core\UtilsObject::class;
         $this->assertEquals($expectedClass, get_class($utilsObject));
     }
 
@@ -67,7 +51,7 @@ class RegistryTest extends \OxidTestCase
     public function testGet()
     {
         $oStr = Registry::get("oxstr");
-        $this->assertTrue($oStr instanceof \OxidEsales\EshopCommunity\Core\Str);
+        $this->assertTrue($oStr instanceof \OxidEsales\Eshop\Core\Str);
     }
 
     /**
@@ -114,25 +98,25 @@ class RegistryTest extends \OxidTestCase
     public function testGetConfig()
     {
         $oSubj = $this->getConfig();
-        $this->assertTrue($oSubj instanceof \OxidEsales\EshopCommunity\Core\Config);
+        $this->assertTrue($oSubj instanceof \OxidEsales\Eshop\Core\Config);
     }
 
     public function testGetSession()
     {
         $oSubj = Registry::getSession();
-        $this->assertTrue($oSubj instanceof \OxidEsales\EshopCommunity\Core\Session);
+        $this->assertTrue($oSubj instanceof \OxidEsales\Eshop\Core\Session);
     }
 
     public function testGetLang()
     {
         $oSubj = Registry::getLang();
-        $this->assertTrue($oSubj instanceof \OxidEsales\EshopCommunity\Core\Language);
+        $this->assertTrue($oSubj instanceof \OxidEsales\Eshop\Core\Language);
     }
 
     public function testGetLUtils()
     {
         $oSubj = Registry::getUtils();
-        $this->assertTrue($oSubj instanceof \OxidEsales\EshopCommunity\Core\Utils);
+        $this->assertTrue($oSubj instanceof \OxidEsales\Eshop\Core\Utils);
     }
 
     public function testGetKeys()
@@ -165,8 +149,8 @@ class RegistryTest extends \OxidTestCase
     public function testGetControllerClassNameResolver()
     {
         $object = Registry::getControllerClassNameResolver();
-        $this->assertTrue(is_a($object, '\OxidEsales\EshopCommunity\Core\Contract\ClassNameResolverInterface'));
-        $this->assertTrue(is_a($object, '\OxidEsales\EshopCommunity\Core\Routing\ControllerClassNameResolver'));
+        $this->assertTrue(is_a($object, \OxidEsales\Eshop\Core\Contract\ClassNameResolverInterface::class));
+        $this->assertTrue(is_a($object, \OxidEsales\Eshop\Core\Routing\ControllerClassNameResolver::class));
     }
 
     /**
@@ -294,8 +278,7 @@ class RegistryTest extends \OxidTestCase
     /**
      * IMPORTANT: When you explicitly set/get edition classes, the edition namespace is
      *            used as storage key and not the virtual namespace class name.
-     *            This is no problem as we will always use virtual class names but when edition classes are used
-     *            be careful as long as the bc layer exists.
+     *            It is not intended to use edition namespaces!
      */
     public function testRegistryAndEditionNamespace()
     {

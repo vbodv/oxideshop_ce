@@ -37,10 +37,14 @@ class ForwardCompatibleInstanceOfOxNewClassVirtualClassName_1_Test extends \PHPU
         
         $object = oxNew($virtualClassName);
 
+
+        $message = 'An object created with oxNew(\OxidEsales\Eshop\Application\Model\Article::class) is an instance of "\oxArticle::class"';
         $this->assertInstanceOf($backwardsCompatibleClassAlias, $object, $message);
 
+        $message = 'An object created with oxNew(\OxidEsales\Eshop\Application\Model\Article::class) is an instance of \OxidEsales\EshopCommunity\Application\Model\Article::class';
         $this->assertInstanceOf($realClassName, $object, $message);
 
+        $message = 'An object created with oxNew(\OxidEsales\Eshop\Application\Model\Article::class) is an instance of \OxidEsales\Eshop\Application\Model\Article::class';
         $this->assertInstanceOf($virtualClassName, $object, $message);
     }
 }

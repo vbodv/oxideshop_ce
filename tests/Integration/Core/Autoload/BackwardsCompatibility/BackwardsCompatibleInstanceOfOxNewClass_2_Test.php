@@ -37,10 +37,13 @@ class BackwardsCompatibleInstanceOfOxNewClass_2_Test extends \PHPUnit_Framework_
         
         $object = oxNew($backwardsCompatibleClassAlias);
 
+        $message = 'An object created with oxNew("oxarticle") is an instance of "oxarticle"';
         $this->assertInstanceOf($backwardsCompatibleClassAlias, $object, $message);
 
+        $message = 'An object created with oxNew("oxarticle") is an instance of \OxidEsales\EshopCommunity\Application\Model\Article::class';
         $this->assertInstanceOf($realClassName, $object, $message);
 
+        $message = 'An object created with oxNew("oxarticle") is an instance of \OxidEsales\Eshop\Application\Model\Article::class';
         $this->assertInstanceOf($virtualClassName, $object, $message);
     }
 }
