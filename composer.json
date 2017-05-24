@@ -17,7 +17,8 @@
         "oxid-esales/eshop-db-views-regenerator": "^v1.0.0",
         "doctrine/dbal": "v2.5.12",
         "oxid-esales/eshop-demodata-installer": "^v1.0.0",
-        "oxid-esales/oxideshop-composer-plugin": "^v1.0.0"
+        "oxid-esales/oxideshop-composer-plugin": "^v1.0.0",
+        "oxid-esales/oxideshop-unified-namespaces": "dev-ee"
     },
     "require-dev": {
         "oxid-esales/testing-library": "dev-master",
@@ -61,6 +62,12 @@
                 "shop_tests_path": "SHOP_TESTS_PATH",
                 "partial_module_paths": "PARTIAL_MODULE_PATHS"
             }
+        }
+    },
+    "repositories": {
+        "oxid-esales/oxideshop-unified-namespaces": {
+            "type": "vcs",
+            "url": "https://github.com/OXID-eSales/oxideshop-unified-namespaces"
         }
     }
 }
