@@ -41,35 +41,13 @@ class BackwardsCompatibilityAutoload
      * Autoload method.
      *
      * @param string $class Name of the class to be loaded
-     *
-     * @return bool
      */
     public function autoload($class)
     {
-        $virtualAlias = null;
-
-        if ($this->isBcAliasRequest($class)) {
-            $virtualAlias = $this->getUnifiedNamespaceClassForBcAlias($class);
-            $this->forceBackwardsCompatiblityClassLoading($virtualAlias);
-        } else {
-            return false;
+        $unifiedNamespaceClassName = $this->getUnifiedNamespaceClassForBcAlias($class);
+        if (!empty($unifiedNamespaceClassName)) {
+            $this->forceBackwardsCompatiblityClassLoading($unifiedNamespaceClassName);
         }
-
-        return true;
-    }
-
-    /**
-     * Return true, if the given class name is a backwards compatible alias like oxArticle
-     *
-     * @param string $class Name of the class
-     *
-     * @return bool
-     */
-    private function isBcAliasRequest($class)
-    {
-        $classMap = $this->getBackwardsCompatibilityClassMap();
-
-        return in_array(strtolower($class), $classMap);
     }
 
     /**
@@ -77,18 +55,14 @@ class BackwardsCompatibilityAutoload
      *
      * @param string $bcAlias Name of the backwards compatible class like oxArticle
      *
-     * @return null|string Name of the virtual class like OxidEsales\Eshop\Application\Model\Article
+     * @return string Name of the unified namespace class like OxidEsales\Eshop\Application\Model\Article
      */
     private function getUnifiedNamespaceClassForBcAlias($bcAlias)
     {
-        $result = null;
-
         $classMap = $this->getBackwardsCompatibilityClassMap();
-        if ($resolvedClassName = array_search(strtolower($bcAlias), $classMap)) {
-            $result = $resolvedClassName;
-        }
-
-        return  $result;
+        $bcAlias = strtolower($bcAlias);
+        $result = isset($classMap[$bcAlias]) ? $classMap[$bcAlias] : "";
+        return $result;
     }
 
     /**
@@ -111,7 +85,7 @@ class BackwardsCompatibilityAutoload
     {
         if (is_null($this->backwardsCompatibilityClassMap)) {
             $classMap = include __DIR__ . DIRECTORY_SEPARATOR . 'BackwardsCompatibilityClassMap.php';
-            $this->backwardsCompatibilityClassMap = array_map('strtolower', $classMap);
+            $this->backwardsCompatibilityClassMap = $classMap;
         }
 
         return $this->backwardsCompatibilityClassMap;

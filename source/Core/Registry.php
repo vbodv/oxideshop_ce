@@ -359,7 +359,7 @@ class Registry
     {
         if (is_null(self::$backwardsCompatibilityClassMap)) {
             $classMap = include CORE_AUTOLOADER_PATH . 'BackwardsCompatibilityClassMap.php';
-            self::$backwardsCompatibilityClassMap = array_map('strtolower', $classMap);
+            self::$backwardsCompatibilityClassMap = $classMap;
         }
 
         return self::$backwardsCompatibilityClassMap;
