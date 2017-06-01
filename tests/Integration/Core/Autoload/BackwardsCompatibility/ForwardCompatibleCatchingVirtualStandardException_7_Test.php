@@ -22,7 +22,7 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Integration\Core\Autoload\BackwardsCompatibility;
 
-class ForwardCompatibleCatchingVirtualStandardException_7_Test extends \PHPUnit_Framework_TestCase
+class ForwardCompatibleCatchingUnifiedNamespaceStandardException_7_Test extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -30,7 +30,7 @@ class ForwardCompatibleCatchingVirtualStandardException_7_Test extends \PHPUnit_
      *
      * @throws \Exception $exception
      */
-    public function testForwardCompatibleCatchingVirtualStandardException()
+    public function testForwardCompatibleCatchingUnifiedNamespaceStandardException()
     {
         // $this->markTestSkipped(
         //    'This test will fail on Travis and CI as it MUST run in an own PHP process, which is not possible.'

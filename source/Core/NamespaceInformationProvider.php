@@ -59,7 +59,7 @@ class NamespaceInformationProvider
      *
      * @var string
      */
-    protected static $virtualNamespace = 'OxidEsales\\Eshop\\';
+    protected static $unifiedNamespace = 'OxidEsales\\Eshop\\';
 
     /**
      * Getter for array with official OXID eShop Edition namespaces.
@@ -82,13 +82,13 @@ class NamespaceInformationProvider
     }
 
     /**
-     * Getter for official OXID eShop virtual namespace.
+     * Getter for official OXID eShop Unified Namespace.
      *
      * @return string
      */
-    public static function getVirtualNamespace()
+    public static function getUnifiedNamespace()
     {
-        return static::$virtualNamespace;
+        return static::$unifiedNamespace;
     }
 
 
@@ -133,13 +133,13 @@ class NamespaceInformationProvider
      *
      * @return bool
      */
-    public static function classBelongsToShopVirtualNamespace($className)
+    public static function classBelongsToShopUnifiedNamespace($className)
     {
         $lcClassName = strtolower(ltrim($className, '\\'));
-        $virtualNamespace = static::getVirtualNamespace();
-        $belongsToVirtualNamespace = (false !== strpos($lcClassName, strtolower($virtualNamespace)));
+        $unifiedNamespace = static::getUnifiedNamespace();
+        $belongsToUnifiedNamespace = (false !== strpos($lcClassName, strtolower($unifiedNamespace)));
 
-        return $belongsToVirtualNamespace;
+        return $belongsToUnifiedNamespace;
     }
 
     /**

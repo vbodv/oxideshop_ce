@@ -183,57 +183,57 @@ class RegistryTest extends \OxidEsales\TestingLibrary\UnitTestCase
     }
 
     /**
-     * Verify that Registry::get can be called with virtualClassname as well as bc class name to get the same object.
+     * Verify that Registry::get can be called with unified namespace classname as well as bc class name to get the same object.
      */
     public function testRegistryGetSupportsNamespaces()
     {
         $className = 'oxArticle';
-        $virtualClassName = \OxidEsales\Eshop\Application\Model\Article::class;
+        $unifiedNamespaceClassName = \OxidEsales\Eshop\Application\Model\Article::class;
         Registry::get($className);
         $this->assertTrue(Registry::instanceExists($className));
-        $this->assertTrue(Registry::instanceExists($virtualClassName));
-        $this->assertSame(Registry::get($className), Registry::get($virtualClassName));
+        $this->assertTrue(Registry::instanceExists($unifiedNamespaceClassName));
+        $this->assertSame(Registry::get($className), Registry::get($unifiedNamespaceClassName));
     }
 
     /**
-     * Verify that Registry::get can be called with virtualClassname as well as bc class name to get the same object.
+     * Verify that Registry::get can be called with unified namespace classname as well as bc class name to get the same object.
      */
     public function testRegistryGetSupportsBcClasses()
     {
         $className = 'oxArticle';
-        $virtualClassName = \OxidEsales\Eshop\Application\Model\Article::class;
-        Registry::get($virtualClassName);
+        $unifiedNamespaceClassName = \OxidEsales\Eshop\Application\Model\Article::class;
+        Registry::get($unifiedNamespaceClassName);
         $this->assertTrue(Registry::instanceExists($className));
-        $this->assertTrue(Registry::instanceExists($virtualClassName));
-        $this->assertSame(Registry::get($className), Registry::get($virtualClassName));
+        $this->assertTrue(Registry::instanceExists($unifiedNamespaceClassName));
+        $this->assertSame(Registry::get($className), Registry::get($unifiedNamespaceClassName));
     }
 
     /**
-     * Verify that Registry::set can be called with virtualClassname as well as bc class name to get the same object.
+     * Verify that Registry::set can be called with unified namespace classname as well as bc class name to get the same object.
      */
     public function testRegistrySetSupportsNamespacesBc()
     {
         $bcClassName = 'oxArticle';
-        $virtualClassName = \OxidEsales\Eshop\Application\Model\Article::class;
+        $unifiedNamespaceClassName = \OxidEsales\Eshop\Application\Model\Article::class;
         $object = oxNew($bcClassName);
         Registry::set($bcClassName, $object);
         $this->assertTrue(Registry::instanceExists($bcClassName));
-        $this->assertTrue(Registry::instanceExists($virtualClassName));
-        $this->assertSame(Registry::get($bcClassName), Registry::get($virtualClassName));
+        $this->assertTrue(Registry::instanceExists($unifiedNamespaceClassName));
+        $this->assertSame(Registry::get($bcClassName), Registry::get($unifiedNamespaceClassName));
     }
 
     /**
-     * Verify that Registry::set can be called with virtualClassname as well as bc class name to get the same object.
+     * Verify that Registry::set can be called with unified namespace classname as well as bc class name to get the same object.
      */
     public function testRegistrySetSupportsNamespaces()
     {
         $bcClassName = 'oxbasket';
-        $virtualClassName = \OxidEsales\Eshop\Application\Model\Basket::class;
-        $object = oxNew($virtualClassName);
+        $unifiedNamespaceClassName = \OxidEsales\Eshop\Application\Model\Basket::class;
+        $object = oxNew($unifiedNamespaceClassName);
         Registry::set($bcClassName, $object);
         $this->assertTrue(Registry::instanceExists($bcClassName));
-        $this->assertTrue(Registry::instanceExists($virtualClassName));
-        $this->assertSame(Registry::get($bcClassName), Registry::get($virtualClassName));
+        $this->assertTrue(Registry::instanceExists($unifiedNamespaceClassName));
+        $this->assertSame(Registry::get($bcClassName), Registry::get($unifiedNamespaceClassName));
     }
 
     /**
@@ -242,8 +242,8 @@ class RegistryTest extends \OxidEsales\TestingLibrary\UnitTestCase
     public function testGetStorageKeyBcClass()
     {
         $bcClassName = 'oxArticle';
-        $virtualClassName = \OxidEsales\Eshop\Application\Model\Article::class;
-        $this->assertEquals($virtualClassName, Registry::getStorageKey($bcClassName));
+        $unifiedNamespaceClassName = \OxidEsales\Eshop\Application\Model\Article::class;
+        $this->assertEquals($unifiedNamespaceClassName, Registry::getStorageKey($bcClassName));
     }
 
     /**
@@ -252,8 +252,8 @@ class RegistryTest extends \OxidEsales\TestingLibrary\UnitTestCase
     public function testGetStorageKeyConfigFile()
     {
         $bcClassName = 'oxConfigFile';
-        $virtualClassName = \OxidEsales\Eshop\Core\ConfigFile::class;
-        $this->assertEquals($virtualClassName, Registry::getStorageKey($bcClassName));
+        $unifiedNamespaceClassName = \OxidEsales\Eshop\Core\ConfigFile::class;
+        $this->assertEquals($unifiedNamespaceClassName, Registry::getStorageKey($bcClassName));
     }
 
     /**
@@ -261,8 +261,8 @@ class RegistryTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testGetStorageKeyNamespaceClass()
     {
-        $virtualClassName = \OxidEsales\Eshop\Application\Model\Article::class;
-        $this->assertEquals($virtualClassName, Registry::getStorageKey($virtualClassName));
+        $unifiedNamespaceClassName = \OxidEsales\Eshop\Application\Model\Article::class;
+        $this->assertEquals($unifiedNamespaceClassName, Registry::getStorageKey($unifiedNamespaceClassName));
     }
 
     /**
@@ -277,17 +277,17 @@ class RegistryTest extends \OxidEsales\TestingLibrary\UnitTestCase
 
     /**
      * IMPORTANT: When you explicitly set/get edition classes, the edition namespace is
-     *            used as storage key and not the virtual namespace class name.
+     *            used as storage key and not the unified namespace classname.
      *            It is not intended to use edition namespaces!
      */
     public function testRegistryAndEditionNamespace()
     {
         $className = \OxidEsales\EshopCommunity\Application\Model\Order::class;
-        $virtualClassName = \OxidEsales\Eshop\Application\Model\Order::class;
+        $unifiedNamespaceClassName = \OxidEsales\Eshop\Application\Model\Order::class;
         Registry::get($className);
         $this->assertTrue(Registry::instanceExists($className));
-        //When you explicitly request an EDITION namespace object this is NOT stored under the virtual namespace key.
-        $this->assertFalse(Registry::instanceExists($virtualClassName));
+        //When you explicitly request an EDITION namespace object this is NOT stored under the unified namespace key.
+        $this->assertFalse(Registry::instanceExists($unifiedNamespaceClassName));
     }
 
     /**

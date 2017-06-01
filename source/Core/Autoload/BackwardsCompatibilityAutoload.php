@@ -32,7 +32,7 @@ namespace OxidEsales\EshopCommunity\Core\Autoload;
 class BackwardsCompatibilityAutoload
 {
     /**
-     * Array map with virtual namespace class name as key, bc class name as value.
+     * Array map with Unified Namespace class name as key, bc class name as value.
      * @var array
      */
     private $backwardsCompatibilityClassMap = null;
@@ -73,7 +73,7 @@ class BackwardsCompatibilityAutoload
     }
 
     /**
-     * Return the name of a virtual class for a given backwards compatible class
+     * Return the name of a Unified Namespace class for a given backwards compatible class
      *
      * @param string $bcAlias Name of the backwards compatible class like oxArticle
      *
@@ -103,9 +103,9 @@ class BackwardsCompatibilityAutoload
     }
 
     /**
-     * Return the backwards compatibile classmap
+     * Return the backwards compatible class map.
      *
-     * @return array Mapping of virtual to backwards compatibile classes
+     * @return array Mapping of Unified Namespace to backwards compatible classes.
      */
     private function getBackwardsCompatibilityClassMap()
     {

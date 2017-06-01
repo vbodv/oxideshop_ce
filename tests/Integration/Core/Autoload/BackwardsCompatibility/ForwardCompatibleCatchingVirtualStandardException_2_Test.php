@@ -22,7 +22,7 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Integration\Core\Autoload\BackwardsCompatibility;
 
-class ForwardCompatibleCatchingVirtualStandardException_2_Test extends \PHPUnit_Framework_TestCase
+class ForwardCompatibleCatchingUnifiedNamespaceStandardException_2_Test extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -30,7 +30,7 @@ class ForwardCompatibleCatchingVirtualStandardException_2_Test extends \PHPUnit_
      *
      * @throws \Exception $exception
      */
-    public function testForwardCompatibleCatchingVirtualStandardException()
+    public function testForwardCompatibleCatchingUnifiedNamespaceStandardException()
     {
         $exception = oxNew('oxException');
         try {

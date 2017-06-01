@@ -37,7 +37,7 @@ class ForwardCompatibleInstanceOfOxNewClassRealClassName_1_Test extends \OxidEsa
         }
 
         $realClassName = \OxidEsales\EshopCommunity\Application\Model\Article::class;
-        $virtualClassName = \OxidEsales\Eshop\Application\Model\Article::class;
+        $unifiedNamespaceClassName = \OxidEsales\Eshop\Application\Model\Article::class;
         $backwardsCompatibleClassAlias = \oxArticle::class;
 
         $object = oxNew($realClassName);
@@ -49,6 +49,6 @@ class ForwardCompatibleInstanceOfOxNewClassRealClassName_1_Test extends \OxidEsa
         $this->assertInstanceOf($realClassName, $object, $message);
 
         $message = 'An object created with oxNew(\OxidEsales\EshopCommunity\Application\Model\Article::class) is not an instance of \OxidEsales\Eshop\Application\Model\Article::class';
-        $this->assertNotInstanceOf($virtualClassName, $object, $message);
+        $this->assertNotInstanceOf($unifiedNamespaceClassName, $object, $message);
     }
 }

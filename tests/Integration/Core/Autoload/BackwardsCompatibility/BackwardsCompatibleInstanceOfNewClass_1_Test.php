@@ -31,7 +31,7 @@ class BackwardsCompatibleInstanceOfNewClass_1_Test extends \PHPUnit_Framework_Te
     public function testBackwardsCompatibleInstanceOfNewClass()
     {
         $realClassName = \OxidEsales\EshopCommunity\Application\Model\Article::class;
-        $virtualClassName = \OxidEsales\Eshop\Application\Model\Article::class;
+        $unifiedNamespaceClassName = \OxidEsales\Eshop\Application\Model\Article::class;
         $backwardsCompatibleClassAlias = \oxArticle::class;
 
         $object = new $backwardsCompatibleClassAlias();
@@ -43,6 +43,6 @@ class BackwardsCompatibleInstanceOfNewClass_1_Test extends \PHPUnit_Framework_Te
         $this->assertInstanceOf($realClassName, $object, $message);
 
         $message = 'An object created with new \oxArticle() is an instance of \OxidEsales\Eshop\Application\Model\Article::class';
-        $this->assertInstanceOf($virtualClassName, $object, $message);
+        $this->assertInstanceOf($unifiedNamespaceClassName, $object, $message);
     }
 }
