@@ -115,13 +115,9 @@ if (!is_readable(OX_BASE_PATH . "config.inc.php")) {
 require_once VENDOR_PATH . 'autoload.php';
 
 /*
- * Require and register the alias autoloader.
- * This autoloader will load classes in the virtual namespace like '\OxidEsales\Eshop\Core\UtilsObject' or
- * for reasons of backwards compatibility classes like 'oxArticle'.
- *
- * Past this point you should use only create instances of classes from the virtual namespace
+ * This autoloader will load classes for reasons of backwards compatibility like 'oxArticle'.
  */
-require_once CORE_AUTOLOADER_PATH . 'AliasAutoload.php';
+require_once CORE_AUTOLOADER_PATH . 'BackwardsCompatibilityAutoload.php';
 
 /**
  * Register the module autoload.

@@ -27,6 +27,9 @@ namespace OxidEsales\EshopCommunity\Core\Autoload;
  *
  * The aliases are provided by a class map provider. But it is not sufficient
  * to
+ *
+ * @deprecated since v6.0.0-rc.2 (2017-06-01); Virtual namespaces were replaced by concrete classes, called
+ *                                             unified namespace classes
  */
 class AliasAutoload
 {
