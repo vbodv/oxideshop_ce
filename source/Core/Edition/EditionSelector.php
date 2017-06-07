@@ -98,26 +98,19 @@ class EditionSelector
             $configFile = new ConfigFile(OX_BASE_PATH . DIRECTORY_SEPARATOR . "config.inc.php");
         }
         $configFile = isset($configFile) ? $configFile : Registry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
-        $edition = $configFile->getVar('edition') ?: $this->findEditionByArticleClass();
+        $edition = $configFile->getVar('edition') ?: $this->getEditionByExistingClasses();
         $configFile->setVar('edition', $edition);
 
         return strtoupper($edition);
     }
 
     /**
-     * Determine shop version by ClassMap existence.
+     * Determine shop edition by existence of edition specific classes.
      *
      * @return string
      */
-    protected function findEditionByArticleClass()
+    protected function getEditionByExistingClasses()
     {
-        $edition = static::COMMUNITY;
-        if (class_exists(\OxidEsales\EshopEnterprise\Application\Model\Article::class)) {
-            $edition = static::ENTERPRISE;
-        } elseif (class_exists(\OxidEsales\EshopProfessional\Application\Model\Article::class)) {
-            $edition = static::PROFESSIONAL;
-        }
-
-        return $edition;
+        return static::COMMUNITY;
     }
 }

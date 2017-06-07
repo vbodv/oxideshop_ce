@@ -23,7 +23,7 @@
 namespace OxidEsales\EshopCommunity\Core;
 
 /**
- * Class NamespaceInformationProvider
+ * Class EditionSelector
  *
  * @package OxidEsales\EshopCommunity\Core
  *
@@ -55,7 +55,7 @@ class NamespaceInformationProvider
     ];
 
     /**
-     * OXID eShop virtual namespace.
+     * OXID eShop unified namespace.
      *
      * @var string
      */
