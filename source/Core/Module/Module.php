@@ -566,28 +566,6 @@ class Module extends \OxidEsales\Eshop\Core\Base
     }
 
     /**
-     * Translate module metadata information about patched shop classes
-     * into virtual namespace. There might still be BC class names used in module metadata.php.
-     *
-     * @param array $rawExtensions Extension information from module metadata.php.
-     *
-     * @return array
-     */
-    protected function getVirtualShopClassExtensionsForBc($rawExtensions)
-    {
-        $extensions = [];
-
-        foreach ($rawExtensions as $classToBePatched => $moduleClass) {
-            if (!\OxidEsales\Eshop\Core\NamespaceInformationProvider::isNamespacedClass($classToBePatched)) {
-                $bcMap = \OxidEsales\Eshop\Core\Registry::getBackwardsCompatibilityClassMap();
-                $classToBePatched = $bcMap[strtolower($classToBePatched)] ?: $classToBePatched;
-            }
-            $extensions[$classToBePatched] = $moduleClass;
-        }
-        return $extensions;
-    }
-
-    /**
      * Translate module metadata information about the patched shop classes
      * into Unified Namespace. There might still be BC class names used in module metadata.php.
      *
