@@ -67,7 +67,7 @@ class ServersManager
      */
     public function getServer($serverId)
     {
-        return $this->appServerService->load($serverId);
+        return $this->appServerService->loadAppServer($serverId);
     }
 
     /**
@@ -77,7 +77,7 @@ class ServersManager
      */
     public function saveServer($oServer)
     {
-        $this->appServerService->save($oServer);
+        $this->appServerService->saveAppServer($oServer);
     }
 
     /**
@@ -114,7 +114,7 @@ class ServersManager
      */
     public function deleteServer($sServerId)
     {
-        $this->appServerService->deleteById($sServerId);
+        $this->appServerService->deleteAppServerById($sServerId);
     }
 
     /**
@@ -187,7 +187,7 @@ class ServersManager
      */
     public function getServersData()
     {
-        return $this->appServerService->loadList();
+        return $this->appServerService->loadAppServerList();
     }
 
 }

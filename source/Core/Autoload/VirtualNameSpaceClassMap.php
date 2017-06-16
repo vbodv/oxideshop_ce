@@ -428,6 +428,7 @@ class VirtualNameSpaceClassMap
             'OxidEsales\Eshop\Core\ApplicationServerList' => \OxidEsales\EshopCommunity\Core\ApplicationServerList::class,
             'OxidEsales\Eshop\Core\Dao\ApplicationServerDao' => \OxidEsales\EshopCommunity\Core\Dao\ApplicationServerDao::class,
             'OxidEsales\Eshop\Core\Contract\BaseDaoInterface' => \OxidEsales\EshopCommunity\Core\Contract\BaseDaoInterface::class,
+            'OxidEsales\Eshop\Core\Service\ApplicationServerFacade' => \OxidEsales\EshopCommunity\Core\Service\ApplicationServerFacade::class,
             'OxidEsales\Eshop\Core\Service\ApplicationServerService' => \OxidEsales\EshopCommunity\Core\Service\ApplicationServerService::class,
             'OxidEsales\Eshop\Core\Contract\ApplicationServerServiceInterface' => \OxidEsales\EshopCommunity\Core\Contract\ApplicationServerServiceInterface::class,
             'OxidEsales\Eshop\Core\Autoload\VirtualNameSpaceClassMap' => \OxidEsales\EshopCommunity\Core\Autoload\VirtualNameSpaceClassMap::class,

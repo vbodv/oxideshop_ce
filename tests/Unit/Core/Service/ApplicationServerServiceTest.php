@@ -74,11 +74,6 @@ class ApplicationServerServiceTest extends \OxidEsales\TestingLibrary\UnitTestCa
 
         $server = oxNew(\OxidEsales\Eshop\Core\ApplicationServer::class);
         $server->setId('testId');
-        $server->setTimestamp('timestamp');
-        $server->setIp('127.0.0.1');
-        $server->setLastFrontendUsage('frontendUsageTimestamp');
-        $server->setLastAdminUsage('adminUsageTimestamp');
-        $server->setIsValid();
 
         $service = $this->getApplicationServerServiceMock($appServerDao);
 
@@ -98,11 +93,6 @@ class ApplicationServerServiceTest extends \OxidEsales\TestingLibrary\UnitTestCa
 
         $server = oxNew(\OxidEsales\Eshop\Core\ApplicationServer::class);
         $server->setId('testId');
-        $server->setTimestamp('timestamp');
-        $server->setIp('127.0.0.1');
-        $server->setLastFrontendUsage('frontendUsageTimestamp');
-        $server->setLastAdminUsage('adminUsageTimestamp');
-        $server->setIsValid();
 
         $service = $this->getApplicationServerServiceMock($appServerDao);
 

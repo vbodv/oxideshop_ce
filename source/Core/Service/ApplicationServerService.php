@@ -97,6 +97,24 @@ class ApplicationServerService implements \OxidEsales\Eshop\Core\Contract\Applic
     }
 
     /**
+     * Returns all servers information array from configuration.
+     *
+     * @return array
+     */
+    public function loadActiveAppServerList()
+    {
+        $server = oxNew(\OxidEsales\Eshop\Core\ApplicationServer::class);
+        $server->setId('serverNameHash1');
+        $server->setTimestamp('createdTimestamp');
+        $server->setIp('127.0.0.1');
+        $server->setLastFrontendUsage('frontendUsageTimestamp');
+        $server->setLastAdminUsage('adminUsageTimestamp');
+        $server->setIsValid();
+
+        return array($server);
+    }
+
+    /**
      * Returns ApplicationServerDao class.
      *
      * @return \OxidEsales\Eshop\Core\Dao\ApplicationServerDao
